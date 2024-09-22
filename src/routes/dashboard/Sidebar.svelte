@@ -1,12 +1,35 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { LogOut, Home, ShoppingCart, Package, UsersRound, LogIn } from 'lucide-svelte';
 	import { Button } from "$lib/components/ui/button/index.js";
 	import * as Accordion from "$lib/components/ui/accordion/index.js";
 	import LoginModal from "$lib/components/LoginModal.svelte";
-    import { page } from '$app/stores';
-    
+	import { supabase } from '$lib/supabase';
+	import { user } from '$lib/stores/userStore';
+	import { page } from '$app/stores';
+
 	export let closeSheet: () => void;
 	let loginModalOpen = false;
+
+	onMount(async () => {
+		const { data } = await supabase.auth.getSession();
+		if (data.session) {
+			user.set(data.session.user);
+		}
+
+		supabase.auth.onAuthStateChange((event, session) => {
+			if (session) {
+				user.set(session.user);
+			} else {
+				user.set(null);
+			}
+		});
+	});
+
+	async function handleLogout() {
+		await supabase.auth.signOut();
+		user.set(null);
+	}
 
 	// Define the sidebar navigation structure
 	const sidebarNavigation = [
@@ -53,15 +76,18 @@
 <div class="px-4 py-6 border-b">
 	<h2 class="text-lg font-semibold">Acme Inc</h2>
 	<p class="text-sm text-muted-foreground">Dashboard</p>
-	<p class="mt-2 text-sm">user@example.com</p>
-	<Button variant="outline" size="sm" class="mt-2 mr-2" on:click={() => loginModalOpen = true}>
-		<LogIn class="mr-2 h-4 w-4" />
-		Log in
-	</Button>
-	<Button variant="outline" size="sm" class="mt-2">
-		<LogOut class="mr-2 h-4 w-4" />
-		Log out
-	</Button>
+	{#if $user}
+		<p class="mt-2 text-sm">{$user.email}</p>
+		<Button variant="outline" size="sm" class="mt-2" on:click={handleLogout}>
+			<LogOut class="mr-2 h-4 w-4" />
+			Log out
+		</Button>
+	{:else}
+		<Button variant="outline" size="sm" class="mt-2" on:click={() => loginModalOpen = true}>
+			<LogIn class="mr-2 h-4 w-4" />
+			Log in
+		</Button>
+	{/if}
 </div>
 
 <nav class="flex-1 px-2 py-4">

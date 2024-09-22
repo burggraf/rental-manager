@@ -28,6 +28,7 @@
 	"type": "module",
 	"dependencies": {
 		"@internationalized/date": "^3.5.5",
+		"@supabase/supabase-js": "^2.45.4",
 		"bits-ui": "^0.21.15",
 		"clsx": "^2.1.1",
 		"cmdk-sv": "^0.0.18",
