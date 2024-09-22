@@ -19,6 +19,7 @@
     UsersRound,
     LineChart,
     EllipsisVertical,
+    LogOut,
     
   } from 'lucide-svelte';
 
@@ -35,6 +36,7 @@
   import * as Table from "$lib/components/ui/table/index.js";
   import * as Tabs from "$lib/components/ui/tabs/index.js";
   import * as Tooltip from "$lib/components/ui/tooltip/index.js";
+  import * as Accordion from "$lib/components/ui/accordion/index.js";
 </script>
 
 <div class="bg-muted/40 flex min-h-screen w-full flex-col">
@@ -49,55 +51,75 @@
             <span class="sr-only">Toggle Menu</span>
           </Button>
         </Sheet.Trigger>
-        <Sheet.Content side="left" class="w-[250px]">
-          <nav class="grid gap-6 text-lg font-medium">
-            <a
-              href="##"
-              class="bg-primary text-primary-foreground group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold md:text-base"
-            >
-              <Package2 class="h-5 w-5 transition-all group-hover:scale-110" />
-              <span class="sr-only">Acme Inc</span>
-            </a>
-            <a
-              href="##"
-              class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-            >
-              <Home class="h-5 w-5" />
-              Dashboard
-            </a>
-            <a href="##" class="text-foreground flex items-center gap-4 px-2.5">
-              <ShoppingCart class="h-5 w-5" />
-              Orders
-            </a>
-            <a
-              href="##"
-              class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-            >
-              <Package class="h-5 w-5" />
-              Products
-            </a>
-            <a
-              href="##"
-              class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-            >
-              <UsersRound class="h-5 w-5" />
-              Customers
-            </a>
-            <a
-              href="##"
-              class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-            >
-              <LineChart class="h-5 w-5" />
-              Analytics
-            </a>
-            <a
-              href="##"
-              class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-            >
-              <Settings class="h-5 w-5" />
-              Settings
-            </a>
+        <Sheet.Content side="left" class="w-[300px] flex flex-col">
+          <div class="px-4 py-6 border-b">
+            <h2 class="text-lg font-semibold">Acme Inc</h2>
+            <p class="text-sm text-muted-foreground">Dashboard</p>
+            <p class="mt-2 text-sm">user@example.com</p>
+            <Button variant="outline" size="sm" class="mt-2">
+              <LogOut class="mr-2 h-4 w-4" />
+              Log out
+            </Button>
+          </div>
+          
+          <nav class="flex-1 px-2 py-4">
+            <Accordion.Root type="single" collapsible>
+              <Accordion.Item value="dashboard" class="border-none">
+                <Accordion.Trigger class="flex w-full items-center justify-start px-4 py-3 text-base hover:bg-muted/50 data-[state=open]:bg-muted no-underline">
+                  <Home class="mr-3 h-5 w-5" />
+                  Dashboard
+                </Accordion.Trigger>
+                <Accordion.Content class="pt-1 pb-2">
+                  <a href="##" class="block py-3 px-8 text-base hover:bg-muted/50 no-underline">Overview</a>
+                  <a href="##" class="block py-3 px-8 text-base hover:bg-muted/50 no-underline">Analytics</a>
+                </Accordion.Content>
+              </Accordion.Item>
+              <Accordion.Item value="orders" class="border-none">
+                <Accordion.Trigger class="flex w-full items-center justify-start px-4 py-3 text-base hover:bg-muted/50 data-[state=open]:bg-muted no-underline">
+                  <ShoppingCart class="mr-3 h-5 w-5" />
+                  Orders
+                </Accordion.Trigger>
+                <Accordion.Content class="pt-1 pb-2">
+                  <a href="##" class="block py-3 px-8 text-base hover:bg-muted/50 no-underline">Recent Orders</a>
+                  <a href="##" class="block py-3 px-8 text-base hover:bg-muted/50 no-underline">Returns</a>
+                </Accordion.Content>
+              </Accordion.Item>
+              <Accordion.Item value="products" class="border-none">
+                <Accordion.Trigger class="flex w-full items-center justify-start px-4 py-3 text-base hover:bg-muted/50 data-[state=open]:bg-muted no-underline">
+                  <Package class="mr-3 h-5 w-5" />
+                  Products
+                </Accordion.Trigger>
+                <Accordion.Content class="pt-1 pb-2">
+                  <a href="##" class="block py-3 px-8 text-base hover:bg-muted/50 no-underline">Inventory</a>
+                  <a href="##" class="block py-3 px-8 text-base hover:bg-muted/50 no-underline">Categories</a>
+                </Accordion.Content>
+              </Accordion.Item>
+              <Accordion.Item value="customers" class="border-none">
+                <Accordion.Trigger class="flex w-full items-center justify-start px-4 py-3 text-base hover:bg-muted/50 data-[state=open]:bg-muted no-underline">
+                  <UsersRound class="mr-3 h-5 w-5" />
+                  Customers
+                </Accordion.Trigger>
+                <Accordion.Content class="pt-1 pb-2">
+                  <a href="##" class="block py-3 px-8 text-base hover:bg-muted/50 no-underline">List</a>
+                  <a href="##" class="block py-3 px-8 text-base hover:bg-muted/50 no-underline">Segments</a>
+                </Accordion.Content>
+              </Accordion.Item>
+            </Accordion.Root>
           </nav>
+          
+          <div class="mt-auto px-4 py-6 border-t">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <p class="text-sm font-medium">Current Plan</p>
+                <p class="text-xs text-muted-foreground">Pro</p>
+              </div>
+              <Button size="sm">Upgrade</Button>
+            </div>
+            <div class="flex justify-between text-xs text-muted-foreground">
+              <a href="##">Terms of Service</a>
+              <a href="##">Privacy Policy</a>
+            </div>
+          </div>
         </Sheet.Content>
       </Sheet.Root>
       <Breadcrumb.Root class="hidden md:flex">
