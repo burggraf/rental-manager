@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { LogOut, Home, ShoppingCart, Package, UsersRound, LogIn, Settings } from 'lucide-svelte';
 	import { Button } from "$lib/components/ui/button/index.js";
 	import * as Accordion from "$lib/components/ui/accordion/index.js";
@@ -10,24 +9,6 @@
 
 	export let closeSheet: () => void;
 	let loginModalOpen = false;
-
-	onMount(async () => {
-		const { data } = await supabase.auth.getSession();
-		if (data.session) {
-			user.set(data.session.user);
-			console.log('User logged in:', data.session.user);
-		}
-
-		supabase.auth.onAuthStateChange((event, session) => {
-			if (session) {
-				user.set(session.user);
-				console.log('Auth state changed - User:', session.user);
-			} else {
-				user.set(null);
-				console.log('Auth state changed - User logged out');
-			}
-		});
-	});
 
 	async function handleLogout() {
 		await supabase.auth.signOut();

@@ -26,6 +26,32 @@
   function capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
+
+  import { onMount } from 'svelte';
+  import { supabase } from '$lib/supabase';
+  import { user } from '$lib/stores/userStore';
+
+  onMount(async () => {
+    const { data } = await supabase.auth.getSession();
+    if (data.session) {
+        user.set(data.session.user);
+        console.log('User logged in:', data.session.user);
+    }
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+        if (session) {
+            user.set(session.user);
+            console.log('Auth state changed - User:', session.user);
+        } else {
+            user.set(null);
+            console.log('Auth state changed - User logged out');
+        }
+    });
+
+    return () => {
+        authListener.subscription.unsubscribe();
+    };
+  });
 </script>
 
 <div class="bg-muted/40 flex min-h-screen w-full flex-col">
