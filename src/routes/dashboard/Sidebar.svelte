@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { LogOut, Home, ShoppingCart, Package, UsersRound, LogIn } from 'lucide-svelte';
+	import { LogOut, Home, ShoppingCart, Package, UsersRound, LogIn, Settings } from 'lucide-svelte';
 	import { Button } from "$lib/components/ui/button/index.js";
 	import * as Accordion from "$lib/components/ui/accordion/index.js";
 	import LoginModal from "$lib/components/LoginModal.svelte";
@@ -63,6 +63,13 @@
 			items: [
 				{ label: "List", href: "/dashboard/customers" },
 				{ label: "Segments", href: "/dashboard/customers/segments" }
+			]
+		},
+		{
+			category: "Settings",
+			icon: Settings,
+			items: [
+				{ label: "Account", href: "/dashboard/account" },
 			]
 		}
 	];
