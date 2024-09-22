@@ -11,7 +11,7 @@
     ListFilter,
     Package,
     Package2,
-    PanelLeft,
+    Menu,
     Search,
     Settings,
     ShoppingCart,
@@ -38,115 +38,18 @@
 </script>
 
 <div class="bg-muted/40 flex min-h-screen w-full flex-col">
-  <aside class="bg-background fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r sm:flex">
-    <nav class="flex flex-col items-center gap-4 px-2 sm:py-5">
-      <a
-        href="##"
-        class="bg-primary text-primary-foreground group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold md:h-8 md:w-8 md:text-base"
-      >
-        <Package2 class="h-4 w-4 transition-all group-hover:scale-110" />
-        <span class="sr-only">Acme Inc</span>
-      </a>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild let:builder>
-          <a
-            href="##"
-            class="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
-            use:builder.action
-            {...builder}
-          >
-            <Home class="h-5 w-5" />
-            <span class="sr-only">Dashboard</span>
-          </a>
-        </Tooltip.Trigger>
-        <Tooltip.Content side="right">Dashboard</Tooltip.Content>
-      </Tooltip.Root>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild let:builder>
-          <a
-            href="##"
-            class="bg-accent text-accent-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
-            use:builder.action
-            {...builder}
-          >
-            <ShoppingCart class="h-5 w-5" />
-            <span class="sr-only">Orders</span>
-          </a>
-        </Tooltip.Trigger>
-        <Tooltip.Content side="right">Orders</Tooltip.Content>
-      </Tooltip.Root>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild let:builder>
-          <a
-            href="##"
-            class="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
-            use:builder.action
-            {...builder}
-          >
-            <Package class="h-5 w-5" />
-            <span class="sr-only">Products</span>
-          </a>
-        </Tooltip.Trigger>
-        <Tooltip.Content side="right">Products</Tooltip.Content>
-      </Tooltip.Root>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild let:builder>
-          <a
-            href="##"
-            class="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
-            use:builder.action
-            {...builder}
-          >
-            <UsersRound class="h-5 w-5" />
-            <span class="sr-only">Customers</span>
-          </a>
-        </Tooltip.Trigger>
-        <Tooltip.Content side="right">Customers</Tooltip.Content>
-      </Tooltip.Root>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild let:builder>
-          <a
-            href="##"
-            class="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
-            use:builder.action
-            {...builder}
-          >
-            <LineChart class="h-5 w-5" />
-            <span class="sr-only">Analytics</span>
-          </a>
-        </Tooltip.Trigger>
-        <Tooltip.Content side="right">Analytics</Tooltip.Content>
-      </Tooltip.Root>
-    </nav>
-    <nav class="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild let:builder>
-          <a
-            href="##"
-            class="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
-            use:builder.action
-            {...builder}
-          >
-            <Settings class="h-5 w-5" />
-            <span class="sr-only">Settings</span>
-          </a>
-        </Tooltip.Trigger>
-        <Tooltip.Content side="right">Settings</Tooltip.Content>
-      </Tooltip.Root>
-    </nav>
-  </aside>
-  <div class="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+  <div class="flex flex-col">
     <header
-      class="bg-background sticky top-0 z-30 flex h-14 items-center gap-4 border-b px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
+      class="bg-background sticky top-0 z-30 flex h-14 items-center gap-4 border-b px-4"
     >
       <Sheet.Root>
         <Sheet.Trigger asChild let:builder>
-          <Button builders={[builder]} size="icon" variant="outline" class="sm:hidden">
-            <PanelLeft class="h-5 w-5" />
+          <Button builders={[builder]} size="icon" variant="outline">
+            <Menu class="h-5 w-5" />
             <span class="sr-only">Toggle Menu</span>
           </Button>
         </Sheet.Trigger>
-        <Sheet.Content side="left" class="sm:max-w-xs">
+        <Sheet.Content side="left" class="w-[250px]">
           <nav class="grid gap-6 text-lg font-medium">
             <a
               href="##"
@@ -185,6 +88,13 @@
               class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
             >
               <LineChart class="h-5 w-5" />
+              Analytics
+            </a>
+            <a
+              href="##"
+              class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
+            >
+              <Settings class="h-5 w-5" />
               Settings
             </a>
           </nav>
@@ -222,7 +132,7 @@
             builders={[builder]}
           >
             <div
-              class="bg-gray-500 text-white flex h-9 w-9 items-center justify-center overflow-hidden rounded-full"
+              class="bg-gray-600 text-white flex h-9 w-9 items-center justify-center overflow-hidden rounded-full"
             >
               <span class="text-sm font-medium">MB</span>
             </div>
@@ -239,7 +149,7 @@
       </DropdownMenu.Root>
     </header>
     <main
-      class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3"
+      class="grid flex-1 items-start gap-4 p-4 md:gap-8 lg:grid-cols-3 xl:grid-cols-3"
     >
       <div class="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
         <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
