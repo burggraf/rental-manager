@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { LogOut, Home, ShoppingCart, Package, UsersRound } from 'lucide-svelte';
+	import { LogOut, Home, ShoppingCart, Package, UsersRound, LogIn } from 'lucide-svelte';
 	import { Button } from "$lib/components/ui/button/index.js";
 	import * as Accordion from "$lib/components/ui/accordion/index.js";
-	import { page } from '$app/stores';
-
+	import LoginModal from "$lib/components/LoginModal.svelte";
+    import { page } from '$app/stores';
+    
 	export let closeSheet: () => void;
+	let loginModalOpen = false;
 
 	// Define the sidebar navigation structure
 	const sidebarNavigation = [
@@ -52,6 +54,10 @@
 	<h2 class="text-lg font-semibold">Acme Inc</h2>
 	<p class="text-sm text-muted-foreground">Dashboard</p>
 	<p class="mt-2 text-sm">user@example.com</p>
+	<Button variant="outline" size="sm" class="mt-2 mr-2" on:click={() => loginModalOpen = true}>
+		<LogIn class="mr-2 h-4 w-4" />
+		Log in
+	</Button>
 	<Button variant="outline" size="sm" class="mt-2">
 		<LogOut class="mr-2 h-4 w-4" />
 		Log out
@@ -98,3 +104,6 @@
 		<a href="##">Privacy Policy</a>
 	</div>
 </div>
+
+<!-- Login Modal -->
+<LoginModal bind:open={loginModalOpen} />
