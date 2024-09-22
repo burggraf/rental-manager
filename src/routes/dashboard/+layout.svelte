@@ -13,11 +13,20 @@
   import * as Sheet from "$lib/components/ui/sheet/index.js";
 
   import Sidebar from './Sidebar.svelte';
+  import { page } from '$app/stores';
 
   let sheetOpen = $state(false);
 
   function closeSheet() {
     sheetOpen = false;
+  }
+
+  let currentPath = $derived($page.url.pathname);
+  let pathSegments = $derived(currentPath.split('/').filter(segment => segment !== ''));
+  let currentPageName = $derived(pathSegments[pathSegments.length - 1] || 'Dashboard');
+
+  function capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 </script>
 
@@ -42,10 +51,20 @@
           <Breadcrumb.Item>
             <Breadcrumb.Link href="/dashboard">Dashboard</Breadcrumb.Link>
           </Breadcrumb.Item>
-          <Breadcrumb.Separator />
-          <Breadcrumb.Item>
-            <Breadcrumb.Page>Current Page</Breadcrumb.Page>
-          </Breadcrumb.Item>
+          {#if pathSegments.length > 1}
+            {#each pathSegments.slice(1) as segment, index}
+              <Breadcrumb.Separator />
+              <Breadcrumb.Item>
+                {#if index === pathSegments.length - 2}
+                  <Breadcrumb.Page>{capitalizeFirstLetter(segment)}</Breadcrumb.Page>
+                {:else}
+                  <Breadcrumb.Link href={`/dashboard/${pathSegments.slice(1, index + 2).join('/')}`}>
+                    {capitalizeFirstLetter(segment)}
+                  </Breadcrumb.Link>
+                {/if}
+              </Breadcrumb.Item>
+            {/each}
+          {/if}
         </Breadcrumb.List>
       </Breadcrumb.Root>
       <div class="relative ml-auto flex-1 md:grow-0">
