@@ -1,6 +1,4 @@
 <script lang="ts">
-  import '../../app.css';
-  
   import { 
     Menu,
     Search,
@@ -76,28 +74,7 @@
         />
       </div>
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild let:builder>
-          <Button
-            variant="outline"
-            size="icon"
-            class="overflow-hidden rounded-full"
-            builders={[builder]}
-          >
-            <div
-              class="bg-gray-600 text-white flex h-9 w-9 items-center justify-center overflow-hidden rounded-full"
-            >
-              <span class="text-sm font-medium">MB</span>
-            </div>
-          </Button>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content align="end">
-          <DropdownMenu.Label>My Account</DropdownMenu.Label>
-          <DropdownMenu.Separator />
-          <DropdownMenu.Item>Settings</DropdownMenu.Item>
-          <DropdownMenu.Item>Support</DropdownMenu.Item>
-          <DropdownMenu.Separator />
-          <DropdownMenu.Item>Logout</DropdownMenu.Item>
-        </DropdownMenu.Content>
+        <!-- User dropdown menu content -->
       </DropdownMenu.Root>
     </header>
     <main
