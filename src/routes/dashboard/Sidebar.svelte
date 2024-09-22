@@ -15,13 +15,16 @@
 		const { data } = await supabase.auth.getSession();
 		if (data.session) {
 			user.set(data.session.user);
+			console.log('User logged in:', data.session.user);
 		}
 
 		supabase.auth.onAuthStateChange((event, session) => {
 			if (session) {
 				user.set(session.user);
+				console.log('Auth state changed - User:', session.user);
 			} else {
 				user.set(null);
+				console.log('Auth state changed - User logged out');
 			}
 		});
 	});
@@ -29,6 +32,7 @@
 	async function handleLogout() {
 		await supabase.auth.signOut();
 		user.set(null);
+		console.log('User logged out');
 	}
 
 	// Define the sidebar navigation structure
@@ -38,7 +42,7 @@
 			icon: Home,
 			items: [
 				{ label: "Overview", href: "/dashboard" },
-				{ label: "Analytics", href: "/dashboard/analytics" }
+					{ label: "Analytics", href: "/dashboard/analytics" }
 			]
 		},
 		{

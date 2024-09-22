@@ -24,9 +24,11 @@
         email,
         password,
       });
-      if (error) console.error('Error logging in:', error.message);
-      else {
+      if (error) {
+        console.error('Error logging in:', error.message);
+      } else {
         user.set(data.user);
+        console.log('User logged in:', data.user);
         open = false;
       }
     } else {
@@ -40,9 +42,13 @@
           }
         }
       });
-      if (error) console.error('Error signing up:', error.message);
-      else {
-        if (data.user) user.set(data.user);
+      if (error) {
+        console.error('Error signing up:', error.message);
+      } else {
+        if (data.user) {
+          user.set(data.user);
+          console.log('User signed up:', data.user);
+        }
         open = false;
       }
     }
