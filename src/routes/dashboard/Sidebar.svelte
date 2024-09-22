@@ -1,52 +1,51 @@
 <script lang="ts">
-	import { LogOut, Home, ShoppingCart, Package, UsersRound, Settings } from 'lucide-svelte'
-	import { Button } from '$lib/components/ui/button/index.js'
-	import * as Accordion from '$lib/components/ui/accordion/index.js'
+	import { LogOut, Home, ShoppingCart, Package, UsersRound } from 'lucide-svelte';
+	import { Button } from "$lib/components/ui/button/index.js";
+	import * as Accordion from "$lib/components/ui/accordion/index.js";
+	import { page } from '$app/stores';
+
+	export let closeSheet: () => void;
 
 	// Define the sidebar navigation structure
 	const sidebarNavigation = [
 		{
-			category: 'Dashboard',
+			category: "Dashboard",
 			icon: Home,
 			items: [
-				{ label: 'Overview', href: '##' },
-				{ label: 'Analytics', href: '##' },
-			],
+				{ label: "Overview", href: "/dashboard" },
+				{ label: "Analytics", href: "/dashboard/analytics" }
+			]
 		},
 		{
-			category: 'Orders',
+			category: "Orders",
 			icon: ShoppingCart,
 			items: [
-				{ label: 'Recent Orders', href: '##' },
-				{ label: 'Returns', href: '##' },
-			],
+				{ label: "Recent Orders", href: "/dashboard/orders" },
+				{ label: "Returns", href: "/dashboard/orders/returns" }
+			]
 		},
 		{
-			category: 'Products',
+			category: "Products",
 			icon: Package,
 			items: [
-				{ label: 'Inventory', href: '##' },
-				{ label: 'Categories', href: '##' },
-			],
+				{ label: "Inventory", href: "/dashboard/products" },
+				{ label: "Categories", href: "/dashboard/products/categories" }
+			]
 		},
 		{
-			category: 'Customers',
+			category: "Customers",
 			icon: UsersRound,
 			items: [
-				{ label: 'List', href: '##' },
-				{ label: 'Segments', href: '##' },
-			],
-		},
-		{
-			category: 'Settings',
-			icon: Settings,
-			items: [
-				{ label: 'General', href: '##' },
-				{ label: 'Security', href: '##' },
-				{ label: 'Notifications', href: '##' },
-			],
-		},
-	]
+				{ label: "List", href: "/dashboard/customers" },
+				{ label: "Segments", href: "/dashboard/customers/segments" }
+			]
+		}
+	];
+
+	function handleNavClick(event: Event) {
+		// Close the sheet after a short delay to allow the click event to propagate
+		setTimeout(() => closeSheet(), 100);
+	}
 </script>
 
 <div class="px-4 py-6 border-b">
@@ -71,7 +70,12 @@
 				</Accordion.Trigger>
 				<Accordion.Content class="pt-1 pb-2">
 					{#each items as { label, href }}
-						<a {href} class="block py-3 px-8 text-base hover:bg-muted/50 no-underline">
+						<a 
+							{href} 
+							class="block py-3 px-8 text-base hover:bg-muted/50 no-underline" 
+							class:bg-muted={$page.url.pathname === href}
+							on:click={handleNavClick}
+						>
 							{label}
 						</a>
 					{/each}
