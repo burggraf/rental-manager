@@ -1,33 +1,42 @@
 <script lang="ts">
-  import { Button } from "$lib/components/ui/button";
-  import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "$lib/components/ui/table";
-  import type { Contact } from "$lib/types/contact";
+  import { onMount } from 'svelte';
+  import { supabase } from '$lib/supabase';
+  import { goto } from '$app/navigation';
 
-  let { contacts = [] } = $props<{ contacts?: Contact[] }>();
+  let contacts = [];
+
+  onMount(async () => {
+    const { data, error } = await supabase
+      .from('contacts')
+      .select('*')
+      .order('lastname', { ascending: true });
+    
+    if (error) {
+      console.error('Error fetching contacts:', error);
+    } else {
+      contacts = data;
+    }
+  });
+
+  function handleContactClick(id: string) {
+    goto(`/dashboard/contacts/${id}`);
+  }
 </script>
 
-<div class="space-y-4">
-  <div class="flex justify-between items-center">
-    <h2 class="text-2xl font-bold">Contacts</h2>
-    <Button>Add Contact</Button>
-  </div>
+<h2 class="text-xl font-semibold mb-4">Contacts List</h2>
 
-  <Table>
-    <TableHeader>
-      <TableRow>
-        <TableHead>Name</TableHead>
-        <TableHead>Email</TableHead>
-        <TableHead>Phone</TableHead>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      {#each contacts as contact (contact.id)}
-        <TableRow>
-          <TableCell>{contact.name}</TableCell>
-          <TableCell>{contact.email}</TableCell>
-          <TableCell>{contact.phone || 'N/A'}</TableCell>
-        </TableRow>
-      {/each}
-    </TableBody>
-  </Table>
-</div>
+<ul class="space-y-2">
+  {#each contacts as contact (contact.id)}
+    <li 
+      class="border p-2 rounded cursor-pointer hover:bg-gray-100"
+      on:click={() => handleContactClick(contact.id)}
+    >
+      <div class="font-medium">{contact.firstname} {contact.lastname}</div>
+      <div class="text-sm text-gray-600">{contact.email}</div>
+    </li>
+  {/each}
+</ul>
+
+{#if contacts.length === 0}
+  <p class="text-gray-500">No contacts found.</p>
+{/if}
