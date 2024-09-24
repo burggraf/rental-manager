@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LogOut, Home, ShoppingCart, Package, UsersRound, LogIn, Settings } from 'lucide-svelte';
+	import { LogOut, Home, ShoppingCart, Package, UsersRound, LogIn, Settings, Users } from 'lucide-svelte';
 	import { Button } from "$lib/components/ui/button/index.js";
 	import * as Accordion from "$lib/components/ui/accordion/index.js";
 	import LoginModal from "$lib/components/LoginModal.svelte";
@@ -18,6 +18,14 @@
 
 	// Define the sidebar navigation structure
 	$: sidebarNavigation = [
+		{
+			category: "People",
+			icon: Users,
+			items: [
+				{ label: "Contacts", href: "/dashboard/contacts" },
+				{ label: "My Account", href: "/dashboard/account" }
+			]
+		},
 		{
 			category: "Dashboard",
 			icon: Home,
