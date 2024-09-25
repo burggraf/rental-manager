@@ -5,6 +5,7 @@
   import * as Dialog from "$lib/components/ui/dialog";
   import { supabase } from '$lib/supabase';
   import { browser } from '$app/environment';
+  import { t } from '$lib/i18n';
 
   let { open = $bindable(false) } = $props();
 
@@ -77,32 +78,32 @@
   <Dialog.Root open={true}>
     <Dialog.Content class="sm:max-w-[425px]">
       <Dialog.Header>
-        <Dialog.Title>{isLogin ? 'Login' : 'Register'}</Dialog.Title>
+        <Dialog.Title>{isLogin ? $t('loginModal.loginTitle') : $t('loginModal.registerTitle')}</Dialog.Title>
         <Dialog.Description>
-          {isLogin ? 'Enter your credentials to login' : 'Create an account'}
+          {isLogin ? $t('loginModal.loginDescription') : $t('loginModal.registerDescription')}
         </Dialog.Description>
       </Dialog.Header>
       <div class="space-y-4 py-4">
         <div class="space-y-2">
-          <Label for="email">Email</Label>
+          <Label for="email">{$t('loginModal.emailLabel')}</Label>
           <Input id="email" type="email" bind:value={email} required />
         </div>
         <div class="space-y-2">
-          <Label for="password">Password</Label>
+          <Label for="password">{$t('loginModal.passwordLabel')}</Label>
           <Input id="password" type="password" bind:value={password} required />
         </div>
         {#if error}
           <p class="text-red-500">{error}</p>
         {/if}
         <Button class="w-full" on:click={handleLogin} disabled={loading}>
-          {loading ? 'Loading...' : (isLogin ? 'Login' : 'Register')}
+          {loading ? $t('loginModal.loading') : (isLogin ? $t('loginModal.loginButton') : $t('loginModal.registerButton'))}
         </Button>
         <div class="relative">
           <div class="absolute inset-0 flex items-center">
             <span class="w-full border-t" />
           </div>
           <div class="relative flex justify-center text-xs uppercase">
-            <span class="bg-background px-2 text-muted-foreground">Or continue with</span>
+            <span class="bg-background px-2 text-muted-foreground">{$t('loginModal.orContinueWith')}</span>
           </div>
         </div>
         <Button class="w-full" variant="outline" on:click={handleGoogleLogin} disabled={loading}>
@@ -114,7 +115,7 @@
       </div>
       <Dialog.Footer>
         <Button variant="link" on:click={toggleMode}>
-          {isLogin ? 'Need an account?' : 'Already have an account?'}
+          {isLogin ? $t('loginModal.needAccount') : $t('loginModal.alreadyHaveAccount')}
         </Button>
       </Dialog.Footer>
       <Dialog.Close on:click={closeModal} />

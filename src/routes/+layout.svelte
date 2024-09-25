@@ -4,6 +4,8 @@
   import { user } from '$lib/stores/authStore';
   import { browser } from '$app/environment';
   import '../app.css';
+  import { page } from '$app/stores';
+  import LanguageSelector from '$lib/components/LanguageSelector.svelte';
   let notificationSupported = $state(false);
 
   onMount(() => {
@@ -45,5 +47,5 @@
     </script>
   {/if}
 </svelte:head>
-
+<LanguageSelector />
 <slot />
