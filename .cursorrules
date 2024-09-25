@@ -215,20 +215,11 @@ You are an expert in Svelte 5, TypeScript, and modern web development using Svel
 
 ---
 
-**Internationalization (i18n) with Paraglide.js**
+**Internationalization (i18n) with typesafe-i18n **
 
-- Use Paraglide.js for internationalization: [Paraglide.js Documentation](https://inlang.com/m/gerre34r/library-inlang-paraglideJs)
-- Install Paraglide.js: `npm install @inlang/paraglide-js`
-- Set up language files in the `languages` directory.
-- Use the `t` function to translate strings:
-  ```svelte
-  <script>
-    import { t } from '@inlang/paraglide-js';
-  </script>
-
-  <h1>{t('welcome_message')}</h1>
+- Use sveltekit-i18n for internationalization
+- Install sveltekit-i18n: `npm install sveltekit-i18n --force`
   ```
-- Support multiple languages and RTL layouts.
 - Ensure text scaling and font adjustments for accessibility.
 
 ---
