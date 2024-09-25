@@ -27,6 +27,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@inlang/paraglide-js": "^1.11.2",
 		"@internationalized/date": "^3.5.5",
 		"@supabase/supabase-js": "^2.45.4",
 		"bits-ui": "^0.21.15",

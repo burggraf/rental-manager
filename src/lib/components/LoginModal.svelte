@@ -1,127 +1,123 @@
 <script lang="ts">
-  import { Button } from "$lib/components/ui/button/index.js";
-  import * as Card from "$lib/components/ui/card/index.js";
-  import { Input } from "$lib/components/ui/input/index.js";
-  import { Label } from "$lib/components/ui/label/index.js";
-  import * as Dialog from "$lib/components/ui/dialog/index.js";
+  import { Button } from "$lib/components/ui/button";
+  import { Input } from "$lib/components/ui/input";
+  import { Label } from "$lib/components/ui/label";
+  import * as Dialog from "$lib/components/ui/dialog";
   import { supabase } from '$lib/supabase';
-  import { user } from '$lib/stores/userStore';
+  import { browser } from '$app/environment';
 
-  export let open = false;
-  let isLogin = true;
-  let email = '';
-  let password = '';
-  let firstName = '';
-  let lastName = '';
+  let { open = $bindable(false) } = $props();
 
-  function toggleForm() {
-    isLogin = !isLogin;
+  let email = $state('');
+  let password = $state('');
+  let loading = $state(false);
+  let error = $state<string | null>(null);
+  let isLogin = $state(true);
+
+  $effect(() => {
+    console.log('Modal open:', open);
+  });
+
+  function closeModal() {
+    open = false;
   }
 
-  async function handleSubmit() {
-    if (isLogin) {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) {
-        console.error('Error logging in:', error.message);
-      } else {
-        user.set(data.user);
-        console.log('User logged in:', data.user);
-        open = false;
-      }
+  async function handleLogin() {
+    loading = true;
+    error = null;
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (signInError) {
+      error = signInError.message;
     } else {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
+      closeModal(); // Close the modal on successful login
+    }
+
+    loading = false;
+  }
+
+  async function handleGoogleLogin() {
+    if (!browser) return;
+
+    loading = true;
+    error = null;
+
+    try {
+      const { error: signInError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
         options: {
-          data: {
-            first_name: firstName,
-            last_name: lastName,
-          }
+          redirectTo: `${window.location.origin}/auth/callback`
         }
       });
-      if (error) {
-        console.error('Error signing up:', error.message);
+
+      if (signInError) {
+        error = signInError.message;
       } else {
-        if (data.user) {
-          user.set(data.user);
-          console.log('User signed up:', data.user);
-        }
-        open = false;
+        closeModal(); // Close the modal on successful login
       }
+    } catch (e) {
+      error = 'An unexpected error occurred';
+      console.error(e);
+    } finally {
+      loading = false;
     }
+  }
+
+  function toggleMode() {
+    isLogin = !isLogin;
+    error = null;
   }
 </script>
 
-<Dialog.Root bind:open>
-  <Dialog.Content class="sm:max-w-[425px]">
-    {#if isLogin}
-      <Card.Root class="mx-auto max-w-sm">
-        <Card.Header>
-          <Card.Title class="text-2xl">Login</Card.Title>
-          <Card.Description>Enter your email below to login to your account</Card.Description>
-        </Card.Header>
-        <Card.Content>
-          <form on:submit|preventDefault={handleSubmit} class="grid gap-4">
-            <div class="grid gap-2">
-              <Label for="email">Email</Label>
-              <Input id="email" type="email" bind:value={email} placeholder="m@example.com" required />
-            </div>
-            <div class="grid gap-2">
-              <div class="flex items-center">
-                <Label for="password">Password</Label>
-                <a href="##" class="ml-auto inline-block text-sm underline">
-                  Forgot your password?
-                </a>
-              </div>
-              <Input id="password" type="password" bind:value={password} required />
-            </div>
-            <Button type="submit" class="w-full">Login</Button>
-            <Button variant="outline" class="w-full">Login with Google</Button>
-          </form>
-          <div class="mt-4 text-center text-sm">
-            Don't have an account?
-            <button on:click={toggleForm} class="underline">Sign up</button>
+{#if open}
+  <Dialog.Root open={true}>
+    <Dialog.Content class="sm:max-w-[425px]">
+      <Dialog.Header>
+        <Dialog.Title>{isLogin ? 'Login' : 'Register'}</Dialog.Title>
+        <Dialog.Description>
+          {isLogin ? 'Enter your credentials to login' : 'Create an account'}
+        </Dialog.Description>
+      </Dialog.Header>
+      <div class="space-y-4 py-4">
+        <div class="space-y-2">
+          <Label for="email">Email</Label>
+          <Input id="email" type="email" bind:value={email} required />
+        </div>
+        <div class="space-y-2">
+          <Label for="password">Password</Label>
+          <Input id="password" type="password" bind:value={password} required />
+        </div>
+        {#if error}
+          <p class="text-red-500">{error}</p>
+        {/if}
+        <Button class="w-full" on:click={handleLogin} disabled={loading}>
+          {loading ? 'Loading...' : (isLogin ? 'Login' : 'Register')}
+        </Button>
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <span class="w-full border-t" />
           </div>
-        </Card.Content>
-      </Card.Root>
-    {:else}
-      <Card.Root class="mx-auto max-w-sm">
-        <Card.Header>
-          <Card.Title class="text-xl">Sign Up</Card.Title>
-          <Card.Description>Enter your information to create an account</Card.Description>
-        </Card.Header>
-        <Card.Content>
-          <form on:submit|preventDefault={handleSubmit} class="grid gap-4">
-            <div class="grid grid-cols-2 gap-4">
-              <div class="grid gap-2">
-                <Label for="first-name">First name</Label>
-                <Input id="first-name" bind:value={firstName} placeholder="Max" required />
-              </div>
-              <div class="grid gap-2">
-                <Label for="last-name">Last name</Label>
-                <Input id="last-name" bind:value={lastName} placeholder="Robinson" required />
-              </div>
-            </div>
-            <div class="grid gap-2">
-              <Label for="email">Email</Label>
-              <Input id="email" type="email" bind:value={email} placeholder="m@example.com" required />
-            </div>
-            <div class="grid gap-2">
-              <Label for="password">Password</Label>
-              <Input id="password" type="password" bind:value={password} required />
-            </div>
-            <Button type="submit" class="w-full">Create an account</Button>
-            <Button variant="outline" class="w-full">Sign up with GitHub</Button>
-          </form>
-          <div class="mt-4 text-center text-sm">
-            Already have an account?
-            <button on:click={toggleForm} class="underline">Sign in</button>
+          <div class="relative flex justify-center text-xs uppercase">
+            <span class="bg-background px-2 text-muted-foreground">Or continue with</span>
           </div>
-        </Card.Content>
-      </Card.Root>
-    {/if}
-  </Dialog.Content>
-</Dialog.Root>
+        </div>
+        <Button class="w-full" variant="outline" on:click={handleGoogleLogin} disabled={loading}>
+          <svg class="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+            <path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
+          </svg>
+          Google
+        </Button>
+      </div>
+      <Dialog.Footer>
+        <Button variant="link" on:click={toggleMode}>
+          {isLogin ? 'Need an account?' : 'Already have an account?'}
+        </Button>
+      </Dialog.Footer>
+      <Dialog.Close on:click={closeModal} />
+    </Dialog.Content>
+  </Dialog.Root>
+{/if}
