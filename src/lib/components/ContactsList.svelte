@@ -5,7 +5,6 @@
 
   import type { Contact } from '../types/contact'
   let contacts = $state<Contact[]>([]);
-  let loading = $state(true);
 
   onMount(async () => {
     const { data, error } = await supabase
@@ -16,10 +15,8 @@
     
     if (error) {
       console.error('Error fetching contacts:', error);
-      loading = false;
     } else {
       contacts = data;
-      loading = false;
     }
   });
 
@@ -45,9 +42,5 @@
 </ul>
 
 {#if contacts.length === 0}
-  {#if loading}
-    <p class="text-gray-500">Loading contacts...</p>
-  {:else}
-    <p class="text-gray-500">No contacts found.</p>
-  {/if}
+  <p class="text-gray-500">No contacts found.</p>
 {/if}
