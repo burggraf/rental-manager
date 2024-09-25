@@ -7,7 +7,6 @@
   import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
   import { Button } from "$lib/components/ui/button/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-  import { Input } from "$lib/components/ui/input/index.js";
   import * as Sheet from "$lib/components/ui/sheet/index.js";
 
   import Sidebar from './Sidebar.svelte';
@@ -91,14 +90,6 @@
           {/if}
         </Breadcrumb.List>
       </Breadcrumb.Root>
-      <div class="relative ml-auto flex-1 md:grow-0">
-        <Search class="text-muted-foreground absolute left-2.5 top-2.5 h-4 w-4" />
-        <Input
-          type="search"
-          placeholder="Search..."
-          class="bg-background w-full rounded-lg pl-8 md:w-[200px] lg:w-[336px]"
-        />
-      </div>
       <DropdownMenu.Root>
         <!-- User dropdown menu content -->
       </DropdownMenu.Root>
