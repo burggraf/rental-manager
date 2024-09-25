@@ -7,7 +7,7 @@
     DialogTitle,
     DialogTrigger,
   } from "$lib/components/ui/dialog";
-  import { setLocale } from '$lib/i18n';
+  import { setLocale, locale } from '$lib/i18n';
 
   const supportedLanguages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -22,11 +22,16 @@
     console.log('Selected language:', code);
     isOpen = false;
   }
+
+  let currentLanguage = $derived(supportedLanguages.find(lang => lang.code === $locale) || supportedLanguages[0]);
 </script>
 
 <Dialog bind:open={isOpen}>
   <DialogTrigger asChild>
-    <Button variant="outline" on:click={() => isOpen = true}>Change Language</Button>
+    <Button variant="ghost" size="icon" class="w-10 h-10 p-0" on:click={() => isOpen = true}>
+      <span class="text-xl">{currentLanguage.flag}</span>
+      <span class="sr-only">Change Language</span>
+    </Button>
   </DialogTrigger>
   <DialogContent class="sm:max-w-[425px]">
     <DialogHeader>
