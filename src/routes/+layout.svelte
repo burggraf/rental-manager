@@ -47,5 +47,4 @@
     </script>
   {/if}
 </svelte:head>
-<LanguageSelector />
 <slot />

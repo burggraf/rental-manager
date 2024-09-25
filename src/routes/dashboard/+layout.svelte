@@ -8,11 +8,20 @@
   import { Button } from "$lib/components/ui/button/index.js";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import * as Sheet from "$lib/components/ui/sheet/index.js";
+  import * as Dialog from "$lib/components/ui/dialog";
 
   import Sidebar from './Sidebar.svelte';
+  import LanguageSelector from '$lib/components/LanguageSelector.svelte';
   import { page } from '$app/stores';
+  import { onMount } from 'svelte';
+  import { supabase } from '$lib/supabase';
+  import { user } from '$lib/stores/userStore';
+
+  import { cn } from "$lib/utils";
 
   let sheetOpen = $state(false);
+  let currentLanguage = $state('en');
+  let languageSelectorOpen = $state(false);
 
   function closeSheet() {
     sheetOpen = false;
@@ -26,15 +35,29 @@
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  import { onMount } from 'svelte';
-  import { supabase } from '$lib/supabase';
-  import { user } from '$lib/stores/userStore';
+  function getFlagEmoji(languageCode: string) {
+    const flagEmojis: { [key: string]: string } = {
+      'en': '🇬🇧',
+      'es': '🇪🇸',
+      // Add more languages as needed
+    };
+    return flagEmojis[languageCode] || '🌐';
+  }
 
   onMount(async () => {
     const { data } = await supabase.auth.getSession();
     if (data.session) {
         user.set(data.session.user);
         console.log('User logged in:', data.session.user);
+        // Fetch user's language preference
+        const { data: userData } = await supabase
+          .from('users')
+          .select('language')
+          .eq('id', data.session.user.id)
+          .single();
+        if (userData && userData.language) {
+          currentLanguage = userData.language;
+        }
     }
 
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -56,43 +79,45 @@
 <div class="bg-muted/40 flex min-h-screen w-full flex-col">
   <div class="flex flex-col">
     <header
-      class="bg-background sticky top-0 z-30 flex h-14 items-center gap-4 border-b px-4"
+      class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
     >
-      <Sheet.Root bind:open={sheetOpen}>
-        <Sheet.Trigger asChild let:builder>
-          <Button builders={[builder]} size="icon" variant="outline">
-            <Menu class="h-5 w-5" />
-            <span class="sr-only">Toggle Menu</span>
-          </Button>
-        </Sheet.Trigger>
-        <Sheet.Content side="left" class="w-[300px] flex flex-col">
-          <Sidebar {closeSheet} />
-        </Sheet.Content>
-      </Sheet.Root>
-      <Breadcrumb.Root class="hidden md:flex">
-        <Breadcrumb.List>
-          <Breadcrumb.Item>
-            <Breadcrumb.Link href="/dashboard">Dashboard</Breadcrumb.Link>
-          </Breadcrumb.Item>
-          {#if pathSegments.length > 1}
-            {#each pathSegments.slice(1) as segment, index}
-              <Breadcrumb.Separator />
-              <Breadcrumb.Item>
-                {#if index === pathSegments.length - 2}
-                  <Breadcrumb.Page>{capitalizeFirstLetter(segment)}</Breadcrumb.Page>
-                {:else}
-                  <Breadcrumb.Link href={`/dashboard/${pathSegments.slice(1, index + 2).join('/')}`}>
-                    {capitalizeFirstLetter(segment)}
-                  </Breadcrumb.Link>
-                {/if}
-              </Breadcrumb.Item>
-            {/each}
-          {/if}
-        </Breadcrumb.List>
-      </Breadcrumb.Root>
-      <DropdownMenu.Root>
-        <!-- User dropdown menu content -->
-      </DropdownMenu.Root>
+      <div class="flex items-center gap-4">
+        <Sheet.Root bind:open={sheetOpen}>
+          <Sheet.Trigger asChild let:builder>
+            <Button builders={[builder]} size="icon" variant="outline">
+              <Menu class="h-5 w-5" />
+              <span class="sr-only">Toggle Menu</span>
+            </Button>
+          </Sheet.Trigger>
+          <Sheet.Content side="left" class="w-[300px] flex flex-col">
+            <Sidebar {closeSheet} />
+          </Sheet.Content>
+        </Sheet.Root>
+        <Breadcrumb.Root class="hidden md:flex">
+          <Breadcrumb.List>
+            <Breadcrumb.Item>
+              <Breadcrumb.Link href="/dashboard">Dashboard</Breadcrumb.Link>
+            </Breadcrumb.Item>
+            {#if pathSegments.length > 1}
+              {#each pathSegments.slice(1) as segment, index}
+                <Breadcrumb.Separator />
+                <Breadcrumb.Item>
+                  {#if index === pathSegments.length - 2}
+                    <Breadcrumb.Page>{capitalizeFirstLetter(segment)}</Breadcrumb.Page>
+                  {:else}
+                    <Breadcrumb.Link href={`/dashboard/${pathSegments.slice(1, index + 2).join('/')}`}>
+                      {capitalizeFirstLetter(segment)}
+                    </Breadcrumb.Link>
+                  {/if}
+                </Breadcrumb.Item>
+              {/each}
+            {/if}
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      </div>
+      <div class="flex items-center gap-4">
+        <LanguageSelector />
+      </div>
     </header>
     <main
       class="grid flex-1 items-start gap-4 p-4 md:gap-8 lg:grid-cols-3 xl:grid-cols-3"
@@ -101,3 +126,10 @@
     </main>
   </div>
 </div>
+
+<!--<Dialog.Root bind:open={languageSelectorOpen}>
+  <Dialog.Content>
+    <LanguageSelector bind:currentLanguage />
+  </Dialog.Content>
+</Dialog.Root>
+-->

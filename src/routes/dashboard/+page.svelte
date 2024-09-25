@@ -1,13 +1,9 @@
 <script lang="ts">
   import * as Card from "$lib/components/ui/card/index.js";
   import { Button } from "$lib/components/ui/button/index.js";
-  import { t, locale, setLocale } from '$lib/i18n';
+  import { t } from '$lib/i18n';
 
   // Function to handle language change
-  function handleLanguageChange(event: Event) {
-    const select = event.target as HTMLSelectElement;
-    setLocale(select.value);
-  }
 </script>
 
 <div class="lg:col-span-3">
@@ -27,9 +23,11 @@
   </Card.Root>
 </div>
 
+<!--
 <div>
   <select value={$locale} on:change={handleLanguageChange}>
     <option value="en">English</option>
     <option value="es">Español</option>
   </select>
 </div>
+-->
