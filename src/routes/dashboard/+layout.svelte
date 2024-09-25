@@ -50,6 +50,7 @@
         user.set(data.session.user);
         console.log('User logged in:', data.session.user);
         // Fetch user's language preference
+        /*
         const { data: userData } = await supabase
           .from('users')
           .select('language')
@@ -58,6 +59,7 @@
         if (userData && userData.language) {
           currentLanguage = userData.language;
         }
+          */
     }
 
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
