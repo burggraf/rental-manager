@@ -14,6 +14,7 @@
   } from "$lib/components/ui/table";
   import type { Contact } from '../types/contact';
   import { createSortHandler, type SortState } from '$lib/utils/sorting';
+  import { t } from '$lib/i18n';
 
   let contacts = $state<Contact[]>([]);
   let sortState = $state<SortState>({ column: 'lastname', direction: 'asc' });
@@ -55,7 +56,7 @@
       <TableRow>
         <TableHead>
           <Button variant="ghost" class="justify-start font-bold p-0 hover:bg-transparent" on:click={() => handleSort('firstname')}>
-            First Name
+            {$t('contacts.firstname')}
             {#if getSortIcon('firstname')}
               <svelte:component this={getSortIcon('firstname')} class="ml-1 h-4 w-4" />
             {/if}
@@ -63,7 +64,7 @@
         </TableHead>
         <TableHead>
           <Button variant="ghost" class="justify-start font-bold p-0 hover:bg-transparent" on:click={() => handleSort('lastname')}>
-            Last Name
+            {$t('contacts.lastname')}
             {#if getSortIcon('lastname')}
               <svelte:component this={getSortIcon('lastname')} class="ml-1 h-4 w-4" />
             {/if}
@@ -71,7 +72,7 @@
         </TableHead>
         <TableHead>
           <Button variant="ghost" class="justify-start font-bold p-0 hover:bg-transparent" on:click={() => handleSort('email')}>
-            Email
+            {$t('contacts.email')}
             {#if getSortIcon('email')}
               <svelte:component this={getSortIcon('email')} class="ml-1 h-4 w-4" />
             {/if}
@@ -91,6 +92,6 @@
   </Table>
 
   {#if contacts.length === 0}
-    <p class="text-center text-gray-500 mt-4">No contacts found.</p>
+    <p class="text-center text-gray-500 mt-4">{$t('contacts.noContacts')}</p>
   {/if}
 </div>

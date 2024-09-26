@@ -1,4 +1,4 @@
-import { writable, derived } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 
 // Define your translations
 const translations = {
@@ -22,6 +22,13 @@ const translations = {
       orContinueWith: "Or continue with",
       needAccount: "Need an account?",
       alreadyHaveAccount: "Already have an account?"
+    },
+    contacts: {
+      title: "Contacts",
+      firstname: "First Name",
+      lastname: "Last Name",
+      email: "Email",
+      noContacts: "No contacts found."
     }
   },
   es: {
@@ -44,6 +51,13 @@ const translations = {
       orContinueWith: "O continuar con",
       needAccount: "¿Necesita una cuenta?",
       alreadyHaveAccount: "¿Ya tiene una cuenta?"
+    },
+    contacts: {
+      title: "Contactos",
+      firstname: "Nombre",
+      lastname: "Apellido",
+      email: "Correo Electrónico",
+      noContacts: "No se encontraron contactos."
     }
   }
 };

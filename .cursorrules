@@ -215,11 +215,10 @@ You are an expert in Svelte 5, TypeScript, and modern web development using Svel
 
 ---
 
-**Internationalization (i18n) with typesafe-i18n **
+**Internationalization (i18n) with sveltekit-i18n **
 
 - Use sveltekit-i18n for internationalization
 - Install sveltekit-i18n: `npm install sveltekit-i18n --force`
-  ```
 - Ensure text scaling and font adjustments for accessibility.
 
 ---
