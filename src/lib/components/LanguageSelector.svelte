@@ -28,8 +28,8 @@
 
 <Dialog bind:open={isOpen}>
   <DialogTrigger asChild>
-    <Button variant="ghost" size="icon" class="w-10 h-10 p-0" on:click={() => isOpen = true}>
-      <span class="text-xl">{currentLanguage.flag}</span>
+    <Button variant="ghost" size="icon" class="w-12 h-12 p-0" on:click={() => isOpen = true}>
+      <span class="text-2xl">{currentLanguage.flag}</span>
       <span class="sr-only">Change Language</span>
     </Button>
   </DialogTrigger>
