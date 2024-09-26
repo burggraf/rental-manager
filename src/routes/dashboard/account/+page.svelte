@@ -7,6 +7,7 @@
   import { Input } from "$lib/components/ui/input/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
   import * as Card from "$lib/components/ui/card/index.js";
+  import { t } from '$lib/i18n';
 
   let firstName = '';
   let lastName = '';
@@ -42,25 +43,25 @@
 
 <Card.Root class="max-w-md mx-auto mt-8">
   <Card.Header>
-    <Card.Title>Account Settings</Card.Title>
-    <Card.Description>Update your personal information</Card.Description>
+    <Card.Title>{$t('account.title')}</Card.Title>
+    <Card.Description>{$t('account.personalInfo')}</Card.Description>
   </Card.Header>
   <Card.Content>
     <form on:submit|preventDefault={updateProfile} class="space-y-4">
       <div>
-        <Label for="email">Email</Label>
+        <Label for="email">{$t('account.email')}</Label>
         <Input id="email" type="email" value={email} disabled />
       </div>
       <div>
-        <Label for="firstName">First Name</Label>
+        <Label for="firstName">{$t('account.firstName')}</Label>
         <Input id="firstName" type="text" bind:value={firstName} />
       </div>
       <div>
-        <Label for="lastName">Last Name</Label>
+        <Label for="lastName">{$t('account.lastName')}</Label>
         <Input id="lastName" type="text" bind:value={lastName} />
       </div>
       <Button type="submit" disabled={loading}>
-        {loading ? 'Updating...' : 'Update Profile'}
+        {loading ? $t('account.updating') : $t('account.updateProfile')}
       </Button>
     </form>
   </Card.Content>

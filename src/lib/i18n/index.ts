@@ -56,6 +56,15 @@ const translations = {
       upgrade: "Upgrade",
       termsOfService: "Terms of Service",
       privacyPolicy: "Privacy Policy"
+    },
+    account: {
+      title: "Account Settings",
+      personalInfo: "Update your personal information",
+      email: "Email",
+      firstName: "First Name",
+      lastName: "Last Name",
+      updateProfile: "Update Profile",
+      updating: "Updating..."
     }
   },
   es: {
@@ -112,6 +121,15 @@ const translations = {
       upgrade: "Mejorar",
       termsOfService: "Términos de Servicio",
       privacyPolicy: "Política de Privacidad"
+    },
+    account: {
+      title: "Configuración de la Cuenta",
+      personalInfo: "Actualiza tu información personal",
+      email: "Correo Electrónico",
+      firstName: "Nombre",
+      lastName: "Apellido",
+      updateProfile: "Actualizar Perfil",
+      updating: "Actualizando..."
     }
   }
 };
