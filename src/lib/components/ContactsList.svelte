@@ -3,6 +3,7 @@
   import { supabase } from '$lib/supabase';
   import { goto } from '$app/navigation';
   import { Button } from "$lib/components/ui/button";
+  import { ChevronUp, ChevronDown } from 'lucide-svelte';
   import {
     Table,
     TableBody,
@@ -39,6 +40,13 @@
   function handleContactClick(id: string) {
     goto(`/dashboard/contacts/${id}`);
   }
+
+  function getSortIcon(column: string) {
+    if (sortState.column === column) {
+      return sortState.direction === 'asc' ? ChevronUp : ChevronDown;
+    }
+    return null;
+  }
 </script>
 
 <div class="container mx-auto py-10">
@@ -46,13 +54,28 @@
     <TableHeader>
       <TableRow>
         <TableHead>
-          <Button variant="ghost" on:click={() => handleSort('firstname')}>First Name</Button>
+          <Button variant="ghost" class="justify-start font-bold p-0 hover:bg-transparent" on:click={() => handleSort('firstname')}>
+            First Name
+            {#if getSortIcon('firstname')}
+              <svelte:component this={getSortIcon('firstname')} class="ml-1 h-4 w-4" />
+            {/if}
+          </Button>
         </TableHead>
         <TableHead>
-          <Button variant="ghost" on:click={() => handleSort('lastname')}>Last Name</Button>
+          <Button variant="ghost" class="justify-start font-bold p-0 hover:bg-transparent" on:click={() => handleSort('lastname')}>
+            Last Name
+            {#if getSortIcon('lastname')}
+              <svelte:component this={getSortIcon('lastname')} class="ml-1 h-4 w-4" />
+            {/if}
+          </Button>
         </TableHead>
         <TableHead>
-          <Button variant="ghost" on:click={() => handleSort('email')}>Email</Button>
+          <Button variant="ghost" class="justify-start font-bold p-0 hover:bg-transparent" on:click={() => handleSort('email')}>
+            Email
+            {#if getSortIcon('email')}
+              <svelte:component this={getSortIcon('email')} class="ml-1 h-4 w-4" />
+            {/if}
+          </Button>
         </TableHead>
       </TableRow>
     </TableHeader>
