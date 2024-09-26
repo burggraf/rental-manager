@@ -29,6 +29,33 @@ const translations = {
       lastname: "Last Name",
       email: "Email",
       noContacts: "No contacts found."
+    },
+    sidebar: {
+      companyName: "Acme Inc",
+      dashboard: "Dashboard",
+      logOut: "Log out",
+      logIn: "Log in",
+      people: "People",
+      contacts: "Contacts",
+      myAccount: "My Account",
+      overview: "Overview",
+      analytics: "Analytics",
+      orders: "Orders",
+      recentOrders: "Recent Orders",
+      returns: "Returns",
+      products: "Products",
+      inventory: "Inventory",
+      categories: "Categories",
+      customers: "Customers",
+      list: "List",
+      segments: "Segments",
+      settings: "Settings",
+      account: "Account",
+      language: "Language",
+      currentPlan: "Current Plan",
+      upgrade: "Upgrade",
+      termsOfService: "Terms of Service",
+      privacyPolicy: "Privacy Policy"
     }
   },
   es: {
@@ -58,6 +85,33 @@ const translations = {
       lastname: "Apellido",
       email: "Correo Electrónico",
       noContacts: "No se encontraron contactos."
+    },
+    sidebar: {
+      companyName: "Acme Inc",
+      dashboard: "Panel de Control",
+      logOut: "Cerrar sesión",
+      logIn: "Iniciar sesión",
+      people: "Personas",
+      contacts: "Contactos",
+      myAccount: "Mi Cuenta",
+      overview: "Resumen",
+      analytics: "Análisis",
+      orders: "Pedidos",
+      recentOrders: "Pedidos Recientes",
+      returns: "Devoluciones",
+      products: "Productos",
+      inventory: "Inventario",
+      categories: "Categorías",
+      customers: "Clientes",
+      list: "Lista",
+      segments: "Segmentos",
+      settings: "Configuración",
+      account: "Cuenta",
+      language: "Idioma",
+      currentPlan: "Plan Actual",
+      upgrade: "Mejorar",
+      termsOfService: "Términos de Servicio",
+      privacyPolicy: "Política de Privacidad"
     }
   }
 };

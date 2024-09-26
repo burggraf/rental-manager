@@ -6,6 +6,7 @@
 	import { supabase } from '$lib/supabase';
 	import { user } from '$lib/stores/userStore';
 	import { page } from '$app/stores';
+	import { t } from '$lib/i18n';
 
 	export let closeSheet: () => void;
 	let loginModalOpen = false;
@@ -13,57 +14,56 @@
 	async function handleLogout() {
 		await supabase.auth.signOut();
 		user.set(null);
-		console.log('User logged out');
 	}
 
 	// Define the sidebar navigation structure
 	$: sidebarNavigation = [
 		{
-			category: "People",
+			category: $t('sidebar.people'),
 			icon: Users,
 			items: [
-				{ label: "Contacts", href: "/dashboard/contacts" },
-				{ label: "My Account", href: "/dashboard/account" }
+				{ label: $t('sidebar.contacts'), href: "/dashboard/contacts" },
+				{ label: $t('sidebar.myAccount'), href: "/dashboard/account" }
 			]
 		},
 		{
-			category: "Dashboard",
+			category: $t('sidebar.dashboard'),
 			icon: Home,
 			items: [
-				{ label: "Overview", href: "/dashboard" },
-				{ label: "Analytics", href: "/dashboard/analytics" }
+				{ label: $t('sidebar.overview'), href: "/dashboard" },
+				{ label: $t('sidebar.analytics'), href: "/dashboard/analytics" }
 			]
 		},
 		{
-			category: "Orders",
+			category: $t('sidebar.orders'),
 			icon: ShoppingCart,
 			items: [
-				{ label: "Recent Orders", href: "/dashboard/orders" },
-				{ label: "Returns", href: "/dashboard/orders/returns" }
+				{ label: $t('sidebar.recentOrders'), href: "/dashboard/orders" },
+				{ label: $t('sidebar.returns'), href: "/dashboard/orders/returns" }
 			]
 		},
 		{
-			category: "Products",
+			category: $t('sidebar.products'),
 			icon: Package,
 			items: [
-				{ label: "Inventory", href: "/dashboard/products" },
-				{ label: "Categories", href: "/dashboard/products/categories" }
+				{ label: $t('sidebar.inventory'), href: "/dashboard/products" },
+				{ label: $t('sidebar.categories'), href: "/dashboard/products/categories" }
 			]
 		},
 		{
-			category: "Customers",
+			category: $t('sidebar.customers'),
 			icon: UsersRound,
 			items: [
-				{ label: "List", href: "/dashboard/customers" },
-				{ label: "Segments", href: "/dashboard/customers/segments" }
+				{ label: $t('sidebar.list'), href: "/dashboard/customers" },
+				{ label: $t('sidebar.segments'), href: "/dashboard/customers/segments" }
 			]
 		},
 		{
-			category: "Settings",
+			category: $t('sidebar.settings'),
 			icon: Settings,
 			items: [
-				...$user ? [{ label: "Account", href: "/dashboard/account" }] : [],
-				{ label: "Language", href: "/dashboard/language" },
+				...$user ? [{ label: $t('sidebar.account'), href: "/dashboard/account" }] : [],
+				{ label: $t('sidebar.language'), href: "/dashboard/language" },
 			]
 		}
 	];
@@ -75,18 +75,18 @@
 </script>
 
 <div class="px-4 py-6 border-b">
-	<h2 class="text-lg font-semibold">Acme Inc</h2>
-	<p class="text-sm text-muted-foreground">Dashboard</p>
+	<h2 class="text-lg font-semibold">{$t('sidebar.companyName')}</h2>
+	<p class="text-sm text-muted-foreground">{$t('sidebar.dashboard')}</p>
 	{#if $user}
 		<p class="mt-2 text-sm">{$user.email}</p>
 		<Button variant="outline" size="sm" class="mt-2" on:click={handleLogout}>
 			<LogOut class="mr-2 h-4 w-4" />
-			Log out
+			{$t('sidebar.logOut')}
 		</Button>
 	{:else}
 		<Button variant="outline" size="sm" class="mt-2" on:click={() => loginModalOpen = true}>
 			<LogIn class="mr-2 h-4 w-4" />
-			Log in
+			{$t('sidebar.logIn')}
 		</Button>
 	{/if}
 </div>
@@ -123,14 +123,14 @@
 <div class="mt-auto px-4 py-6 border-t">
 	<div class="flex items-center justify-between mb-4">
 		<div>
-			<p class="text-sm font-medium">Current Plan</p>
+			<p class="text-sm font-medium">{$t('sidebar.currentPlan')}</p>
 			<p class="text-xs text-muted-foreground">Pro</p>
 		</div>
-		<Button size="sm">Upgrade</Button>
+		<Button size="sm">{$t('sidebar.upgrade')}</Button>
 	</div>
 	<div class="flex justify-between text-xs text-muted-foreground">
-		<a href="##">Terms of Service</a>
-		<a href="##">Privacy Policy</a>
+		<a href="##">{$t('sidebar.termsOfService')}</a>
+		<a href="##">{$t('sidebar.privacyPolicy')}</a>
 	</div>
 </div>
 
