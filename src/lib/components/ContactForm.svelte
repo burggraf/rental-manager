@@ -1,6 +1,7 @@
 <script lang="ts">
 import { supabase } from '$lib/supabase';
 import { goto } from '$app/navigation';
+import { t } from '$lib/i18n';
 
 let firstname = '';
 let lastname = '';
@@ -21,9 +22,32 @@ async function handleSubmit() {
 </script>
 
 <form on:submit|preventDefault={handleSubmit} class="space-y-4">
-  <input bind:value={firstname} placeholder="First Name" required class="w-full p-2 border rounded" />
-  <input bind:value={lastname} placeholder="Last Name" required class="w-full p-2 border rounded" />
-  <input bind:value={email} type="email" placeholder="Email" required class="w-full p-2 border rounded" />
-  <textarea bind:value={notes} placeholder="Notes" required class="w-full p-2 border rounded h-32"></textarea>
-  <button type="submit" class="w-full p-2 bg-blue-500 text-white rounded">Send</button>
+  <input 
+    bind:value={firstname} 
+    placeholder={$t('contacts.firstName')} 
+    required 
+    class="w-full p-2 border rounded" 
+  />
+  <input 
+    bind:value={lastname} 
+    placeholder={$t('contacts.lastName')} 
+    required 
+    class="w-full p-2 border rounded" 
+  />
+  <input 
+    bind:value={email} 
+    type="email" 
+    placeholder={$t('contacts.email')} 
+    required 
+    class="w-full p-2 border rounded" 
+  />
+  <textarea 
+    bind:value={notes} 
+    placeholder={$t('contacts.notes')} 
+    required 
+    class="w-full p-2 border rounded h-32"
+  ></textarea>
+  <button type="submit" class="w-full p-2 bg-blue-500 text-white rounded">
+    {$t('contacts.send')}
+  </button>
 </form>

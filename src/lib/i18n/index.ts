@@ -28,7 +28,14 @@ const translations = {
       firstname: "First Name",
       lastname: "Last Name",
       email: "Email",
-      noContacts: "No contacts found."
+      noContacts: "No contacts found.",
+      createNew: "Create New Contact",
+      cancel: "Cancel",
+      firstName: "First Name",
+      lastName: "Last Name",
+      email: "Email",
+      notes: "Notes",
+      send: "Send"
     },
     sidebar: {
       companyName: "Acme Inc",
@@ -93,7 +100,14 @@ const translations = {
       firstname: "Nombre",
       lastname: "Apellido",
       email: "Correo Electrónico",
-      noContacts: "No se encontraron contactos."
+      noContacts: "No se encontraron contactos.",
+      createNew: "Crear Nuevo Contacto",
+      cancel: "Cancelar",
+      firstName: "Nombre",
+      lastName: "Apellido",
+      email: "Correo Electrónico",
+      notes: "Notas",
+      send: "Enviar"
     },
     sidebar: {
       companyName: "Acme Inc",
