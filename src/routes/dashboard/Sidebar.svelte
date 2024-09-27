@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LogOut, Home, ShoppingCart, Package, UsersRound, LogIn, Settings, Users } from 'lucide-svelte';
+	import { LogOut, Home, LogIn, Settings, Users } from 'lucide-svelte';
 	import { Button } from "$lib/components/ui/button/index.js";
 	import * as Accordion from "$lib/components/ui/accordion/index.js";
 	import LoginModal from "$lib/components/LoginModal.svelte";
@@ -16,7 +16,7 @@
 		user.set(null);
 	}
 
-	// Define the sidebar navigation structure
+	// Updated sidebar navigation structure
 	$: sidebarNavigation = [
 		{
 			category: $t('sidebar.people'),
@@ -35,30 +35,6 @@
 			]
 		},
 		{
-			category: $t('sidebar.orders'),
-			icon: ShoppingCart,
-			items: [
-				{ label: $t('sidebar.recentOrders'), href: "/dashboard/orders" },
-				{ label: $t('sidebar.returns'), href: "/dashboard/orders/returns" }
-			]
-		},
-		{
-			category: $t('sidebar.products'),
-			icon: Package,
-			items: [
-				{ label: $t('sidebar.inventory'), href: "/dashboard/products" },
-				{ label: $t('sidebar.categories'), href: "/dashboard/products/categories" }
-			]
-		},
-		{
-			category: $t('sidebar.customers'),
-			icon: UsersRound,
-			items: [
-				{ label: $t('sidebar.list'), href: "/dashboard/customers" },
-				{ label: $t('sidebar.segments'), href: "/dashboard/customers/segments" }
-			]
-		},
-		{
 			category: $t('sidebar.settings'),
 			icon: Settings,
 			items: [
@@ -69,7 +45,6 @@
 	];
 
 	function handleNavClick(event: Event) {
-		// Close the sheet after a short delay to allow the click event to propagate
 		setTimeout(() => closeSheet(), 100);
 	}
 </script>
