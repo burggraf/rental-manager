@@ -3,6 +3,14 @@ import { derived, writable } from 'svelte/store';
 // Define your translations
 const translations = {
   en: {
+    language: {
+      change: 'Change Language',
+      choose: 'Choose Language',
+      names: {
+        en: 'English',
+        es: 'Spanish',
+      },
+    },
     dashboard: {
       title: "Welcome to Your Dashboard",
       description: "This is your main dashboard overview. Select an option from the sidebar to view specific sections.",
@@ -74,6 +82,14 @@ const translations = {
     }
   },
   es: {
+    language: {
+      change: 'Cambiar Idioma',
+      choose: 'Elegir Idioma',
+      names: {
+        en: 'Inglés',
+        es: 'Español',
+      },
+    },
     dashboard: {
       title: "Bienvenido a tu Panel de Control",
       description: "Este es tu resumen principal del panel de control. Selecciona una opción de la barra lateral para ver secciones específicas.",

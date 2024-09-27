@@ -7,7 +7,7 @@
     DialogTitle,
     DialogTrigger,
   } from "$lib/components/ui/dialog";
-  import { setLocale, locale } from '$lib/i18n';
+  import { setLocale, locale, t } from '$lib/i18n';
 
   const supportedLanguages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -30,12 +30,12 @@
   <DialogTrigger asChild>
     <Button variant="ghost" size="icon" class="w-12 h-12 p-0" on:click={() => isOpen = true}>
       <span class="text-2xl">{currentLanguage.flag}</span>
-      <span class="sr-only">Change Language</span>
+      <span class="sr-only">{$t('language.change')}</span>
     </Button>
   </DialogTrigger>
   <DialogContent class="sm:max-w-[425px]">
     <DialogHeader>
-      <DialogTitle>Choose Language</DialogTitle>
+      <DialogTitle>{$t('language.choose')}</DialogTitle>
     </DialogHeader>
     <div class="grid gap-4 py-4">
       {#each supportedLanguages as { code, name, flag }}
@@ -45,7 +45,7 @@
           on:click={() => handleChange(code)}
         >
           <span class="text-2xl">{flag}</span>
-          <span>{name}</span>
+          <span>{$t(`language.names.${code}`)}</span>
         </Button>
       {/each}
     </div>
