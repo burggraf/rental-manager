@@ -110,6 +110,42 @@ const translations = {
     },
     common: {
       backButton: "Back",
+    },
+    privacy: {
+      pageTitle: "Privacy Policy - Acme Inc",
+      metaDescription: "Read our Privacy Policy to understand how we collect, use, and protect your personal information.",
+      title: "Privacy Policy",
+      sections: {
+        introduction: {
+          title: "Introduction",
+          content: "This Privacy Policy describes how Acme Inc collects, uses, and shares your personal information when you use our services."
+        },
+        informationCollection: {
+          title: "Information We Collect",
+          content: "We collect information you provide directly to us, such as when you create an account, use our services, or contact us for support."
+        },
+        useOfInformation: {
+          title: "How We Use Your Information",
+          content: "We use the information we collect to provide, maintain, and improve our services, to communicate with you, and to comply with legal obligations."
+        },
+        dataProtection: {
+          title: "Data Protection",
+          content: "We implement appropriate technical and organizational measures to protect the security of your personal information."
+        },
+        cookies: {
+          title: "Cookies and Similar Technologies",
+          content: "We use cookies and similar tracking technologies to collect and store information about how you use our services."
+        },
+        thirdPartyLinks: {
+          title: "Third-Party Links",
+          content: "Our services may contain links to third-party websites. We are not responsible for the privacy practices of these external sites."
+        },
+        changes: {
+          title: "Changes to This Privacy Policy",
+          content: "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page."
+        }
+      },
+      lastUpdated: "Last updated: [Insert Date]"
     }
   },
   es: {
@@ -220,6 +256,42 @@ const translations = {
     },
     common: {
       backButton: "Volver",
+    },
+    privacy: {
+      pageTitle: "Política de Privacidad - Acme Inc",
+      metaDescription: "Lea nuestra Política de Privacidad para entender cómo recopilamos, usamos y protegemos su información personal.",
+      title: "Política de Privacidad",
+      sections: {
+        introduction: {
+          title: "Introducción",
+          content: "Esta Política de Privacidad describe cómo Acme Inc recopila, utiliza y comparte su información personal cuando utiliza nuestros servicios."
+        },
+        informationCollection: {
+          title: "Información que Recopilamos",
+          content: "Recopilamos la información que nos proporciona directamente, como cuando crea una cuenta, utiliza nuestros servicios o se pone en contacto con nosotros para obtener asistencia."
+        },
+        useOfInformation: {
+          title: "Cómo Utilizamos su Información",
+          content: "Utilizamos la información que recopilamos para proporcionar, mantener y mejorar nuestros servicios, para comunicarnos con usted y para cumplir con las obligaciones legales."
+        },
+        dataProtection: {
+          title: "Protección de Datos",
+          content: "Implementamos medidas técnicas y organizativas apropiadas para proteger la seguridad de su información personal."
+        },
+        cookies: {
+          title: "Cookies y Tecnologías Similares",
+          content: "Utilizamos cookies y tecnologías de seguimiento similares para recopilar y almacenar información sobre cómo utiliza nuestros servicios."
+        },
+        thirdPartyLinks: {
+          title: "Enlaces de Terceros",
+          content: "Nuestros servicios pueden contener enlaces a sitios web de terceros. No somos responsables de las prácticas de privacidad de estos sitios externos."
+        },
+        changes: {
+          title: "Cambios en esta Política de Privacidad",
+          content: "Podemos actualizar esta Política de Privacidad de vez en cuando. Le notificaremos cualquier cambio publicando la nueva Política de Privacidad en esta página."
+        }
+      },
+      lastUpdated: "Última actualización: [Insertar Fecha]"
     }
   }
 };
