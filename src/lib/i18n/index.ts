@@ -33,7 +33,6 @@ const translations = {
       cancel: "Cancel",
       firstName: "First Name",
       lastName: "Last Name",
-      email: "Email",
       notes: "Notes",
       send: "Send"
     },
@@ -105,7 +104,6 @@ const translations = {
       cancel: "Cancelar",
       firstName: "Nombre",
       lastName: "Apellido",
-      email: "Correo Electrónico",
       notes: "Notas",
       send: "Enviar"
     },
