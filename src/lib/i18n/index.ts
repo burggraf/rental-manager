@@ -79,6 +79,37 @@ const translations = {
       lastName: "Last Name",
       updateProfile: "Update Profile",
       updating: "Updating..."
+    },
+    terms: {
+      pageTitle: "Terms of Service - Acme Inc",
+      metaDescription: "Read our Terms of Service to understand the rules and regulations governing the use of our services.",
+      title: "Terms of Service",
+      sections: {
+        acceptance: {
+          title: "Acceptance of Terms",
+          content: "By accessing and using this service, you accept and agree to be bound by the terms and provision of this agreement."
+        },
+        useOfService: {
+          title: "Use of Service",
+          content: "You agree to use this service only for purposes permitted by these Terms of Service and any applicable law, regulation, or generally accepted practices or guidelines in the relevant jurisdictions."
+        },
+        privacy: {
+          title: "Privacy Policy",
+          content: "Your use of the service is also governed by our Privacy Policy, which is incorporated into these terms by reference."
+        },
+        termination: {
+          title: "Termination",
+          content: "We may terminate or suspend your access to the service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms."
+        },
+        changes: {
+          title: "Changes to Terms",
+          content: "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. It is your responsibility to check these Terms periodically for changes."
+        }
+      },
+      lastUpdated: "Last updated: [Insert Date]"
+    },
+    common: {
+      backButton: "Back",
     }
   },
   es: {
@@ -158,6 +189,37 @@ const translations = {
       lastName: "Apellido",
       updateProfile: "Actualizar Perfil",
       updating: "Actualizando..."
+    },
+    terms: {
+      pageTitle: "Términos de Servicio - Acme Inc",
+      metaDescription: "Lea nuestros Términos de Servicio para comprender las reglas y regulaciones que rigen el uso de nuestros servicios.",
+      title: "Términos de Servicio",
+      sections: {
+        acceptance: {
+          title: "Aceptación de Términos",
+          content: "Al acceder y utilizar este servicio, usted acepta y está de acuerdo en regirse por los términos y disposiciones de este acuerdo."
+        },
+        useOfService: {
+          title: "Uso del Servicio",
+          content: "Usted se compromete a utilizar este servicio solo para los fines permitidos por estos Términos de Servicio y cualquier ley, regulación o práctica o directriz generalmente aceptada en las jurisdicciones relevantes."
+        },
+        privacy: {
+          title: "Política de Privacidad",
+          content: "El uso del servicio también se rige por nuestra Política de Privacidad, que se incorpora a estos términos por referencia."
+        },
+        termination: {
+          title: "Terminación",
+          content: "Podemos terminar o suspender su acceso al servicio inmediatamente, sin previo aviso o responsabilidad, por cualquier motivo, incluyendo, sin limitación, si usted incumple los Términos."
+        },
+        changes: {
+          title: "Cambios en los Términos",
+          content: "Nos reservamos el derecho, a nuestra sola discreción, de modificar o reemplazar estos Términos en cualquier momento. Es su responsabilidad revisar estos Términos periódicamente para ver si hay cambios."
+        }
+      },
+      lastUpdated: "Última actualización: [Insertar Fecha]"
+    },
+    common: {
+      backButton: "Volver",
     }
   }
 };

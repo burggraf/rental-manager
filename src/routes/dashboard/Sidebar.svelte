@@ -129,8 +129,8 @@
 		<Button size="sm">{$t('sidebar.upgrade')}</Button>
 	</div>
 	<div class="flex justify-between text-xs text-muted-foreground">
-		<a href="##">{$t('sidebar.termsOfService')}</a>
-		<a href="##">{$t('sidebar.privacyPolicy')}</a>
+		<a href="/terms">{$t('sidebar.termsOfService')}</a>
+		<a href="/privacy">{$t('sidebar.privacyPolicy')}</a>
 	</div>
 </div>
 
