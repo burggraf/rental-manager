@@ -19,6 +19,8 @@
 
   import { cn } from "$lib/utils";
 
+  import DarkModeToggle from "$lib/components/DarkModeToggle.svelte";
+
   let sheetOpen = $state(false);
   let currentLanguage = $state('en');
   let languageSelectorOpen = $state(false);
@@ -117,8 +119,9 @@
           </Breadcrumb.List>
         </Breadcrumb.Root>
       </div>
-      <div class="flex items-center gap-4">
+      <div class="flex items-center space-x-2">
         <LanguageSelector />
+        <DarkModeToggle />
       </div>
     </header>
     <main

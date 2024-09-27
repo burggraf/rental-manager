@@ -6,6 +6,7 @@
   import '../app.css';
   import { page } from '$app/stores';
   import LanguageSelector from '$lib/components/LanguageSelector.svelte';
+  import { ModeWatcher } from "mode-watcher";
   let notificationSupported = $state(false);
 
   onMount(() => {
@@ -36,6 +37,8 @@
     }
   }
 </script>
+
+<ModeWatcher />
 
 <svelte:head>
   {#if browser && notificationSupported}
