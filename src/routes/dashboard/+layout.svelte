@@ -46,9 +46,9 @@
     return flagEmojis[languageCode] || '🌐';
   }
 
-  onMount(async () => {
-    const { data } = await supabase.auth.getSession();
-    if (data.session) {
+  onMount(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) {
         user.set(data.session.user);
         console.log('User logged in:', data.session.user);
         // Fetch user's language preference
@@ -62,21 +62,8 @@
           currentLanguage = userData.language;
         }
           */
-    }
-
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-        if (session) {
-            user.set(session.user);
-            console.log('Auth state changed - User:', session.user);
-        } else {
-            user.set(null);
-            console.log('Auth state changed - User logged out');
-        }
+      }
     });
-
-    return () => {
-        authListener.subscription.unsubscribe();
-    };
   });
 </script>
 
