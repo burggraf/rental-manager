@@ -1,3 +1,4 @@
+<!-- svelte-ignore slot_element_deprecated -->
 <script lang="ts">
     import { 
       Menu,
