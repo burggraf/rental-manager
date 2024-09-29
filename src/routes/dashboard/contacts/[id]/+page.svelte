@@ -13,7 +13,7 @@
 
 		if (error) {
 			console.error('Error updating contact:', error);
-			} else {
+				} else {
 			isEditing = false;
 		}
 	}
@@ -29,6 +29,14 @@
 			}
 		}
 	}
+
+	function handleEdit() {
+		isEditing = true;
+	}
+
+	function handleCancel() {
+		isEditing = false;
+	}
 </script>
 
 <MainLayout>
@@ -37,63 +45,118 @@
 		<div class="max-w-2xl mx-auto mt-8">
 			<h1 class="text-2xl font-bold mb-4">
 				{isEditing ? $t('contactDetail.editContact') : $t('contactDetail.contactDetails')}
-			</h1>
+				</h1>
 
-			{#if isEditing}
-				<form onsubmit={(e) => { e.preventDefault(); handleSave(); }} class="space-y-4">
-					<input
-						bind:value={contactDetail.firstname}
-						placeholder={$t('contactDetail.firstName')}
-						required
-						class="w-full p-2 border rounded"
-					/>
-					<input
-						bind:value={contactDetail.lastname}
-						placeholder={$t('contactDetail.lastName')}
-						required
-						class="w-full p-2 border rounded"
-					/>
-					<input
-						bind:value={contactDetail.email}
-						type="email"
-						placeholder={$t('contactDetail.email')}
-						required
-						class="w-full p-2 border rounded"
-					/>
-					<textarea
-						bind:value={contactDetail.notes}
-						placeholder={$t('contactDetail.notes')}
-						class="w-full p-2 border rounded h-32"
-					></textarea>
-					<div class="flex justify-between">
-						<button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">{$t('common.save')}</button>
-						<button
-							type="button"
-							onclick={() => (isEditing = false)}
-							class="bg-gray-500 text-white px-4 py-2 rounded">{$t('common.cancel')}</button
-						>
+			<div class="space-y-4">
+				{#if isEditing}
+					<form class="space-y-4">
+						<div class="w-full p-2 border rounded">
+							<label for="firstname" class="block text-sm font-medium text-gray-700">{$t('contactDetail.firstName')}</label>
+							<input
+								id="firstname"
+								type="text"
+								bind:value={contactDetail.firstname}
+								class="mt-1 p-2 w-full bg-white border rounded focus:ring-primary focus:border-primary"
+							/>
+						</div>
+
+						<div class="w-full p-2 border rounded">
+							<label for="lastname" class="block text-sm font-medium text-gray-700">{$t('contactDetail.lastName')}</label>
+							<input
+								id="lastname"
+								type="text"
+								bind:value={contactDetail.lastname}
+								class="mt-1 p-2 w-full bg-white border rounded focus:ring-primary focus:border-primary"
+							/>
+						</div>
+
+						<div class="w-full p-2 border rounded">
+							<label for="email" class="block text-sm font-medium text-gray-700">{$t('contactDetail.email')}</label>
+							<input
+								id="email"
+								type="email"
+								bind:value={contactDetail.email}
+								class="mt-1 p-2 w-full bg-white border rounded focus:ring-primary focus:border-primary"
+							/>
+						</div>
+
+						<div class="w-full p-2 border rounded">
+							<label for="phone" class="block text-sm font-medium text-gray-700">{$t('contactDetail.phone')}</label>
+							<input
+								id="phone"
+								type="tel"
+								bind:value={contactDetail.phone}
+								class="mt-1 p-2 w-full bg-white border rounded focus:ring-primary focus:border-primary"
+							/>
+						</div>
+
+						<div class="w-full p-2 border rounded">
+							<label for="notes" class="block text-sm font-medium text-gray-700">{$t('contactDetail.notes')}</label>
+							<textarea
+								id="notes"
+								bind:value={contactDetail.notes}
+								rows="4"
+								class="mt-1 p-2 w-full bg-white border rounded focus:ring-primary focus:border-primary resize-y"
+							></textarea>
+						</div>
+
+						<!-- Add more fields as needed -->
+
+						<div class="flex justify-end space-x-4 mt-4">
+							<button
+								type="button"
+								class="px-4 py-2 bg-secondary text-secondary-foreground rounded hover:bg-secondary/90"
+								onclick={handleCancel}
+							>
+								{$t('common.cancel')}
+							</button>
+							<button
+								type="submit"
+								class="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
+								onclick={handleSave}
+							>
+								{$t('common.save')}
+							</button>
+						</div>
+					</form>
+				{:else}
+					<div class="space-y-4">
+						<div class="w-full p-2 border rounded">
+							<label class="block text-sm font-medium text-gray-700">{$t('contactDetail.firstName')}</label>
+								<div class="mt-1 p-2 bg-gray-100 rounded">{contactDetail.firstname}</div>
+						</div>
+						<div class="w-full p-2 border rounded">
+								<label class="block text-sm font-medium text-gray-700">{$t('contactDetail.lastName')}</label>
+								<div class="mt-1 p-2 bg-gray-100 rounded">{contactDetail.lastname}</div>
+						</div>
+						<div class="w-full p-2 border rounded">
+								<label class="block text-sm font-medium text-gray-700">{$t('contactDetail.email')}</label>
+								<div class="mt-1 p-2 bg-gray-100 rounded">{contactDetail.email}</div>
+						</div>
+						<div class="w-full p-2 border rounded">
+								<label id="notes-label" class="block text-sm font-medium text-gray-700">{$t('contactDetail.notes')}</label>
+								<div 
+									aria-labelledby="notes-label" 
+									class="mt-1 p-2 bg-gray-100 rounded whitespace-pre-wrap"
+								>
+									{contactDetail.notes}
+								</div>
+						</div>
+						<div class="flex justify-between">
+							<button
+								onclick={handleEdit}
+								class="bg-blue-500 text-white px-4 py-2 rounded">{$t('common.edit')}</button>
+							<button
+								onclick={handleDelete}
+								class="bg-red-500 text-white px-4 py-2 rounded">{$t('common.delete')}</button>
+						</div>
 					</div>
-				</form>
-			{:else}
-				<div class="space-y-2">
-					<p><strong>{$t('contactDetail.name')}:</strong> {contactDetail.firstname} {contactDetail.lastname}</p>
-					<p><strong>{$t('contactDetail.email')}:</strong> {contactDetail.email}</p>
-					<p><strong>{$t('contactDetail.notes')}:</strong> {contactDetail.notes || $t('contactDetail.noNotes')}</p>
-				</div>
-				<div class="mt-4 space-x-2">
-					<button
-						onclick={() => (isEditing = true)}
-						class="bg-blue-500 text-white px-4 py-2 rounded">{$t('common.edit')}</button
-					>
-					<button onclick={handleDelete} class="bg-red-500 text-white px-4 py-2 rounded"
-						>{$t('common.delete')}</button
-					>
-				</div>
-			{/if}
+				{/if}
 
-			<a href="/dashboard/contacts" class="mt-4 inline-block text-blue-500 hover:underline"
-				>{$t('contactDetail.backToContacts')}</a
-			>
+				<a href="/dashboard/contacts" class="mt-4 inline-block text-blue-500 hover:underline"
+					>{$t('contactDetail.backToContacts')}</a
+				>
+			</div>
 		</div>
 	</div>
 </MainLayout>
