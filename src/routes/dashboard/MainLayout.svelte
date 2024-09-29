@@ -98,11 +98,14 @@
           <slot name="top-right" />
         </div>
       </header>
+      <!--
       <main
-        class="grid flex-1 items-start gap-4 p-4 md:gap-8 lg:grid-cols-3 xl:grid-cols-3"
-      >
-        <slot name="content" />
-      </main>
+        class="bg-purple-500 grid flex-1 items-start gap-4 p-4 md:gap-8 lg:grid-cols-3 xl:grid-cols-3"
+      >-->
+        <div class="p-4 md:p-6 lg:p-8">
+          <slot name="content" />
+        </div>
+      <!--</main>-->
     </div>
   </div>
   

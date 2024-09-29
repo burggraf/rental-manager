@@ -40,7 +40,7 @@
 			</h1>
 
 			{#if isEditing}
-				<form on:submit|preventDefault={handleSave} class="space-y-4">
+				<form onsubmit={(e) => { e.preventDefault(); handleSave(); }} class="space-y-4">
 					<input
 						bind:value={contactDetail.firstname}
 						placeholder={$t('contactDetail.firstName')}
