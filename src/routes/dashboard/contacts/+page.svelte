@@ -18,7 +18,7 @@
 	<div slot="content">
 		<div class="flex justify-between items-center mb-4">
 			<h1 class="text-2xl font-bold">{$t('contacts.title')}</h1>
-			<Button on:click={handleNewContact} variant="outline" size="icon">
+			<Button onclick={handleNewContact} variant="outline" size="icon">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"

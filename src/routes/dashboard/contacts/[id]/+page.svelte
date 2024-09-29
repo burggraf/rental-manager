@@ -69,7 +69,7 @@
 						<button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">{$t('common.save')}</button>
 						<button
 							type="button"
-							on:click={() => (isEditing = false)}
+							onclick={() => (isEditing = false)}
 							class="bg-gray-500 text-white px-4 py-2 rounded">{$t('common.cancel')}</button
 						>
 					</div>
@@ -82,10 +82,10 @@
 				</div>
 				<div class="mt-4 space-x-2">
 					<button
-						on:click={() => (isEditing = true)}
+						onclick={() => (isEditing = true)}
 						class="bg-blue-500 text-white px-4 py-2 rounded">{$t('common.edit')}</button
 					>
-					<button on:click={handleDelete} class="bg-red-500 text-white px-4 py-2 rounded"
+					<button onclick={handleDelete} class="bg-red-500 text-white px-4 py-2 rounded"
 						>{$t('common.delete')}</button
 					>
 				</div>

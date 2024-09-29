@@ -166,7 +166,7 @@ You are an expert in Svelte 5, TypeScript, and modern web development using Svel
     import { counter } from './counter.svelte.ts';
   </script>
 
-  <button on:click={() => counter.increment()}>
+  <button onclick={() => counter.increment()}>
     Count: {counter.count}
   </button>
   ```

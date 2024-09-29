@@ -28,7 +28,7 @@
 
 <Dialog bind:open={isOpen}>
   <DialogTrigger asChild>
-    <Button variant="ghost" size="icon" class="w-12 h-12 p-0" on:click={() => isOpen = true}>
+    <Button variant="ghost" size="icon" class="w-12 h-12 p-0" onclick={() => isOpen = true}>
       <span class="text-2xl">{currentLanguage.flag}</span>
       <span class="sr-only">{$t('language.change')}</span>
     </Button>
@@ -42,7 +42,7 @@
         <Button
           class="flex justify-start items-center gap-2"
           variant="ghost"
-          on:click={() => handleChange(code)}
+          onclick={() => handleChange(code)}
         >
           <span class="text-2xl">{flag}</span>
           <span>{$t(`language.names.${code}`)}</span>

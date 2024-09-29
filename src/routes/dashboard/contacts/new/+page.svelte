@@ -24,7 +24,7 @@
 		<ContactForm on:submit={handleSubmit} />
 
 		<div class="flex justify-end space-x-4 mt-6">
-			<Button variant="outline" on:click={handleCancel}>{$t('contacts.cancel')}</Button>
+			<Button variant="outline" onclick={handleCancel}>{$t('contacts.cancel')}</Button>
 		</div>
 	</div>
 </MainLayout>

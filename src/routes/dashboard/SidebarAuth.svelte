@@ -16,12 +16,12 @@
 <div class="px-4 py-2">
 	{#if $user}
 		<p class="mt-2 text-sm">{$user.email}</p>
-		<Button variant="outline" size="sm" class="mt-2" on:click={handleLogout}>
+		<Button variant="outline" size="sm" class="mt-2" onclick={handleLogout}>
 			<LogOut class="mr-2 h-4 w-4" />
 			{$t('sidebar.logOut')}
 		</Button>
 	{:else}
-		<Button variant="outline" size="sm" class="mt-2" on:click={() => loginModalOpen = true}>
+		<Button variant="outline" size="sm" class="mt-2" onclick={() => loginModalOpen = true}>
 			<LogIn class="mr-2 h-4 w-4" />
 			{$t('sidebar.logIn')}
 		</Button>

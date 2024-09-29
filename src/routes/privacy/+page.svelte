@@ -16,7 +16,7 @@
   <Button
     variant="outline"
     class="mb-6"
-    on:click={goBack}
+    onclick={goBack}
   >
     {$t('common.backButton')}
   </Button>
