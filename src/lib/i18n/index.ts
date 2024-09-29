@@ -137,6 +137,24 @@ const translations = {
         }
       },
       lastUpdated: "Last updated: [Insert Date]"
+    },
+    contactDetail: {
+      editContact: "Edit Contact",
+      contactDetails: "Contact Details",
+      deleteConfirmation: "Are you sure you want to delete this contact?",
+      firstName: "First Name",
+      lastName: "Last Name",
+      email: "Email",
+      notes: "Notes",
+      name: "Name",
+      noNotes: "No notes available",
+      backToContacts: "Back to Contacts"
+    },
+    common: {
+      save: "Save",
+      cancel: "Cancel",
+      edit: "Edit",
+      delete: "Delete"
     }
   },
   es: {
@@ -274,6 +292,24 @@ const translations = {
         }
       },
       lastUpdated: "Última actualización: [Insertar Fecha]"
+    },
+    contactDetail: {
+      editContact: "Editar Contacto",
+      contactDetails: "Detalles del Contacto",
+      deleteConfirmation: "¿Está seguro de que desea eliminar este contacto?",
+      firstName: "Nombre",
+      lastName: "Apellido",
+      email: "Correo Electrónico",
+      notes: "Notas",
+      name: "Nombre",
+      noNotes: "No hay notas disponibles",
+      backToContacts: "Volver a Contactos"
+    },
+    common: {
+      save: "Guardar",
+      cancel: "Cancelar",
+      edit: "Editar",
+      delete: "Eliminar"
     }
   }
 };
