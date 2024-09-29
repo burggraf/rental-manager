@@ -55,27 +55,42 @@
     <TableHeader>
       <TableRow>
         <TableHead>
-          <Button variant="ghost" class="justify-start font-bold p-0 hover:bg-transparent" on:click={() => handleSort('firstname')}>
-            {$t('contacts.firstname')}
-            {#if getSortIcon('firstname')}
-              <svelte:component this={getSortIcon('firstname')} class="ml-1 h-4 w-4" />
-            {/if}
+          <Button variant="ghost" class="justify-start w-full px-2" on:click={() => handleSort('firstname')}>
+            <span class="flex items-center">
+              {$t('contacts.firstname')}
+              {#key getSortIcon('firstname')}
+                {#if getSortIcon('firstname')}
+                  {@const Icon = getSortIcon('firstname')}
+                  <Icon class="ml-1 h-4 w-4" />
+                {/if}
+              {/key}
+            </span>
           </Button>
         </TableHead>
         <TableHead>
-          <Button variant="ghost" class="justify-start font-bold p-0 hover:bg-transparent" on:click={() => handleSort('lastname')}>
-            {$t('contacts.lastname')}
-            {#if getSortIcon('lastname')}
-              <svelte:component this={getSortIcon('lastname')} class="ml-1 h-4 w-4" />
-            {/if}
+          <Button variant="ghost" class="justify-start w-full px-2" on:click={() => handleSort('lastname')}>
+            <span class="flex items-center">
+              {$t('contacts.lastname')}
+              {#key getSortIcon('lastname')}
+                {#if getSortIcon('lastname')}
+                  {@const Icon = getSortIcon('lastname')}
+                  <Icon class="ml-1 h-4 w-4" />
+                {/if}
+              {/key}
+            </span>
           </Button>
         </TableHead>
         <TableHead>
-          <Button variant="ghost" class="justify-start font-bold p-0 hover:bg-transparent" on:click={() => handleSort('email')}>
-            {$t('contacts.email')}
-            {#if getSortIcon('email')}
-              <svelte:component this={getSortIcon('email')} class="ml-1 h-4 w-4" />
-            {/if}
+          <Button variant="ghost" class="justify-start w-full px-2" on:click={() => handleSort('email')}>
+            <span class="flex items-center">
+              {$t('contacts.email')}
+              {#key getSortIcon('email')}
+                {#if getSortIcon('email')}
+                  {@const Icon = getSortIcon('email')}
+                  <Icon class="ml-1 h-4 w-4" />
+                {/if}
+              {/key}
+            </span>
           </Button>
         </TableHead>
       </TableRow>

@@ -99,9 +99,6 @@ const translations = {
       },
       lastUpdated: "Last updated: [Insert Date]"
     },
-    common: {
-      backButton: "Back",
-    },
     privacy: {
       pageTitle: "Privacy Policy - Acme Inc",
       metaDescription: "Read our Privacy Policy to understand how we collect, use, and protect your personal information.",
@@ -151,6 +148,7 @@ const translations = {
       backToContacts: "Back to Contacts"
     },
     common: {
+      backButton: "Back",
       save: "Save",
       cancel: "Cancel",
       edit: "Edit",
@@ -254,9 +252,6 @@ const translations = {
       },
       lastUpdated: "Última actualización: [Insertar Fecha]"
     },
-    common: {
-      backButton: "Volver",
-    },
     privacy: {
       pageTitle: "Política de Privacidad - Acme Inc",
       metaDescription: "Lea nuestra Política de Privacidad para entender cómo recopilamos, usamos y protegemos su información personal.",
@@ -306,6 +301,7 @@ const translations = {
       backToContacts: "Volver a Contactos"
     },
     common: {
+      backButton: "Volver",
       save: "Guardar",
       cancel: "Cancelar",
       edit: "Editar",
