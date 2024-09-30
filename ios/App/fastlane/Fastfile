@@ -1,0 +1,22 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build and test iOS app"
+  lane :test do
+    # Add your test commands here
+    run_tests(scheme: "App")
+  end
+
+  desc "Build and deploy iOS app to TestFlight"
+  lane :beta do
+    build_app(workspace: "App.xcworkspace", scheme: "App")
+    upload_to_testflight
+  end
+
+  desc "Build and deploy iOS app to App Store"
+  lane :release do
+    build_app(workspace: "App.xcworkspace", scheme: "App")
+    upload_to_app_store
+  end
+end
+
