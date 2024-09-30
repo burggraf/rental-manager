@@ -14,22 +14,22 @@
 	}
 </script>
 
-<nav class="flex-1 px-2 py-4">
+<nav class="flex-1 py-2">
 	<Accordion.Root type="single" collapsible>
 		{#each sidebarNavigation as { category, icon: Icon, items }, index}
 			{#if items.length > 0}
 				<Accordion.Item value={category.toLowerCase()} class="border-none">
 					<Accordion.Trigger
-						class="flex w-full items-center justify-start px-4 py-3 text-base hover:bg-muted/50 data-[state=open]:bg-muted no-underline"
+						class="flex w-full items-center justify-start px-2 py-2 text-sm hover:bg-muted/50 data-[state=open]:bg-muted no-underline"
 					>
-						<Icon class="mr-3 h-5 w-5" />
+						<Icon class="mr-2 h-4 w-4" />
 						{category}
 					</Accordion.Trigger>
-					<Accordion.Content class="pt-1 pb-2">
+					<Accordion.Content class="py-1">
 						{#each items as { label, href }}
 							<a 
 								{href} 
-								class="block py-3 px-8 text-base hover:bg-muted/50 no-underline" 
+								class="block py-2 px-6 text-sm hover:bg-muted/50 no-underline" 
 								class:bg-muted={$page.url.pathname === href}
 								onclick={handleNavClick}
 							>
