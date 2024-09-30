@@ -8,10 +8,10 @@
 </script>
 
 <MainLayout>
-	<div slot="title">Title</div>
+	<div slot="title">Dashboard</div>
 
-	<div slot="top-left">XX</div>
-	<div slot="top-right">YY</div>
+	<div slot="top-left"></div>
+	<div slot="top-right"></div>
 
 	<div slot="content" class="lg:col-span-3">
 		<Card.Root>
