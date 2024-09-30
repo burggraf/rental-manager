@@ -76,7 +76,7 @@
         <div class="flex items-center gap-4">
           <Sheet.Root bind:open={sheetOpen}>
             <Sheet.Trigger asChild let:builder>
-              <Button builders={[builder]} size="icon" variant="outline">
+              <Button builders={[builder]} size="icon" variant="ghost">
                 <Menu class="h-5 w-5" />
                 <span class="sr-only">Toggle Menu</span>
               </Button>
