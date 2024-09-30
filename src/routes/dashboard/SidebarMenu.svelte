@@ -20,10 +20,12 @@
 			{#if items.length > 0}
 				<Accordion.Item value={category.toLowerCase()} class="border-none">
 					<Accordion.Trigger
-						class="flex w-full items-center justify-start px-2 py-2 text-sm hover:bg-muted/50 data-[state=open]:bg-muted no-underline"
+						class="flex w-full items-center justify-between px-2 py-2 text-sm hover:bg-muted/50 data-[state=open]:bg-muted no-underline"
 					>
-						<Icon class="mr-2 h-4 w-4" />
-						{category}
+						<div class="flex items-center">
+							<Icon class="mr-2 h-4 w-4" />
+							{category}
+						</div>
 					</Accordion.Trigger>
 					<Accordion.Content class="py-1">
 						{#each items as { label, href }}
