@@ -69,43 +69,43 @@
   </script>
   
   <div class="bg-muted/40 flex min-h-screen w-full flex-col">
-    <div class="flex flex-col">
-      <header
-        class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
-      >
-        <div class="flex items-center gap-4">
-          <Sheet.Root bind:open={sheetOpen}>
-            <Sheet.Trigger asChild let:builder>
-              <Button builders={[builder]} size="icon" variant="ghost">
-                <Menu class="h-5 w-5" />
-                <span class="sr-only">Toggle Menu</span>
-              </Button>
-            </Sheet.Trigger>
-            <Sheet.Content side="left" class="w-[300px] flex flex-col">
-              <Sidebar {closeSheet} />
-            </Sheet.Content>
-          </Sheet.Root>
-          <slot name="top-left" />
-        </div>
+    <header
+      class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
+    >
+      <div class="flex items-center gap-4">
+        <Sheet.Root bind:open={sheetOpen}>
+          <Sheet.Trigger asChild let:builder>
+            <Button builders={[builder]} size="icon" variant="ghost">
+              <Menu class="h-5 w-5" />
+              <span class="sr-only">Toggle Menu</span>
+            </Button>
+          </Sheet.Trigger>
+          <Sheet.Content side="left" class="w-[300px] flex flex-col">
+            <Sidebar {closeSheet} />
+          </Sheet.Content>
+        </Sheet.Root>
+        <slot name="top-left" />
+      </div>
 
-        <div>
-            <slot name="title" />
-        </div>
+      <div>
+          <slot name="title" />
+      </div>
 
-        <div class="flex items-center space-x-2">
-          <LanguageSelector />
-          <DarkModeToggle />
-          <slot name="top-right" />
-        </div>
-      </header>
-      <!--
-      <main
-        class="bg-purple-500 grid flex-1 items-start gap-4 p-4 md:gap-8 lg:grid-cols-3 xl:grid-cols-3"
-      >-->
-        <div class="p-4 md:p-6 lg:p-8">
-          <slot name="content" />
-        </div>
-      <!--</main>-->
+      <div class="flex items-center space-x-2">
+        <slot name="top-right" />
+      </div>
+    </header>
+
+    <div class="flex-grow flex flex-col">
+      <main class="flex-grow p-4 md:p-6 lg:p-8">
+        <slot name="content" />
+      </main>
+
+      <footer class="bg-background border-t h-14 flex items-center px-4">
+        <slot name="footer" />
+        <LanguageSelector />
+        <DarkModeToggle />
+      </footer>
     </div>
   </div>
   
