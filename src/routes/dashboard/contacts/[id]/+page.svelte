@@ -4,6 +4,7 @@
 	import MainLayout from '$lib/components/MainLayout.svelte';
 	import { t } from '$lib/i18n';
 	import { cn } from '$lib/utils';
+	import { ChevronLeft } from 'lucide-svelte';
 
 	let { data } = $props();
 	let contactDetail = $state(data.contact);
@@ -14,7 +15,7 @@
 
 		if (error) {
 			console.error('Error updating contact:', error);
-				} else {
+		} else {
 			isEditing = false;
 		}
 	}
@@ -38,15 +39,28 @@
 	function handleCancel() {
 		isEditing = false;
 	}
+
+	function handleBackToContacts() {
+		goto('/dashboard/contacts');
+	}
 </script>
 
 <MainLayout>
+	<div slot="top-left">
+		<button
+			onclick={handleBackToContacts}
+			class="p-2 rounded-full hover:bg-muted transition-colors duration-200"
+			aria-label={$t('contactDetail.backToContacts')}
+		>
+			<ChevronLeft class="w-6 h-6" />
+		</button>
+	</div>
 	<div slot="title">{isEditing ? $t('contactDetail.editContact') : $t('contactDetail.contactDetails')}</div>
 	<div slot="content">
 		<div class="max-w-2xl mx-auto mt-8">
 			<h1 class="text-2xl font-bold mb-4">
 				{isEditing ? $t('contactDetail.editContact') : $t('contactDetail.contactDetails')}
-				</h1>
+			</h1>
 
 			<div class="space-y-4">
 				{#if isEditing}
@@ -101,8 +115,8 @@
 								rows="4"
 								class={cn(
 									"mt-1 p-2 w-full bg-background border rounded",
-										"text-foreground placeholder:text-muted-foreground",
-										"resize-y"
+									"text-foreground placeholder:text-muted-foreground",
+									"resize-y"
 								)}
 							></textarea>
 						</div>
@@ -165,10 +179,6 @@
 						</div>
 					</div>
 				{/if}
-
-				<a href="/dashboard/contacts" class="mt-4 inline-block text-blue-500 hover:underline"
-					>{$t('contactDetail.backToContacts')}</a
-				>
 			</div>
 		</div>
 	</div>
