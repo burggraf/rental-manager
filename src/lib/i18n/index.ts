@@ -42,7 +42,7 @@ const translations = {
       firstName: "First Name",
       lastName: "Last Name",
       notes: "Notes",
-      send: "Send"
+      save: "Save"
     },
     sidebar: {
       companyName: "Acme Inc",
@@ -195,7 +195,7 @@ const translations = {
       firstName: "Nombre",
       lastName: "Apellido",
       notes: "Notas",
-      send: "Enviar"
+      save: "Guardar"
     },
     sidebar: {
       companyName: "Acme Inc",

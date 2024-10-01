@@ -48,6 +48,6 @@ async function handleSubmit() {
     class="w-full p-2 border rounded h-32"
   ></textarea>
   <button type="submit" class="w-full p-2 bg-blue-500 text-white rounded">
-    {$t('contacts.send')}
+    {$t('contacts.save')}
   </button>
 </form>
