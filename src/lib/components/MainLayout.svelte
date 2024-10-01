@@ -11,7 +11,7 @@
     import * as Sheet from "$lib/components/ui/sheet/index.js";
     import * as Dialog from "$lib/components/ui/dialog";
   
-    import Sidebar from './Sidebar.svelte';
+    import Sidebar from '$lib/components/Sidebar.svelte';
     import LanguageSelector from '$lib/components/LanguageSelector.svelte';
     import { page } from '$app/stores';
     import { onMount } from 'svelte';

@@ -3,7 +3,7 @@
 	import { Button } from '$lib/components/ui/button'
 	import ContactForm from '$lib/components/ContactForm.svelte'
 	import { t } from '$lib/i18n'
-	import MainLayout from '../../MainLayout.svelte'
+	import MainLayout from '$lib/components/MainLayout.svelte'
 
 	function handleCancel() {
 		goto('/dashboard/contacts')

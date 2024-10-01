@@ -2,10 +2,10 @@
 	import { page } from '$app/stores';
 	import { t } from '$lib/i18n';
 	import { user } from '$lib/stores/userStore';
-	import SidebarHeader from './SidebarHeader.svelte';
-	import SidebarAuth from './SidebarAuth.svelte';
-	import SidebarMenu from './SidebarMenu.svelte';
-	import SidebarFooter from './SidebarFooter.svelte';
+	import SidebarHeader from '$lib/components/SidebarHeader.svelte';
+	import SidebarAuth from '$lib/components/SidebarAuth.svelte';
+	import SidebarMenu from '$lib/components/SidebarMenu.svelte';
+	import SidebarFooter from '$lib/components/SidebarFooter.svelte';
 	import LoginModal from "$lib/components/LoginModal.svelte";
 	import { Home, Users, Settings } from 'lucide-svelte'
 

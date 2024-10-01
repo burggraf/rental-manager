@@ -8,7 +8,7 @@
 	import { Label } from '$lib/components/ui/label/index.js'
 	import * as Card from '$lib/components/ui/card/index.js'
 	import { t } from '$lib/i18n'
-	import MainLayout from '../MainLayout.svelte'
+	import MainLayout from '$lib/components/MainLayout.svelte'
 
 	let firstName = ''
 	let lastName = ''

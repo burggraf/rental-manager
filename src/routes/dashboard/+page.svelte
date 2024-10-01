@@ -3,7 +3,7 @@
 	import { Button } from '$lib/components/ui/button/index.js'
 	import { t } from '$lib/i18n'
 
-	import MainLayout from './MainLayout.svelte'
+	import MainLayout from '$lib/components/MainLayout.svelte'
 	// Function to handle language change
 </script>
 

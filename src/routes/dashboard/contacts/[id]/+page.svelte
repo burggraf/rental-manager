@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabase';
 	import { goto } from '$app/navigation';
-	import MainLayout from '../../MainLayout.svelte';
+	import MainLayout from '$lib/components/MainLayout.svelte';
 	import { t } from '$lib/i18n';
 	import { cn } from '$lib/utils';
 

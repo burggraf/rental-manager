@@ -4,7 +4,7 @@
 	import { Button } from '$lib/components/ui/button'
 	import type { PageData } from './$types'
 	import { t } from '$lib/i18n'
-	import MainLayout from '../MainLayout.svelte'
+	import MainLayout from '$lib/components/MainLayout.svelte'
 	import { 
 		UserPlus,
 		Menu,
