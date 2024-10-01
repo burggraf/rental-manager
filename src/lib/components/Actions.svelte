@@ -10,7 +10,7 @@
 
   let { actions } = $props<{ actions: Action[] }>();
   let isOpen = $state(false);
-  let dropdownRef: HTMLDivElement;
+  let dropdownRef = $state<HTMLDivElement | null>(null);
 
   function toggleDropdown() {
     isOpen = !isOpen;
