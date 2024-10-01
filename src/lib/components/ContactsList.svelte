@@ -50,7 +50,7 @@
   }
 </script>
 
-<div class="container mx-auto py-10">
+<div class="container mx-auto py-0 px-1">
   <Table>
     <TableHeader>
       <TableRow>
