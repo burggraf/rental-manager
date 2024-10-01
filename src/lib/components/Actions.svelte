@@ -1,6 +1,7 @@
 <script lang="ts">
   import { MoreVertical } from 'lucide-svelte';
   import { Button } from '$lib/components/ui/button';
+  import { cn } from '$lib/utils';
 
   interface Action {
     icon: typeof MoreVertical;
@@ -48,12 +49,21 @@
   {#if isOpen}
     <div 
       bind:this={dropdownRef}
-      class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+      class={cn(
+        "absolute right-0 mt-2 w-48 rounded-md shadow-lg",
+        "bg-background border border-border",
+        "dark:bg-background dark:border-border",
+        "z-10"
+      )}
     >
       <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
         {#each actions as { icon: Icon, title, action }}
           <button
-            class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            class={cn(
+              "flex items-center w-full px-4 py-2 text-sm",
+              "text-foreground hover:bg-muted",
+              "dark:text-foreground dark:hover:bg-muted"
+            )}
             role="menuitem"
             onclick={() => handleAction(action)}
           >
