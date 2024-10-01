@@ -55,7 +55,7 @@
     <TableHeader>
       <TableRow>
         <TableHead>
-          <Button variant="ghost" class="justify-start w-full px-2" on:click={() => handleSort('firstname')}>
+          <Button variant="ghost" class="justify-start w-full px-2" onclick={() => handleSort('firstname')}>
             <span class="flex items-center">
               {$t('contacts.firstname')}
               {#key getSortIcon('firstname')}
@@ -68,7 +68,7 @@
           </Button>
         </TableHead>
         <TableHead>
-          <Button variant="ghost" class="justify-start w-full px-2" on:click={() => handleSort('lastname')}>
+          <Button variant="ghost" class="justify-start w-full px-2" onclick={() => handleSort('lastname')}>
             <span class="flex items-center">
               {$t('contacts.lastname')}
               {#key getSortIcon('lastname')}
@@ -81,7 +81,7 @@
           </Button>
         </TableHead>
         <TableHead>
-          <Button variant="ghost" class="justify-start w-full px-2" on:click={() => handleSort('email')}>
+          <Button variant="ghost" class="justify-start w-full px-2" onclick={() => handleSort('email')}>
             <span class="flex items-center">
               {$t('contacts.email')}
               {#key getSortIcon('email')}
@@ -97,7 +97,7 @@
     </TableHeader>
     <TableBody>
       {#each contacts as contact (contact.id)}
-        <TableRow on:click={() => handleContactClick(contact.id)} class="cursor-pointer">
+        <TableRow onclick={() => handleContactClick(contact.id)} class="cursor-pointer">
           <TableCell>{contact.firstname}</TableCell>
           <TableCell>{contact.lastname}</TableCell>
           <TableCell>{contact.email}</TableCell>

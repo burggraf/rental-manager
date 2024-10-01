@@ -40,7 +40,7 @@
 </script>
 
 <div class="relative" use:clickOutside>
-  <Button variant="ghost" size="icon" class="h-9 w-9 p-0" on:click={toggleDropdown}>
+  <Button variant="ghost" size="icon" class="h-9 w-9 p-0" onclick={toggleDropdown}>
     <MoreVertical class="h-5 w-5" />
     <span class="sr-only">Open menu</span>
   </Button>
@@ -55,7 +55,7 @@
           <button
             class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             role="menuitem"
-            on:click={() => handleAction(action)}
+            onclick={() => handleAction(action)}
           >
             <Icon class="mr-2 h-4 w-4" />
             <span>{title}</span>
