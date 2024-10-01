@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import MainLayout from '../../MainLayout.svelte';
 	import { t } from '$lib/i18n';
+	import { cn } from '$lib/utils';
 
 	let { data } = $props();
 	let contactDetail = $state(data.contact);
@@ -50,94 +51,100 @@
 			<div class="space-y-4">
 				{#if isEditing}
 					<form class="space-y-4">
-						<div class="w-full p-2 border rounded">
-							<label for="firstname" class="block text-sm font-medium text-gray-700">{$t('contactDetail.firstName')}</label>
+						<div class="w-full p-2 border rounded bg-background">
+							<label for="firstname" class="block text-sm font-medium text-foreground">{$t('contactDetail.firstName')}</label>
 							<input
 								id="firstname"
 								type="text"
 								bind:value={contactDetail.firstname}
-								class="mt-1 p-2 w-full bg-white border rounded focus:ring-primary focus:border-primary"
+								class={cn(
+									"mt-1 p-2 w-full bg-background border rounded",
+									"text-foreground placeholder:text-muted-foreground",
+									"focus:ring-ring focus:border-ring"
+								)}
 							/>
 						</div>
 
-						<div class="w-full p-2 border rounded">
-							<label for="lastname" class="block text-sm font-medium text-gray-700">{$t('contactDetail.lastName')}</label>
+						<div class="w-full p-2 border rounded bg-background">
+							<label for="lastname" class="block text-sm font-medium text-foreground">{$t('contactDetail.lastName')}</label>
 							<input
 								id="lastname"
 								type="text"
 								bind:value={contactDetail.lastname}
-								class="mt-1 p-2 w-full bg-white border rounded focus:ring-primary focus:border-primary"
+								class={cn(
+									"mt-1 p-2 w-full bg-background border rounded",
+									"text-foreground placeholder:text-muted-foreground",
+									"focus:ring-ring focus:border-ring"
+								)}
 							/>
 						</div>
 
-						<div class="w-full p-2 border rounded">
-							<label for="email" class="block text-sm font-medium text-gray-700">{$t('contactDetail.email')}</label>
+						<div class="w-full p-2 border rounded bg-background">
+							<label for="email" class="block text-sm font-medium text-foreground">{$t('contactDetail.email')}</label>
 							<input
 								id="email"
 								type="email"
 								bind:value={contactDetail.email}
-								class="mt-1 p-2 w-full bg-white border rounded focus:ring-primary focus:border-primary"
+								class={cn(
+									"mt-1 p-2 w-full bg-background border rounded",
+									"text-foreground placeholder:text-muted-foreground",
+									"focus:ring-ring focus:border-ring"
+								)}
 							/>
 						</div>
 
-						<div class="w-full p-2 border rounded">
-							<label for="phone" class="block text-sm font-medium text-gray-700">{$t('contactDetail.phone')}</label>
-							<input
-								id="phone"
-								type="tel"
-								bind:value={contactDetail.phone}
-								class="mt-1 p-2 w-full bg-white border rounded focus:ring-primary focus:border-primary"
-							/>
-						</div>
-
-						<div class="w-full p-2 border rounded">
-							<label for="notes" class="block text-sm font-medium text-gray-700">{$t('contactDetail.notes')}</label>
+						<div class="w-full p-2 border rounded bg-background">
+							<label for="notes" class="block text-sm font-medium text-foreground">{$t('contactDetail.notes')}</label>
 							<textarea
 								id="notes"
 								bind:value={contactDetail.notes}
 								rows="4"
-								class="mt-1 p-2 w-full bg-white border rounded focus:ring-primary focus:border-primary resize-y"
+								class={cn(
+									"mt-1 p-2 w-full bg-background border rounded",
+										"text-foreground placeholder:text-muted-foreground",
+										"resize-y"
+								)}
 							></textarea>
 						</div>
 
 						<!-- Add more fields as needed -->
 
 						<div class="flex justify-end space-x-4 mt-4">
-							<button
-								type="button"
-								class="px-4 py-2 bg-secondary text-secondary-foreground rounded hover:bg-secondary/90"
-								onclick={handleCancel}
-							>
-								{$t('common.cancel')}
-							</button>
-							<button
-								type="submit"
-								class="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
-								onclick={handleSave}
-							>
-								{$t('common.save')}
-							</button>
+								<button
+									type="button"
+									class="px-4 py-2 bg-secondary text-secondary-foreground rounded hover:bg-secondary/90"
+									onclick={handleCancel}
+								>
+									{$t('common.cancel')}
+								</button>
+								<button
+									type="submit"
+									class="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
+									onclick={handleSave}
+								>
+									{$t('common.save')}
+								</button>
 						</div>
 					</form>
 				{:else}
 					<div class="space-y-4">
-						<div class="w-full p-2 border rounded">
-							<label class="block text-sm font-medium text-gray-700">{$t('contactDetail.firstName')}</label>
-								<div class="mt-1 p-2 bg-gray-100 rounded">{contactDetail.firstname}</div>
+						<div class="w-full p-2 border rounded bg-card">
+							<label class="block text-sm font-medium text-card-foreground">{$t('contactDetail.firstName')}</label>
+								<div class="mt-1 p-2 bg-muted rounded text-foreground">{contactDetail.firstname}</div>
 						</div>
-						<div class="w-full p-2 border rounded">
-								<label class="block text-sm font-medium text-gray-700">{$t('contactDetail.lastName')}</label>
-								<div class="mt-1 p-2 bg-gray-100 rounded">{contactDetail.lastname}</div>
+						<div class="w-full p-2 border rounded bg-card">
+								<label class="block text-sm font-medium text-card-foreground">{$t('contactDetail.lastName')}</label>
+								<div class="mt-1 p-2 bg-muted rounded text-foreground">{contactDetail.lastname}</div>
 						</div>
-						<div class="w-full p-2 border rounded">
-								<label class="block text-sm font-medium text-gray-700">{$t('contactDetail.email')}</label>
-								<div class="mt-1 p-2 bg-gray-100 rounded">{contactDetail.email}</div>
+						<div class="w-full p-2 border rounded bg-card">
+								<label class="block text-sm font-medium text-card-foreground">{$t('contactDetail.email')}</label>
+								<div class="mt-1 p-2 bg-muted rounded text-foreground">{contactDetail.email}</div>
 						</div>
-						<div class="w-full p-2 border rounded">
-								<label id="notes-label" class="block text-sm font-medium text-gray-700">{$t('contactDetail.notes')}</label>
+						<div class="w-full p-2 border rounded bg-card">
+								<label id="notes-label" class="block text-sm font-medium text-card-foreground">{$t('contactDetail.notes')}</label>
 								<div 
 									aria-labelledby="notes-label" 
-									class="mt-1 p-2 bg-gray-100 rounded whitespace-pre-wrap"
+									class="mt-1 p-2 bg-muted rounded text-foreground"
 								>
 									{contactDetail.notes}
 								</div>
@@ -145,10 +152,16 @@
 						<div class="flex justify-between">
 							<button
 								onclick={handleEdit}
-								class="bg-blue-500 text-white px-4 py-2 rounded">{$t('common.edit')}</button>
+								class="bg-primary text-primary-foreground px-4 py-2 rounded hover:bg-primary/90"
+							>
+								{$t('common.edit')}
+							</button>
 							<button
 								onclick={handleDelete}
-								class="bg-red-500 text-white px-4 py-2 rounded">{$t('common.delete')}</button>
+								class="bg-destructive text-destructive-foreground px-4 py-2 rounded hover:bg-destructive/90"
+							>
+								{$t('common.delete')}
+							</button>
 						</div>
 					</div>
 				{/if}
