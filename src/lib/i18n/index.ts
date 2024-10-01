@@ -154,6 +154,13 @@ const translations = {
       cancel: "Cancel",
       edit: "Edit",
       delete: "Delete"
+    },
+    darkModeToggle: {
+      toggleTheme: "Toggle theme",
+      chooseTheme: "Choose theme",
+      lightMode: "Light mode",
+      darkMode: "Dark mode",
+      systemSetting: "Use system setting"
     }
   },
   es: {
@@ -308,6 +315,13 @@ const translations = {
       cancel: "Cancelar",
       edit: "Editar",
       delete: "Eliminar"
+    },
+    darkModeToggle: {
+      toggleTheme: "Cambiar tema",
+      chooseTheme: "Elegir tema",
+      lightMode: "Modo claro",
+      darkMode: "Modo oscuro",
+      systemSetting: "Ajuste del sistema"
     }
   }
 };
