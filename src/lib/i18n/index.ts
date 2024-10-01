@@ -145,7 +145,8 @@ const translations = {
       notes: "Notes",
       name: "Name",
       noNotes: "No notes available",
-      backToContacts: "Back to Contacts"
+      backToContacts: "Back to Contacts",
+      createNew: "Create New Contact",
     },
     common: {
       backButton: "Back",
@@ -298,7 +299,8 @@ const translations = {
       notes: "Notas",
       name: "Nombre",
       noNotes: "No hay notas disponibles",
-      backToContacts: "Volver a Contactos"
+      backToContacts: "Volver a Contactos",
+      createNew: "Crear Nuevo Contacto",
     },
     common: {
       backButton: "Volver",

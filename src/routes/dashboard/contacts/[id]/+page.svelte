@@ -6,16 +6,22 @@
 	import { cn } from '$lib/utils';
 	import { Check, X } from 'lucide-svelte';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
 	let { data } = $props();
-	let contactDetail = $state(data.contact);
+	let contactDetail = $state(data.contact || { firstname: '', lastname: '', email: '', notes: '' });
 	let notesTextarea: HTMLTextAreaElement;
+	console.log('$page.url.pathname', $page.url.pathname);
+	let isNewContact = $derived($page.url.pathname.split('/').pop() === 'new');
+	console.log($page.url.pathname.split('/').pop());
 
 	async function handleSave() {
-		const { error } = await supabase.from('contacts').update(contactDetail).eq('id', contactDetail.id);
+		const { error } = isNewContact
+			? await supabase.from('contacts').insert(contactDetail)
+			: await supabase.from('contacts').update(contactDetail).eq('id', contactDetail.id);
 
 		if (error) {
-			console.error('Error updating contact:', error);
+			console.error('Error saving contact:', error);
 		} else {
 			goto('/dashboard/contacts');
 		}
@@ -75,7 +81,7 @@
 			<Check class="w-6 h-6" />
 		</button>
 	</div>
-	<div slot="title">{$t('contactDetail.editContact')}</div>
+	<div slot="title">{isNewContact ? $t('contactDetail.createNew') : $t('contactDetail.editContact')}</div>
 	<div slot="content">
 		<div class="max-w-2xl mx-auto mt-8">
 			<form class="space-y-4" onsubmit={handleSubmit}>
@@ -137,15 +143,17 @@
 					></textarea>
 				</div>
 
-				<div class="flex justify-start mt-4">
-					<button
-						type="button"
-						onclick={handleDelete}
-						class="px-4 py-2 bg-destructive text-destructive-foreground rounded hover:bg-destructive/90"
-					>
-						{$t('common.delete')}
-					</button>
-				</div>
+				{#if !isNewContact}
+					<div class="flex justify-start mt-4">
+						<button
+							type="button"
+							onclick={handleDelete}
+							class="px-4 py-2 bg-destructive text-destructive-foreground rounded hover:bg-destructive/90"
+						>
+							{$t('common.delete')}
+						</button>
+					</div>
+				{/if}
 			</form>
 		</div>
 	</div>

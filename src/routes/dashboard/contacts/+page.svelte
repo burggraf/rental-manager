@@ -13,8 +13,9 @@
 	export let data: PageData
 
 	function handleNewContact() {
-		goto('/dashboard/contacts/new')
+		goto('/dashboard/contacts/new');
 	}
+
 </script>
 
 <MainLayout>
@@ -25,7 +26,6 @@
 			<UserPlus class="h-5 w-5" />
 			<span class="sr-only">New Contact</span>
 		</Button>
-
 	</div>
 
 	<div slot="content">
