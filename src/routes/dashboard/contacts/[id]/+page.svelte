@@ -4,11 +4,10 @@
 	import MainLayout from '$lib/components/MainLayout.svelte';
 	import { t } from '$lib/i18n';
 	import { cn } from '$lib/utils';
-	import { ChevronLeft } from 'lucide-svelte';
+	import { ChevronLeft, Check } from 'lucide-svelte';
 
 	let { data } = $props();
 	let contactDetail = $state(data.contact);
-	let isEditing = $state(false);
 
 	async function handleSave() {
 		const { error } = await supabase.from('contacts').update(contactDetail).eq('id', contactDetail.id);
@@ -16,7 +15,7 @@
 		if (error) {
 			console.error('Error updating contact:', error);
 		} else {
-			isEditing = false;
+			goto('/dashboard/contacts');
 		}
 	}
 
@@ -32,16 +31,13 @@
 		}
 	}
 
-	function handleEdit() {
-		isEditing = true;
-	}
-
-	function handleCancel() {
-		isEditing = false;
-	}
-
 	function handleBackToContacts() {
 		goto('/dashboard/contacts');
+	}
+
+	function handleSubmit(event: Event) {
+		event.preventDefault();
+		handleSave();
 	}
 </script>
 
@@ -55,131 +51,85 @@
 			<ChevronLeft class="w-6 h-6" />
 		</button>
 	</div>
-	<div slot="title">{isEditing ? $t('contactDetail.editContact') : $t('contactDetail.contactDetails')}</div>
+	<div slot="top-right">
+		<button
+			onclick={handleSave}
+			class="p-2 rounded-full hover:bg-muted transition-colors duration-200"
+			aria-label={$t('common.save')}
+		>
+			<Check class="w-6 h-6" />
+		</button>
+	</div>
+	<div slot="title">{$t('contactDetail.editContact')}</div>
 	<div slot="content">
 		<div class="max-w-2xl mx-auto mt-8">
-			<h1 class="text-2xl font-bold mb-4">
-				{isEditing ? $t('contactDetail.editContact') : $t('contactDetail.contactDetails')}
-			</h1>
+			<form class="space-y-4" onsubmit={handleSubmit}>
+				<div class="w-full p-2 border rounded bg-background">
+					<label for="firstname" class="block text-sm font-medium text-foreground">{$t('contactDetail.firstName')}</label>
+					<input
+						id="firstname"
+						type="text"
+						bind:value={contactDetail.firstname}
+						class={cn(
+							"mt-1 p-2 w-full bg-background border rounded",
+							"text-foreground placeholder:text-muted-foreground",
+							"focus:ring-ring focus:border-ring"
+						)}
+					/>
+				</div>
 
-			<div class="space-y-4">
-				{#if isEditing}
-					<form class="space-y-4">
-						<div class="w-full p-2 border rounded bg-background">
-							<label for="firstname" class="block text-sm font-medium text-foreground">{$t('contactDetail.firstName')}</label>
-							<input
-								id="firstname"
-								type="text"
-								bind:value={contactDetail.firstname}
-								class={cn(
-									"mt-1 p-2 w-full bg-background border rounded",
-									"text-foreground placeholder:text-muted-foreground",
-									"focus:ring-ring focus:border-ring"
-								)}
-							/>
-						</div>
+				<div class="w-full p-2 border rounded bg-background">
+					<label for="lastname" class="block text-sm font-medium text-foreground">{$t('contactDetail.lastName')}</label>
+					<input
+						id="lastname"
+						type="text"
+						bind:value={contactDetail.lastname}
+						class={cn(
+							"mt-1 p-2 w-full bg-background border rounded",
+							"text-foreground placeholder:text-muted-foreground",
+							"focus:ring-ring focus:border-ring"
+						)}
+					/>
+				</div>
 
-						<div class="w-full p-2 border rounded bg-background">
-							<label for="lastname" class="block text-sm font-medium text-foreground">{$t('contactDetail.lastName')}</label>
-							<input
-								id="lastname"
-								type="text"
-								bind:value={contactDetail.lastname}
-								class={cn(
-									"mt-1 p-2 w-full bg-background border rounded",
-									"text-foreground placeholder:text-muted-foreground",
-									"focus:ring-ring focus:border-ring"
-								)}
-							/>
-						</div>
+				<div class="w-full p-2 border rounded bg-background">
+					<label for="email" class="block text-sm font-medium text-foreground">{$t('contactDetail.email')}</label>
+					<input
+						id="email"
+						type="email"
+						bind:value={contactDetail.email}
+						class={cn(
+							"mt-1 p-2 w-full bg-background border rounded",
+							"text-foreground placeholder:text-muted-foreground",
+							"focus:ring-ring focus:border-ring"
+						)}
+					/>
+				</div>
 
-						<div class="w-full p-2 border rounded bg-background">
-							<label for="email" class="block text-sm font-medium text-foreground">{$t('contactDetail.email')}</label>
-							<input
-								id="email"
-								type="email"
-								bind:value={contactDetail.email}
-								class={cn(
-									"mt-1 p-2 w-full bg-background border rounded",
-									"text-foreground placeholder:text-muted-foreground",
-									"focus:ring-ring focus:border-ring"
-								)}
-							/>
-						</div>
+				<div class="w-full p-2 border rounded bg-background">
+					<label for="notes" class="block text-sm font-medium text-foreground">{$t('contactDetail.notes')}</label>
+					<textarea
+						id="notes"
+						bind:value={contactDetail.notes}
+						rows="4"
+						class={cn(
+							"mt-1 p-2 w-full bg-background border rounded",
+							"text-foreground placeholder:text-muted-foreground",
+							"resize-y"
+						)}
+					></textarea>
+				</div>
 
-						<div class="w-full p-2 border rounded bg-background">
-							<label for="notes" class="block text-sm font-medium text-foreground">{$t('contactDetail.notes')}</label>
-							<textarea
-								id="notes"
-								bind:value={contactDetail.notes}
-								rows="4"
-								class={cn(
-									"mt-1 p-2 w-full bg-background border rounded",
-									"text-foreground placeholder:text-muted-foreground",
-									"resize-y"
-								)}
-							></textarea>
-						</div>
-
-						<!-- Add more fields as needed -->
-
-						<div class="flex justify-end space-x-4 mt-4">
-								<button
-									type="button"
-									class="px-4 py-2 bg-secondary text-secondary-foreground rounded hover:bg-secondary/90"
-									onclick={handleCancel}
-								>
-									{$t('common.cancel')}
-								</button>
-								<button
-									type="submit"
-									class="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
-									onclick={handleSave}
-								>
-									{$t('common.save')}
-								</button>
-						</div>
-					</form>
-				{:else}
-					<div class="space-y-4">
-						<div class="w-full p-2 border rounded bg-card">
-							<label class="block text-sm font-medium text-card-foreground">{$t('contactDetail.firstName')}</label>
-								<div class="mt-1 p-2 bg-muted rounded text-foreground">{contactDetail.firstname}</div>
-						</div>
-						<div class="w-full p-2 border rounded bg-card">
-								<label class="block text-sm font-medium text-card-foreground">{$t('contactDetail.lastName')}</label>
-								<div class="mt-1 p-2 bg-muted rounded text-foreground">{contactDetail.lastname}</div>
-						</div>
-						<div class="w-full p-2 border rounded bg-card">
-								<label class="block text-sm font-medium text-card-foreground">{$t('contactDetail.email')}</label>
-								<div class="mt-1 p-2 bg-muted rounded text-foreground">{contactDetail.email}</div>
-						</div>
-						<div class="w-full p-2 border rounded bg-card">
-								<label id="notes-label" class="block text-sm font-medium text-card-foreground">{$t('contactDetail.notes')}</label>
-								<div 
-									aria-labelledby="notes-label" 
-									class="mt-1 p-2 bg-muted rounded text-foreground"
-								>
-									{contactDetail.notes}
-								</div>
-						</div>
-						<div class="flex justify-between">
-							<button
-								onclick={handleEdit}
-								class="bg-primary text-primary-foreground px-4 py-2 rounded hover:bg-primary/90"
-							>
-								{$t('common.edit')}
-							</button>
-							<button
-								onclick={handleDelete}
-								class="bg-destructive text-destructive-foreground px-4 py-2 rounded hover:bg-destructive/90"
-							>
-								{$t('common.delete')}
-							</button>
-						</div>
-					</div>
-				{/if}
-			</div>
+				<div class="flex justify-start mt-4">
+					<button
+						type="button"
+						onclick={handleDelete}
+						class="px-4 py-2 bg-destructive text-destructive-foreground rounded hover:bg-destructive/90"
+					>
+						{$t('common.delete')}
+					</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </MainLayout>

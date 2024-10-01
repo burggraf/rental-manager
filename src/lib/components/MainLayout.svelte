@@ -72,7 +72,7 @@
     <header
       class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
     >
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-0">
         <Sheet.Root bind:open={sheetOpen}>
           <Sheet.Trigger asChild let:builder>
             <Button builders={[builder]} size="icon" variant="ghost">
