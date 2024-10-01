@@ -14,7 +14,6 @@
 
   function toggleDropdown() {
     isOpen = !isOpen;
-    console.log('Dropdown toggled:', isOpen);
   }
 
   function handleAction(action: () => void) {
