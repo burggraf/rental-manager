@@ -68,7 +68,7 @@
     });
   </script>
   
-  <div class="bg-muted/40 flex min-h-screen w-full flex-col">
+  <div class="flex flex-col h-screen">
     <header
       class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
     >
@@ -96,17 +96,32 @@
       </div>
     </header>
 
-    <div class="flex-grow flex flex-col">
-      <main class="flex-grow p-4 md:p-6 lg:p-8">
-        <slot name="content" />
-      </main>
+    <main class="flex-1 overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8">
+      <slot name="content" />
+    </main>
 
-      <footer class="bg-background border-t h-14 flex items-center px-4">
-        <slot name="footer" />
-        <LanguageSelector />
-        <DarkModeToggle />
-      </footer>
-    </div>
+    <footer class="bg-background border-t h-14 flex items-center justify-between px-4">
+      <div class="flex items-center space-x-2">
+        <slot name="bottom-left">
+          <!-- Default content for bottom-left -->
+          <LanguageSelector />
+        </slot>
+      </div>
+      
+      <div class="flex items-center space-x-2">
+        <slot name="bottom-center">
+          <!-- Default content for bottom-center -->
+          <slot name="footer" />
+        </slot>
+      </div>
+      
+      <div class="flex items-center space-x-2">
+        <slot name="bottom-right">
+          <!-- Default content for bottom-right -->
+          <DarkModeToggle />
+        </slot>
+      </div>
+    </footer>
   </div>
   
   <!--<Dialog.Root bind:open={languageSelectorOpen}>
@@ -115,4 +130,3 @@
     </Dialog.Content>
   </Dialog.Root>
   -->
-  
