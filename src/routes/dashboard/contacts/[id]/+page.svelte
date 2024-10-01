@@ -4,10 +4,12 @@
 	import MainLayout from '$lib/components/MainLayout.svelte';
 	import { t } from '$lib/i18n';
 	import { cn } from '$lib/utils';
-	import { ChevronLeft, Check } from 'lucide-svelte';
+	import { Check, X } from 'lucide-svelte';
+	import { onMount } from 'svelte';
 
 	let { data } = $props();
 	let contactDetail = $state(data.contact);
+	let notesTextarea: HTMLTextAreaElement;
 
 	async function handleSave() {
 		const { error } = await supabase.from('contacts').update(contactDetail).eq('id', contactDetail.id);
@@ -39,19 +41,32 @@
 		event.preventDefault();
 		handleSave();
 	}
+
+	function autoGrow() {
+		if (notesTextarea) {
+			notesTextarea.style.height = 'auto';
+			notesTextarea.style.height = notesTextarea.scrollHeight + 'px';
+		}
+	}
+
+	onMount(() => {
+		autoGrow();
+	});
+
+	$effect(() => {
+		autoGrow();
+	});
 </script>
 
 <MainLayout>
-	<div slot="top-left">
+	<div slot="top-right" class="flex space-x-2">
 		<button
 			onclick={handleBackToContacts}
 			class="p-2 rounded-full hover:bg-muted transition-colors duration-200"
-			aria-label={$t('contactDetail.backToContacts')}
+			aria-label={$t('common.cancel')}
 		>
-			<ChevronLeft class="w-6 h-6" />
+			<X class="w-6 h-6" />
 		</button>
-	</div>
-	<div slot="top-right">
 		<button
 			onclick={handleSave}
 			class="p-2 rounded-full hover:bg-muted transition-colors duration-200"
@@ -111,11 +126,13 @@
 					<textarea
 						id="notes"
 						bind:value={contactDetail.notes}
-						rows="4"
+						bind:this={notesTextarea}
+						oninput={autoGrow}
+						rows="1"
 						class={cn(
 							"mt-1 p-2 w-full bg-background border rounded",
 							"text-foreground placeholder:text-muted-foreground",
-							"resize-y"
+							"resize-none overflow-hidden"
 						)}
 					></textarea>
 				</div>
