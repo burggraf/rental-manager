@@ -33,15 +33,15 @@
     <div class="grid gap-4">
       <h4 class="font-medium leading-none">{$t('darkModeToggle.chooseTheme')}</h4>
       <div class="grid gap-2">
-        <Button variant="ghost" class="w-full justify-start" on:click={() => setTheme('light')}>
+        <Button variant="ghost" class="w-full justify-start" onclick={() => setTheme('light')}>
           <Sun class="mr-2 h-4 w-4" />
           {$t('darkModeToggle.lightMode')}
         </Button>
-        <Button variant="ghost" class="w-full justify-start" on:click={() => setTheme('dark')}>
+        <Button variant="ghost" class="w-full justify-start" onclick={() => setTheme('dark')}>
           <Moon class="mr-2 h-4 w-4" />
           {$t('darkModeToggle.darkMode')}
         </Button>
-        <Button variant="ghost" class="w-full justify-start" on:click={() => setTheme('system')}>
+        <Button variant="ghost" class="w-full justify-start" onclick={() => setTheme('system')}>
           <SunMoon class="mr-2 h-4 w-4" />
           {$t('darkModeToggle.systemSetting')}
         </Button>
