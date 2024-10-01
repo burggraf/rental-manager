@@ -24,11 +24,15 @@
   }
 
   let currentLanguage = $derived(supportedLanguages.find(lang => lang.code === $locale) || supportedLanguages[0]);
+
+  function toggleDialog() {
+    isOpen = !isOpen;
+  }
 </script>
 
 <Dialog bind:open={isOpen}>
   <DialogTrigger asChild>
-    <Button variant="ghost" size="icon" class="w-12 h-12 p-0" onclick={() => isOpen = true}>
+    <Button variant="ghost" size="icon" class="w-12 h-12 p-0" on:click={toggleDialog}>
       <span class="text-2xl">{currentLanguage.flag}</span>
       <span class="sr-only">{$t('language.change')}</span>
     </Button>
@@ -40,9 +44,9 @@
     <div class="grid gap-4 py-4">
       {#each supportedLanguages as { code, name, flag }}
         <Button
-          class="flex justify-start items-center gap-2"
+          class="flex justify-start items-center gap-2 w-full"
           variant="ghost"
-          onclick={() => handleChange(code)}
+          on:click={() => handleChange(code)}
         >
           <span class="text-2xl">{flag}</span>
           <span>{$t(`language.names.${code}`)}</span>
