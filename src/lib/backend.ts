@@ -32,8 +32,10 @@ export const signUp = async (email: string, password: string) => {
 export const signInWithOAuth = async (provider: string) => {
     try {
         const authData = await pb.collection('users').authWithOAuth2({ provider });
+        console.log('signInWithOAuth authData', authData)
         return null;
     } catch (error) {
+        console.error('signInWithOAuth error', error)
         return error;
     }
 }

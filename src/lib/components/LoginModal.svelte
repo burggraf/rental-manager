@@ -27,7 +27,7 @@
 		if (isLogin) {
 			try {
 				const signInError = await signInWithPassword(email, password)
-
+				console.log('signInError', signInError)
 				if (signInError) {
 					error = signInError
 					showToast(error, { type: 'error' })
@@ -72,10 +72,10 @@
 		error = null
 
 		try {
-			const { signInError } = await signInWithOAuth('google')
+			const signInError = await signInWithOAuth('google')
 
 			if (signInError) {
-				error = signInError.message
+				error = signInError
 				showToast(error, { type: 'error' })
 			} else {
 				closeModal() // Close the modal on successful login
