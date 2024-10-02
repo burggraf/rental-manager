@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import { user } from '$lib/stores/userStore'
-	import { notification } from '$lib/stores/notificationStore'
 	import { Button } from '$lib/components/ui/button/index.js'
 	import { Input } from '$lib/components/ui/input/index.js'
 	import { Label } from '$lib/components/ui/label/index.js'
@@ -9,6 +8,7 @@
 	import { t } from '$lib/i18n'
 	import MainLayout from '$lib/components/MainLayout.svelte'
 	import { updateUser } from '$lib/backend';
+	import { showToast } from '$lib/utils/toast'
 
 	let firstName = ''
 	let lastName = ''
@@ -32,11 +32,11 @@
 		})
 
 		if (error) {
-			notification.show('Failed to update profile', 'destructive')
+			showToast('Failed to update profile', { type: 'error' })
 			console.error('Error updating profile:', error)
 		} else {
 			user.set(data.user)
-			notification.show('Profile updated successfully')
+			showToast('Profile updated successfully', { type: 'success' })
 		}
 		loading = false
 	}
