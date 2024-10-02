@@ -8,7 +8,8 @@ export const user = writable<RecordModel | null>(null);
 
 export const signInWithPassword = async (email: string, password: string) => {
     try {
-        await pb.collection('users').authWithPassword(email, password);
+        const authData = await pb.collection('users').authWithPassword(email, password);
+        console.log('signInWithPassword authData', authData)
         return '';
     } catch (error) {
         return error;
@@ -29,13 +30,50 @@ export const signUp = async (email: string, password: string) => {
     }
 }
 
+async function urlToFile(url: string, filename: string): Promise<File> {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new File([blob], filename, { type: blob.type });
+}
+
 export const signInWithOAuth = async (provider: string) => {
     try {
         const authData = await pb.collection('users').authWithOAuth2({ provider });
-        console.log('signInWithOAuth authData', authData)
+        console.log('signInWithOAuth authData', authData);
+        const avatarUrl = authData?.meta?.avatarUrl;
+        console.log('signInWithOAuth avatarUrl', avatarUrl);
+        
+        if (avatarUrl && !authData.record.avatar) {
+            console.log('Attempting to update avatar');
+            const id = authData.record.id;
+            console.log('User ID:', id);
+            
+            try {
+                // Fetch the image and create a File object
+                const avatarFile = await urlToFile(avatarUrl, 'avatar.jpg');
+
+                // Create form data
+                const formData = new FormData();
+                formData.append('avatar', avatarFile);
+
+                // Update the user record with the file
+                const record = await pb.collection('users').update(id, formData);
+                console.log('Avatar updated successfully', record);
+            } catch (e) {
+                console.error('Failed to update avatar:', e);
+                if (e instanceof Error) {
+                    console.error('Error message:', e.message);
+                }
+                if ('data' in e) {
+                    console.error('Error data:', e.data);
+                }
+                // Don't throw the error, just log it
+            }
+        }
+        
         return null;
     } catch (error) {
-        console.error('signInWithOAuth error', error)
+        console.error('signInWithOAuth error', error);
         return error;
     }
 }
@@ -89,6 +127,7 @@ export const saveContact = async (contact: Contact) => {
 
 export const getSession = async () => {
     const authData = pb.authStore.model;
+    console.log('getSession: authData', authData)
     return {
         data: { session: authData ? { user: authData } : null },
         error: null

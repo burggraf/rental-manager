@@ -48,6 +48,7 @@
   
     onMount(() => {
       getSession().then(({ data }) => {
+        console.log('getSession: data', data)
         if (data.session) {
           user.set(data.session.user);
           console.log('User logged in:', data.session.user);
