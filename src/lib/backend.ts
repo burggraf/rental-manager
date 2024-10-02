@@ -102,3 +102,17 @@ export const signOut = async () => {
         error
     };
 }
+
+export async function fetchContacts(column: string, direction: 'asc' | 'desc'): Promise<Contact[]> {
+    const { data, error } = await supabase
+      .from('contacts')
+      .select('*')
+      .order(column, { ascending: direction === 'asc' });
+    
+    if (error) {
+      console.error('Error fetching contacts:', error);
+      throw error;
+    }
+    
+    return data || [];
+  }

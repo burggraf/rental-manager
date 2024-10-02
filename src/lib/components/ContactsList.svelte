@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { supabase } from '$lib/supabase';
   import { goto } from '$app/navigation';
   import { Button } from "$lib/components/ui/button";
   import { ChevronUp, ChevronDown } from 'lucide-svelte';
@@ -15,28 +13,25 @@
   import type { Contact } from '../types/contact';
   import { createSortHandler, type SortState } from '$lib/utils/sorting';
   import { t } from '$lib/i18n';
+  import { fetchContacts } from '$lib/backend';
 
   let contacts = $state<Contact[]>([]);
   let sortState = $state<SortState>({ column: 'lastname', direction: 'asc' });
 
   $effect(() => {
-    fetchContacts();
+    loadContacts();
   });
 
-  async function fetchContacts() {
-    const { data, error } = await supabase
-      .from('contacts')
-      .select('*')
-      .order(sortState.column, { ascending: sortState.direction === 'asc' });
-    
-    if (error) {
-      console.error('Error fetching contacts:', error);
-    } else {
-      contacts = data;
+  async function loadContacts() {
+    try {
+      contacts = await fetchContacts(sortState.column, sortState.direction);
+    } catch (error) {
+      console.error('Error loading contacts:', error);
+      // Handle error (e.g., show error message to user)
     }
   }
 
-  const handleSort = createSortHandler(sortState, fetchContacts);
+  const handleSort = createSortHandler(sortState, loadContacts);
 
   function handleContactClick(id: string) {
     goto(`/dashboard/contacts/${id}`);
