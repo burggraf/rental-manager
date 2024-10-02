@@ -42,8 +42,8 @@
 			showToast($t('contactDetail.saveError'), { type: 'error' })
 		} else {
 			setTimeout(() => {
-			showToast($t('contactDetail.saveSuccess'), { type: 'success' })
-			}, 100);
+				showToast($t('contactDetail.saveSuccess'), { type: 'success' })
+			}, 100)
 			goto('/dashboard/contacts')
 		}
 	}
