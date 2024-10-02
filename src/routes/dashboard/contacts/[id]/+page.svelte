@@ -1,67 +1,86 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabase';
-	import { goto } from '$app/navigation';
-	import MainLayout from '$lib/components/MainLayout.svelte';
-	import { t } from '$lib/i18n';
-	import { cn } from '$lib/utils';
-	import { Check, X } from 'lucide-svelte';
-	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
+	import { supabase } from '$lib/supabase'
+	import { goto } from '$app/navigation'
+	import MainLayout from '$lib/components/MainLayout.svelte'
+	import { t } from '$lib/i18n'
+	import { cn } from '$lib/utils'
+	import { Check, X } from 'lucide-svelte'
+	import { onMount } from 'svelte'
+	import { page } from '$app/stores'
+	import { showToast } from '$lib/utils/toast'
+	import { toast } from 'svelte-sonner'
 
-	let { data } = $props();
-	let contactDetail = $state(data.contact || { firstname: '', lastname: '', email: '', notes: '' });
-	let notesTextarea: HTMLTextAreaElement;
-	console.log('$page.url.pathname', $page.url.pathname);
-	let isNewContact = $derived($page.url.pathname.split('/').pop() === 'new');
-	console.log($page.url.pathname.split('/').pop());
+	let { data } = $props()
+	let contactDetail = $state(data.contact || { firstname: '', lastname: '', email: '', notes: '' })
+	let notesTextarea: HTMLTextAreaElement
+	console.log('$page.url.pathname', $page.url.pathname)
+	let isNewContact = $derived($page.url.pathname.split('/').pop() === 'new')
+	console.log($page.url.pathname.split('/').pop())
+
+	function isValidEmail(email: string): boolean {
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+		return emailRegex.test(email)
+	}
 
 	async function handleSave() {
+		if (!contactDetail.email) {
+			showToast($t('contactDetail.emailMissing'), { type: 'error' })
+			return
+		}
+
+		if (!isValidEmail(contactDetail.email)) {
+			showToast($t('contactDetail.emailInvalid'), { type: 'error' })
+			return
+		}
+
 		const { error } = isNewContact
 			? await supabase.from('contacts').insert(contactDetail)
-			: await supabase.from('contacts').update(contactDetail).eq('id', contactDetail.id);
+			: await supabase.from('contacts').update(contactDetail).eq('id', contactDetail.id)
 
 		if (error) {
-			console.error('Error saving contact:', error);
+			console.error('Error saving contact:', error)
+			showToast($t('contactDetail.saveError'), { type: 'error' })
 		} else {
-			goto('/dashboard/contacts');
+			// showToast($t('contactDetail.saveSuccess'), { type: 'success', description: 'SUCCESS' })
+			goto('/dashboard/contacts')
 		}
 	}
 
 	async function handleDelete() {
 		if (confirm($t('contactDetail.deleteConfirmation'))) {
-			const { error } = await supabase.from('contacts').delete().eq('id', contactDetail.id);
+			const { error } = await supabase.from('contacts').delete().eq('id', contactDetail.id)
 
 			if (error) {
-				console.error('Error deleting contact:', error);
+				console.error('Error deleting contact:', error)
 			} else {
-				goto('/dashboard/contacts');
+				goto('/dashboard/contacts')
 			}
 		}
 	}
 
 	function handleBackToContacts() {
-		goto('/dashboard/contacts');
+		goto('/dashboard/contacts')
 	}
 
 	function handleSubmit(event: Event) {
-		event.preventDefault();
-		handleSave();
+		event.preventDefault()
+		handleSave()
 	}
 
 	function autoGrow() {
 		if (notesTextarea) {
-			notesTextarea.style.height = 'auto';
-			notesTextarea.style.height = notesTextarea.scrollHeight + 'px';
+			notesTextarea.style.height = 'auto'
+			notesTextarea.style.height = notesTextarea.scrollHeight + 'px'
 		}
 	}
 
 	onMount(() => {
-		autoGrow();
-	});
+		autoGrow()
+	})
 
 	$effect(() => {
-		autoGrow();
-	});
+		autoGrow()
+	})
 </script>
 
 <MainLayout>
@@ -81,54 +100,64 @@
 			<Check class="w-6 h-6" />
 		</button>
 	</div>
-	<div slot="title">{isNewContact ? $t('contactDetail.createNew') : $t('contactDetail.editContact')}</div>
+	<div slot="title">
+		{isNewContact ? $t('contactDetail.createNew') : $t('contactDetail.editContact')}
+	</div>
 	<div slot="content">
 		<div class="max-w-2xl mx-auto mt-8">
 			<form class="space-y-4" onsubmit={handleSubmit}>
 				<div class="w-full p-2 border rounded bg-background">
-					<label for="firstname" class="block text-sm font-medium text-foreground">{$t('contactDetail.firstName')}</label>
+					<label for="firstname" class="block text-sm font-medium text-foreground"
+						>{$t('contactDetail.firstName')}</label
+					>
 					<input
 						id="firstname"
 						type="text"
 						bind:value={contactDetail.firstname}
 						class={cn(
-							"mt-1 p-2 w-full bg-background border rounded",
-							"text-foreground placeholder:text-muted-foreground",
-							"focus:ring-ring focus:border-ring"
+							'mt-1 p-2 w-full bg-background border rounded',
+							'text-foreground placeholder:text-muted-foreground',
+							'focus:ring-ring focus:border-ring'
 						)}
 					/>
 				</div>
 
 				<div class="w-full p-2 border rounded bg-background">
-					<label for="lastname" class="block text-sm font-medium text-foreground">{$t('contactDetail.lastName')}</label>
+					<label for="lastname" class="block text-sm font-medium text-foreground"
+						>{$t('contactDetail.lastName')}</label
+					>
 					<input
 						id="lastname"
 						type="text"
 						bind:value={contactDetail.lastname}
 						class={cn(
-							"mt-1 p-2 w-full bg-background border rounded",
-							"text-foreground placeholder:text-muted-foreground",
-							"focus:ring-ring focus:border-ring"
+							'mt-1 p-2 w-full bg-background border rounded',
+							'text-foreground placeholder:text-muted-foreground',
+							'focus:ring-ring focus:border-ring'
 						)}
 					/>
 				</div>
 
 				<div class="w-full p-2 border rounded bg-background">
-					<label for="email" class="block text-sm font-medium text-foreground">{$t('contactDetail.email')}</label>
+					<label for="email" class="block text-sm font-medium text-foreground"
+						>{$t('contactDetail.email')}</label
+					>
 					<input
 						id="email"
 						type="email"
 						bind:value={contactDetail.email}
 						class={cn(
-							"mt-1 p-2 w-full bg-background border rounded",
-							"text-foreground placeholder:text-muted-foreground",
-							"focus:ring-ring focus:border-ring"
+							'mt-1 p-2 w-full bg-background border rounded',
+							'text-foreground placeholder:text-muted-foreground',
+							'focus:ring-ring focus:border-ring'
 						)}
 					/>
 				</div>
 
 				<div class="w-full p-2 border rounded bg-background">
-					<label for="notes" class="block text-sm font-medium text-foreground">{$t('contactDetail.notes')}</label>
+					<label for="notes" class="block text-sm font-medium text-foreground"
+						>{$t('contactDetail.notes')}</label
+					>
 					<textarea
 						id="notes"
 						bind:value={contactDetail.notes}
@@ -136,9 +165,9 @@
 						oninput={autoGrow}
 						rows="1"
 						class={cn(
-							"mt-1 p-2 w-full bg-background border rounded",
-							"text-foreground placeholder:text-muted-foreground",
-							"resize-none overflow-hidden"
+							'mt-1 p-2 w-full bg-background border rounded',
+							'text-foreground placeholder:text-muted-foreground',
+							'resize-none overflow-hidden'
 						)}
 					></textarea>
 				</div>

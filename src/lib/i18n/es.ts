@@ -134,7 +134,7 @@ export default {
       contactDetail: {
         editContact: "Editar Contacto",
         contactDetails: "Detalles del Contacto",
-        deleteConfirmation: "¿Está seguro de que desea eliminar este contacto?",
+        deleteConfirmation: "¿Está seguro de que quieres eliminar este contacto?",
         firstName: "Nombre",
         lastName: "Apellido",
         email: "Correo Electrónico",
@@ -143,9 +143,13 @@ export default {
         noNotes: "No hay notas disponibles",
         backToContacts: "Volver a Contactos",
         createNew: "Crear Nuevo Contacto",
+        emailMissing: "La dirección de correo electrónico es obligatoria",
+        emailInvalid: "Por favor, introduce una dirección de correo electrónico válida",
+        saveError: "Error al guardar el contacto",
+        saveSuccess: "Contacto guardado exitosamente"
       },
       common: {
-        backButton: "Volver",
+        backButton: "Atrás",
         save: "Guardar",
         cancel: "Cancelar",
         edit: "Editar",

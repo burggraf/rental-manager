@@ -17,7 +17,7 @@
     import { onMount } from 'svelte';
     import { supabase } from '$lib/supabase';
     import { user } from '$lib/stores/userStore';
-  
+    import { Toaster } from '$lib/components/ui/sonner';
     import { cn } from "$lib/utils";
   
     import DarkModeToggle from "$lib/components/DarkModeToggle.svelte";
@@ -122,6 +122,7 @@
         </slot>
       </div>
     </footer>
+    <Toaster richColors />
   </div>
   
   <!--<Dialog.Root bind:open={languageSelectorOpen}>

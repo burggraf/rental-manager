@@ -143,6 +143,10 @@ export default {
         noNotes: "No notes available",
         backToContacts: "Back to Contacts",
         createNew: "Create New Contact",
+        emailMissing: "Email address is required",
+        emailInvalid: "Please enter a valid email address",
+        saveError: "Error saving contact",
+        saveSuccess: "Contact saved successfully"
       },
       common: {
         backButton: "Back",
