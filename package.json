@@ -1,5 +1,6 @@
 {
 	"name": "rental-manager",
+	"title": "Rental Manager",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
