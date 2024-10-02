@@ -2,7 +2,7 @@
 	import { LogOut, LogIn } from 'lucide-svelte';
 	import { Button } from "$lib/components/ui/button/index.js";
 	import { Avatar, AvatarImage, AvatarFallback } from "$lib/components/ui/avatar/index.js";
-	import { user } from '$lib/stores/userStore';
+	import { user } from '$lib/backend';
 	import { t } from '$lib/i18n';
 	import { signOut, pb } from '$lib/backend';
 
@@ -15,7 +15,7 @@
 
 	// Placeholder for user's plan type
 	const userPlan = "Free Account";
-
+	console.log('$user', $user);
 	let avatarUrl = $derived($user?.avatar 
 		? pb.getFileUrl($user, $user.avatar, { thumb: '100x100' })
 		: '');

@@ -15,7 +15,7 @@
     import LanguageSelector from '$lib/components/LanguageSelector.svelte';
     import { page } from '$app/stores';
     import { onMount } from 'svelte';
-    import { user } from '$lib/stores/userStore';
+    import { user } from '$lib/backend';
     import { Toaster } from '$lib/components/ui/sonner';
     import { cn } from "$lib/utils";
   
