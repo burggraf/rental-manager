@@ -4,4 +4,5 @@ export interface Contact {
   lastname: string;
   email: string;
   notes?: string;
+  userid?: string;
 }

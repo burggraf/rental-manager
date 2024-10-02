@@ -20,7 +20,7 @@
 	{#if $user}
 		<div class="flex items-center mb-2">
 			<Avatar class="h-10 w-10 mr-3">
-				<AvatarImage src="{$user.user_metadata.picture}" alt={$user.email} />
+				<AvatarImage src="{$user.avatar || $user?.user_metadata?.picture || ''}" alt={$user.email} />
 				<AvatarFallback>{$user.email[0].toUpperCase()}</AvatarFallback>
 			</Avatar>
 			<div>

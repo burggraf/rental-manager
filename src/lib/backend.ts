@@ -1,119 +1,123 @@
-import { createClient } from '@supabase/supabase-js'
-import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
+import PocketBase from 'pocketbase';
+import type { RecordModel } from 'pocketbase';
 import { writable } from 'svelte/store';
-import type { User } from '@supabase/supabase-js';
 import type { Contact } from '$lib/types/contact';
 
-export const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY)
-export const user = writable<User | null>(null);
-import { createSortHandler, type SortState } from '$lib/utils/sorting';
+export const pb = new PocketBase('http://127.0.0.1:8090');
+export const user = writable<RecordModel | null>(null);
 
 export const signInWithPassword = async (email: string, password: string) => {
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (signInError) {
-        return signInError;
-      } else {
+    try {
+        await pb.collection('users').authWithPassword(email, password);
         return '';
-      }
+    } catch (error) {
+        return error;
+    }
 }
 
 export const signUp = async (email: string, password: string) => {
-    const { error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-      return String(signUpError);
+    try {
+        const result = await pb.collection('users').create({
+            email,
+            password,
+            passwordConfirm: password,
+        });
+        console.log('signUp result', result)
+        return '';
+    } catch (error) {
+        return String(error);
+    }
 }
 
-export const signInWithOAuth = 
-    async (provider: string) => {
-
-        const { error: signInError } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-              redirectTo: `${window.location.origin}/auth/callback`
-            }
-          });
-          return signInError;
+export const signInWithOAuth = async (provider: string) => {
+    try {
+        const authData = await pb.collection('users').authWithOAuth2({ provider });
+        return null;
+    } catch (error) {
+        return error;
+    }
 }
 
 export const resetPasswordForEmail = async (email: string) => {
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/reset-password`,
-      });
-      return resetError;
+    try {
+        await pb.collection('users').requestPasswordReset(email);
+        return null;
+    } catch (error) {
+        return error;
+    }
 }
 
 export const getContactById = async (id: string) => {
-    const { data, error } = await supabase
-    .from('contacts')
-    .select('*')
-    .eq('id', id)
-    .single();  
-    return {
-        data,
-        error
-    };
+    try {
+        const data = await pb.collection('contacts').getOne(id);
+        return { data, error: null };
+    } catch (error) {
+        return { data: null, error };
+    }
 }
 
-export const deleteContact = async (id: string) => {   
-    const { error } = await supabase
-    .from('contacts')
-    .delete()
-    .eq('id', id);
-    return {
-        error
-    };
+export const deleteContact = async (id: string) => {
+    try {
+        await pb.collection('contacts').delete(id);
+        return { error: null };
+    } catch (error) {
+        return { error };
+    }
 }
+
 export const saveContact = async (contact: Contact) => {
-    const { data, error } = await supabase
-    .from('contacts')
-    .upsert(contact);
-    return {
-        data,
-        error
-    };
+    try {
+        let data;
+        if (contact.id) {
+            // If the contact has an ID, update the existing record
+            data = await pb.collection('contacts').update(contact.id, contact);
+        } else {
+            // If the contact doesn't have an ID, create a new record
+            if (!contact.userid) {
+                contact.userid = pb.authStore.model?.id;
+            }
+            data = await pb.collection('contacts').create(contact);
+        }
+        return { data, error: null };
+    } catch (error) {
+        console.error('saveContact error', error);
+        return { data: null, error };
+    }
 }
 
 export const getSession = async () => {
-    const { data, error } = await supabase.auth.getSession();
+    const authData = pb.authStore.model;
     return {
-        data,
-        error
+        data: { session: authData ? { user: authData } : null },
+        error: null
     };
 }
 
 export const updateUser = async (obj: any) => {
-    const { data, error } = await supabase.auth.updateUser(obj);
-    return {
-        data,
-        error
-    };
+    try {
+        const data = await pb.collection('users').update(pb.authStore.model?.id, obj);
+        return { data, error: null };
+    } catch (error) {
+        return { data: null, error };
+    }
 }
 
 export const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    return {
-        error
-    };
+    pb.authStore.clear();
+    return { error: null };
 }
 
 export const getAllContacts = async () => {
-    const { data, error } = await fetchContacts('lastname', 'asc');
-  return {
-    data,
-    error
-  };
+    return fetchContacts('lastname', 'asc');
 }
 
 export async function fetchContacts(column: string, direction: 'asc' | 'desc') {
-    const { data, error } = await supabase
-      .from('contacts')
-      .select('*')
-      .order(column, { ascending: direction === 'asc' });
-        
-    return { data, error} // data || [];
-  }
+    try {
+        const data = await pb.collection('contacts').getList(1, 50, {
+            sort: direction === 'asc' ? column : `-${column}`,
+        });
+        return { data: data.items, error: null };
+    } catch (error) {
+        return { data: null, error };
+    }
+}
