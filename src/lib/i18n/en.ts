@@ -30,6 +30,7 @@ export default {
         emailRequired: "Email is required for password reset",
         resetPasswordEmailSent: "Password reset email sent. Check your inbox.",
         unexpectedError: "An unexpected error occurred. Please try again.",
+        registerSuccess: "Registration successful. Please check your email for verification."
       },
       contacts: {
         title: "Contacts",

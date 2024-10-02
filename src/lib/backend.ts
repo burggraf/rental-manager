@@ -14,10 +14,18 @@ export const signInWithPassword = async (email: string, password: string) => {
         password,
       });
       if (signInError) {
-        return String(signInError);
+        return signInError;
       } else {
         return '';
       }
+}
+
+export const signUp = async (email: string, password: string) => {
+    const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+      return String(signUpError);
 }
 
 export const signInWithOAuth = 

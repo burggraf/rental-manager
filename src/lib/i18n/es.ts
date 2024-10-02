@@ -29,7 +29,8 @@ export default {
         forgotPassword: "¿Olvidaste tu contraseña?",
         emailRequired: "Se requiere el correo electrónico para restablecer la contraseña",
         resetPasswordEmailSent: "Correo de restablecimiento de contraseña enviado. Revisa tu bandeja de entrada.",
-        unexpectedError: "Ocurrió un error inesperado. Por favor, inténtalo de nuevo."
+        unexpectedError: "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.",
+        registerSuccess: "Registro exitoso. Por favor, verifica tu correo electrónico."
       },
       contacts: {
         title: "Contactos",
