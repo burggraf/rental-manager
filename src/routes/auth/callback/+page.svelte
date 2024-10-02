@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { supabase } from '$lib/supabase';
+  import { getSession } from '$lib/backend';
 
   onMount(async () => {
-    const { error } = await supabase.auth.getSession();
+    const { error } = await getSession();
     if (error) {
       console.error('Error getting session:', error);
     }

@@ -2,14 +2,13 @@
 	import { LogOut, LogIn } from 'lucide-svelte';
 	import { Button } from "$lib/components/ui/button/index.js";
 	import { Avatar, AvatarImage, AvatarFallback } from "$lib/components/ui/avatar/index.js";
-	import { supabase } from '$lib/supabase';
 	import { user } from '$lib/stores/userStore';
 	import { t } from '$lib/i18n';
-
+	import { signOut } from '$lib/backend';
 	export let loginModalOpen: boolean;
 
 	async function handleLogout() {
-		await supabase.auth.signOut();
+		await signOut();
 		user.set(null);
 	}
 

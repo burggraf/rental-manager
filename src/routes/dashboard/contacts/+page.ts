@@ -1,11 +1,9 @@
-import { supabase } from '$lib/supabase';
 import type { Contact } from '$lib/types/contact';
 import type { PageLoad } from './$types';
+import { getAllContacts } from '$lib/backend';
 
 export const load: PageLoad = async () => {
-  const { data, error } = await supabase
-    .from('contacts')
-    .select('*');
+  const { data, error } = await getAllContacts();
 
   return {
     contacts: data as Contact[] || [],

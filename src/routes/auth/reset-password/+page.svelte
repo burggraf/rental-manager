@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { supabase } from '$lib/supabase';
   import { goto } from '$app/navigation';
   import { t } from '$lib/i18n';
   import { Button } from '$lib/components/ui/button';
   import { Input } from '$lib/components/ui/input';
   import { Label } from '$lib/components/ui/label';
   import { page } from '$app/stores';
-
+  import { updateUser } from '$lib/backend';
   export let data;
 
   let newPassword = '';
@@ -25,7 +24,7 @@
     error = null;
 
     try {
-      const { error: resetError } = await supabase.auth.updateUser({
+      const { error: resetError } = await updateUser({
         password: newPassword
       });
 

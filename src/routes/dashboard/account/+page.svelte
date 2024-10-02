@@ -2,13 +2,13 @@
 	import { onMount } from 'svelte'
 	import { user } from '$lib/stores/userStore'
 	import { notification } from '$lib/stores/notificationStore'
-	import { supabase } from '$lib/supabase'
 	import { Button } from '$lib/components/ui/button/index.js'
 	import { Input } from '$lib/components/ui/input/index.js'
 	import { Label } from '$lib/components/ui/label/index.js'
 	import * as Card from '$lib/components/ui/card/index.js'
 	import { t } from '$lib/i18n'
 	import MainLayout from '$lib/components/MainLayout.svelte'
+	import { updateUser } from '$lib/backend';
 
 	let firstName = ''
 	let lastName = ''
@@ -27,7 +27,7 @@
 
 	async function updateProfile() {
 		loading = true
-		const { data, error } = await supabase.auth.updateUser({
+		const { data, error } = await updateUser({
 			data: { first_name: firstName, last_name: lastName },
 		})
 

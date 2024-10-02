@@ -10,12 +10,11 @@
     import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
     import * as Sheet from "$lib/components/ui/sheet/index.js";
     import * as Dialog from "$lib/components/ui/dialog";
-  
+    import { getSession } from '$lib/backend';
     import Sidebar from '$lib/components/Sidebar.svelte';
     import LanguageSelector from '$lib/components/LanguageSelector.svelte';
     import { page } from '$app/stores';
     import { onMount } from 'svelte';
-    import { supabase } from '$lib/supabase';
     import { user } from '$lib/stores/userStore';
     import { Toaster } from '$lib/components/ui/sonner';
     import { cn } from "$lib/utils";
@@ -48,21 +47,11 @@
     }
   
     onMount(() => {
-      supabase.auth.getSession().then(({ data }) => {
+      getSession().then(({ data }) => {
         if (data.session) {
           user.set(data.session.user);
           console.log('User logged in:', data.session.user);
-          // Fetch user's language preference
-          /*
-          const { data: userData } = await supabase
-            .from('users')
-            .select('language')
-            .eq('id', data.session.user.id)
-            .single();
-          if (userData && userData.language) {
-            currentLanguage = userData.language;
-          }
-            */
+          // Fetch user's language preference here
         }
       });
     });

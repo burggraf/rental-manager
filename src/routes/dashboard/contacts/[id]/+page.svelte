@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabase'
 	import { goto } from '$app/navigation'
 	import MainLayout from '$lib/components/MainLayout.svelte'
 	import { t } from '$lib/i18n'
@@ -8,7 +7,7 @@
 	import { onMount } from 'svelte'
 	import { page } from '$app/stores'
 	import { showToast } from '$lib/utils/toast'
-
+	import { saveContact, deleteContact } from '$lib/backend'
 	let { data } = $props()
 	let contactDetail = $state(data.contact || { firstname: '', lastname: '', email: '', notes: '' })
 	let notesTextarea: HTMLTextAreaElement
@@ -32,10 +31,7 @@
 			return
 		}
 
-		const { error } = isNewContact
-			? await supabase.from('contacts').insert(contactDetail)
-			: await supabase.from('contacts').update(contactDetail).eq('id', contactDetail.id)
-
+		const { error } = await saveContact(contactDetail)
 		if (error) {
 			console.error('Error saving contact:', error)
 			showToast($t('contactDetail.saveError'), { type: 'error' })
@@ -49,8 +45,7 @@
 
 	async function handleDelete() {
 		if (confirm($t('contactDetail.deleteConfirmation'))) {
-			const { error } = await supabase.from('contacts').delete().eq('id', contactDetail.id)
-
+			const { error } = await deleteContact(contactDetail.id)
 			if (error) {
 				console.error('Error deleting contact:', error)
 			} else {

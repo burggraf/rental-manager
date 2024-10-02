@@ -1,17 +1,14 @@
 <script lang="ts">
-import { supabase } from '$lib/supabase';
 import { goto } from '$app/navigation';
 import { t } from '$lib/i18n';
-
+import { saveContact } from '$lib/backend';
 let firstname = '';
 let lastname = '';
 let email = '';
 let notes = '';
 
 async function handleSubmit() {
-  const { error } = await supabase
-    .from('contacts')
-    .insert({ firstname, lastname, email, notes });
+  const { error } = await saveContact({ id: '', firstname, lastname, email, notes });
 
   if (error) {
     console.error('Error submitting form:', error);
