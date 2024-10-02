@@ -21,7 +21,10 @@
     import { cn } from "$lib/utils";
   
     import DarkModeToggle from "$lib/components/DarkModeToggle.svelte";
-  
+
+    const app_version = __APP_VERSION__
+	  const app_title = __APP_TITLE__
+
     let sheetOpen = $state(false);
     let currentLanguage = $state('en');
     let languageSelectorOpen = $state(false);
@@ -110,6 +113,7 @@
       
       <div class="flex items-center space-x-2">
         <slot name="bottom-center">
+          {app_title} v{app_version} 
           <!-- Default content for bottom-center -->
           <slot name="footer" />
         </slot>
