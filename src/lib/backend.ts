@@ -39,16 +39,6 @@ export const resetPasswordForEmail = async (email: string) => {
       return resetError;
 }
 
-export const getAllContacts = async (sortState: SortState) => {
-    const { data, error } = await supabase
-    .from('contacts')
-    .select('*');
-  return {
-    data,
-    error
-  };
-}
-
 export const getContactById = async (id: string) => {
     const { data, error } = await supabase
     .from('contacts')
@@ -103,16 +93,19 @@ export const signOut = async () => {
     };
 }
 
-export async function fetchContacts(column: string, direction: 'asc' | 'desc'): Promise<Contact[]> {
+export const getAllContacts = async () => {
+    const { data, error } = await fetchContacts('lastname', 'asc');
+  return {
+    data,
+    error
+  };
+}
+
+export async function fetchContacts(column: string, direction: 'asc' | 'desc') {
     const { data, error } = await supabase
       .from('contacts')
       .select('*')
       .order(column, { ascending: direction === 'asc' });
-    
-    if (error) {
-      console.error('Error fetching contacts:', error);
-      throw error;
-    }
-    
-    return data || [];
+        
+    return { data, error} // data || [];
   }

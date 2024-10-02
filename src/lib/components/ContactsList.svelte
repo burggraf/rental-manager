@@ -24,7 +24,13 @@
 
   async function loadContacts() {
     try {
-      contacts = await fetchContacts(sortState.column, sortState.direction);
+      const { data, error } = await fetchContacts(sortState.column, sortState.direction);
+      if (error) {
+        console.error('Error loading contacts:', error);
+        contacts = [];
+      } else {
+        contacts = data;
+      }
     } catch (error) {
       console.error('Error loading contacts:', error);
       // Handle error (e.g., show error message to user)
