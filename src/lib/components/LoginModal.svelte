@@ -3,7 +3,7 @@
   import { Input } from "$lib/components/ui/input";
   import { Label } from "$lib/components/ui/label";
   import * as Dialog from "$lib/components/ui/dialog";
-  import { supabase } from '$lib/supabase';
+  import { signInWithPassword, signInWithOAuth, resetPasswordForEmail } from '$lib/backend';
   import { browser } from '$app/environment';
   import { t } from '$lib/i18n';
 	import { showToast } from '$lib/utils/toast'
@@ -16,10 +16,6 @@
   let error = $state<string | null>(null);
   let isLogin = $state(true);
 
-  $effect(() => {
-    console.log('Modal open:', open);
-  });
-
   function closeModal() {
     open = false;
   }
@@ -28,18 +24,22 @@
     loading = true;
     error = null;
 
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (signInError) {
-      error = signInError.message;
-    } else {
-      closeModal(); // Close the modal on successful login
+    try {
+      const signInError = await signInWithPassword(email, password);
+    
+      if (signInError) {
+        error = signInError;
+        showToast(error, { type: 'error' });
+      } else {
+        closeModal(); // Close the modal on successful login
+      }
+    } catch (e) {
+      error = 'An unexpected error occurred';
+      console.error(e);
+      showToast(error, { type: 'error' });
+    } finally {
+      loading = false;
     }
-
-    loading = false;
   }
 
   async function handleGoogleLogin() {
@@ -49,21 +49,18 @@
     error = null;
 
     try {
-      const { error: signInError } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`
-        }
-      });
+      const { signInError } = await signInWithOAuth('google');
 
       if (signInError) {
         error = signInError.message;
+        showToast(error, { type: 'error' });
       } else {
         closeModal(); // Close the modal on successful login
       }
     } catch (e) {
       error = 'An unexpected error occurred';
       console.error(e);
+      showToast(error, { type: 'error' });
     } finally {
       loading = false;
     }
@@ -82,17 +79,17 @@
 
     if (!email) {
       error = $t('loginModal.emailRequired');
+      showToast(error, { type: 'error' });
       loading = false;
       return;
     }
 
     try {
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/reset-password`,
-      });
+      const { resetError } = await resetPasswordForEmail(email);
 
       if (resetError) {
         error = resetError.message;
+        showToast(error, { type: 'error' });
       } else {
         // Show success message
         error = null;

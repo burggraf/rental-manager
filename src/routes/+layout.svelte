@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { supabase } from '$lib/supabase';
-  import { user } from '$lib/stores/authStore';
-  import { browser } from '$app/environment';
+  // import { onMount } from 'svelte';
+  // import { supabase } from '$lib/supabase';
+  // import { user } from '$lib/stores/authStore';
+  // import { browser } from '$app/environment';
   import '../app.css';
-  import { page } from '$app/stores';
-  import LanguageSelector from '$lib/components/LanguageSelector.svelte';
+  // import { page } from '$app/stores';
+  // import LanguageSelector from '$lib/components/LanguageSelector.svelte';
   import { ModeWatcher } from "mode-watcher";
-  let notificationSupported = $state(false);
+  // let notificationSupported = $state(false);
 
+  /*
   onMount(() => {
     if (browser) {
       notificationSupported = 'Notification' in window;
@@ -36,11 +37,13 @@
       Notification.requestPermission();
     }
   }
+  */
 </script>
 
 <ModeWatcher />
 
 <svelte:head>
+  <!--
   {#if browser && notificationSupported}
     <script>
       // Request notification permission when the page loads
@@ -49,5 +52,6 @@
       }
     </script>
   {/if}
+  -->
 </svelte:head>
 <slot />
