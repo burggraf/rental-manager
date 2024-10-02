@@ -5,7 +5,8 @@
 	import { user } from '$lib/stores/userStore';
 	import { t } from '$lib/i18n';
 	import { signOut, pb } from '$lib/backend';
-	export let loginModalOpen: boolean;
+
+	let { loginModalOpen = $bindable() } = $props<{ loginModalOpen: boolean }>();
 
 	async function handleLogout() {
 		await signOut();
@@ -15,9 +16,9 @@
 	// Placeholder for user's plan type
 	const userPlan = "Free Account";
 
-	$: avatarUrl = $user?.avatar 
+	let avatarUrl = $derived($user?.avatar 
 		? pb.getFileUrl($user, $user.avatar, { thumb: '100x100' })
-		: '';
+		: '');
 </script>
 
 <div class="px-2 py-4 border-b">
