@@ -25,7 +25,11 @@ export default {
         registerButton: "Register",
         orContinueWith: "Or continue with",
         needAccount: "Need an account?",
-        alreadyHaveAccount: "Already have an account?"
+        alreadyHaveAccount: "Already have an account?",
+        forgotPassword: "Forgot password?",
+        emailRequired: "Email is required for password reset",
+        resetPasswordEmailSent: "Password reset email sent. Check your inbox.",
+        unexpectedError: "An unexpected error occurred. Please try again.",
       },
       contacts: {
         title: "Contacts",
@@ -161,5 +165,16 @@ export default {
         lightMode: "Light mode",
         darkMode: "Dark mode",
         systemSetting: "Use system setting"
+      },
+      resetPassword: {
+        pageTitle: "Reset Password - Acme Inc",
+        title: "Reset Your Password",
+        newPassword: "New Password",
+        confirmPassword: "Confirm Password",
+        resetButton: "Reset Password",
+        resetting: "Resetting...",
+        passwordMismatch: "Passwords do not match",
+        successMessage: "Password reset successful. You can now log in with your new password.",
+        unexpectedError: "An unexpected error occurred. Please try again."
       }
-};
+} as const;

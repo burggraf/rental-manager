@@ -6,6 +6,7 @@
   import { supabase } from '$lib/supabase';
   import { browser } from '$app/environment';
   import { t } from '$lib/i18n';
+	import { showToast } from '$lib/utils/toast'
 
   let { open = $bindable(false) } = $props();
 
@@ -72,6 +73,39 @@
     isLogin = !isLogin;
     error = null;
   }
+
+  async function handleForgotPassword() {
+    if (!browser) return;
+
+    loading = true;
+    error = null;
+
+    if (!email) {
+      error = $t('loginModal.emailRequired');
+      loading = false;
+      return;
+    }
+
+    try {
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/reset-password`,
+      });
+
+      if (resetError) {
+        error = resetError.message;
+      } else {
+        // Show success message
+        error = null;
+        alert($t('loginModal.resetPasswordEmailSent'));
+        closeModal();
+      }
+    } catch (e) {
+      console.error('Password reset error:', e);
+      error = $t('loginModal.unexpectedError');
+    } finally {
+      loading = false;
+    }
+  }
 </script>
 
 {#if open}
@@ -98,6 +132,15 @@
         <Button class="w-full" onclick={handleLogin} disabled={loading}>
           {loading ? $t('loginModal.loading') : (isLogin ? $t('loginModal.loginButton') : $t('loginModal.registerButton'))}
         </Button>
+        {#if isLogin}
+          <Button variant="link" class="w-full text-sm" onclick={handleForgotPassword}>
+            {$t('loginModal.forgotPassword')}
+          </Button>
+        {:else}
+          <Button variant="link" class="w-full text-sm">
+            &nbsp;
+          </Button>
+      {/if}
         <div class="relative">
           <div class="absolute inset-0 flex items-center">
             <span class="w-full border-t"></span>

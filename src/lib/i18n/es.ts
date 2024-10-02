@@ -25,7 +25,11 @@ export default {
         registerButton: "Registrarse",
         orContinueWith: "O continuar con",
         needAccount: "¿Necesita una cuenta?",
-        alreadyHaveAccount: "¿Ya tiene una cuenta?"
+        alreadyHaveAccount: "¿Ya tiene una cuenta?",
+        forgotPassword: "¿Olvidaste tu contraseña?",
+        emailRequired: "Se requiere el correo electrónico para restablecer la contraseña",
+        resetPasswordEmailSent: "Correo de restablecimiento de contraseña enviado. Revisa tu bandeja de entrada.",
+        unexpectedError: "Ocurrió un error inesperado. Por favor, inténtalo de nuevo."
       },
       contacts: {
         title: "Contactos",
@@ -161,5 +165,16 @@ export default {
         lightMode: "Modo claro",
         darkMode: "Modo oscuro",
         systemSetting: "Ajuste del sistema"
+      },
+      resetPassword: {
+        pageTitle: "Restablecer Contraseña - Acme Inc",
+        title: "Restablece tu Contraseña",
+        newPassword: "Nueva Contraseña",
+        confirmPassword: "Confirmar Contraseña",
+        resetButton: "Restablecer Contraseña",
+        resetting: "Restableciendo...",
+        passwordMismatch: "Las contraseñas no coinciden",
+        successMessage: "Contraseña restablecida con éxito. Ahora puedes iniciar sesión con tu nueva contraseña.",
+        unexpectedError: "Ocurrió un error inesperado. Por favor, inténtalo de nuevo."
       }  
 };

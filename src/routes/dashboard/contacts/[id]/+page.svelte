@@ -8,7 +8,6 @@
 	import { onMount } from 'svelte'
 	import { page } from '$app/stores'
 	import { showToast } from '$lib/utils/toast'
-	import { toast } from 'svelte-sonner'
 
 	let { data } = $props()
 	let contactDetail = $state(data.contact || { firstname: '', lastname: '', email: '', notes: '' })
