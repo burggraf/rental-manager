@@ -8,6 +8,62 @@ export const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_K
 export const user = writable<User | null>(null);
 import { createSortHandler, type SortState } from '$lib/utils/sorting';
 
+
+// **************************
+// **** DATABASE ACTIONS ****
+// **************************
+
+export const getItemById = async (collection: string, id: string) => {
+    const { data, error } = await supabase
+    .from(collection)
+    .select('*')
+    .eq('id', id)
+    .single();  
+    return {
+        data,
+        error
+    };
+}
+
+export const deleteItem = async (collection: string, id: string) => {
+    const { error } = await supabase
+    .from(collection)
+    .delete()
+    .eq('id', id);
+    return {
+        error
+    };
+}
+
+export const saveItem = async (collection: string, item: any) => {
+    const { data, error } = await supabase
+    .from(collection)
+    .upsert(item);
+    return {
+        data,
+        error
+    };
+}
+
+export const getList = async (collection: string, startingIndex: number, perPage: number, sortColumn: string, sortDirection: 'asc' | 'desc') => {
+
+    const { data, error } = await supabase
+      .from(collection)
+      .select('*')
+      .order(sortColumn, { ascending: sortDirection === 'asc' })
+      .range(startingIndex - 1, startingIndex + perPage - 1);
+        
+    return { data, error} // data || [];
+}
+
+// ************************
+// **** AUTHENTICATION ****
+// ************************
+
+export const getAvatarUrl = (user: User) => {
+  return user?.user_metadata?.picture || '';
+}
+
 export const signInWithPassword = async (email: string, password: string) => {
     const { error: signInError } = await supabase.auth.signInWithPassword({
         email,
@@ -28,16 +84,15 @@ export const signUp = async (email: string, password: string) => {
       return String(signUpError);
 }
 
-export const signInWithOAuth = 
-    async (provider: string) => {
+export const signInWithOAuth = async (provider: string) => {
 
-        const { error: signInError } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-              redirectTo: `${window.location.origin}/auth/callback`
-            }
-          });
-          return signInError;
+    const { error: signInError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+      return signInError;
 }
 
 export const resetPasswordForEmail = async (email: string) => {
@@ -45,37 +100,6 @@ export const resetPasswordForEmail = async (email: string) => {
         redirectTo: `${window.location.origin}/auth/reset-password`,
       });
       return resetError;
-}
-
-export const getContactById = async (id: string) => {
-    const { data, error } = await supabase
-    .from('contacts')
-    .select('*')
-    .eq('id', id)
-    .single();  
-    return {
-        data,
-        error
-    };
-}
-
-export const deleteContact = async (id: string) => {   
-    const { error } = await supabase
-    .from('contacts')
-    .delete()
-    .eq('id', id);
-    return {
-        error
-    };
-}
-export const saveContact = async (contact: Contact) => {
-    const { data, error } = await supabase
-    .from('contacts')
-    .upsert(contact);
-    return {
-        data,
-        error
-    };
 }
 
 export const getSession = async () => {
@@ -100,20 +124,3 @@ export const signOut = async () => {
         error
     };
 }
-
-export const getAllContacts = async () => {
-    const { data, error } = await fetchContacts('lastname', 'asc');
-  return {
-    data,
-    error
-  };
-}
-
-export async function fetchContacts(column: string, direction: 'asc' | 'desc') {
-    const { data, error } = await supabase
-      .from('contacts')
-      .select('*')
-      .order(column, { ascending: direction === 'asc' });
-        
-    return { data, error} // data || [];
-  }

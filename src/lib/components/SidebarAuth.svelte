@@ -4,7 +4,7 @@
 	import { Avatar, AvatarImage, AvatarFallback } from "$lib/components/ui/avatar/index.js";
 	import { user } from '$lib/backend';
 	import { t } from '$lib/i18n';
-	import { signOut, pb } from '$lib/backend';
+	import { signOut, getAvatarUrl } from '$lib/backend';
 
 	let { loginModalOpen = $bindable() } = $props<{ loginModalOpen: boolean }>();
 
@@ -15,17 +15,14 @@
 
 	// Placeholder for user's plan type
 	const userPlan = "Free Account";
-	console.log('$user', $user);
-	let avatarUrl = $derived($user?.avatar 
-		? pb.getFileUrl($user, $user.avatar, { thumb: '100x100' })
-		: '');
+	let avatarUrl = $derived(getAvatarUrl($user));
 </script>
 
 <div class="px-2 py-4 border-b">
 	{#if $user}
 		<div class="flex items-center mb-2">
 			<Avatar class="h-10 w-10 mr-3">
-				<AvatarImage src={avatarUrl} alt={$user.email} />
+				<AvatarImage src={avatarUrl} alt={$user?.email ?? ''} />
 				<AvatarFallback>{$user.email[0].toUpperCase()}</AvatarFallback>
 			</Avatar>
 			<div>
