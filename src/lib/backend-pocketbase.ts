@@ -1,8 +1,10 @@
+// POCKETBASE BACKEND
 import PocketBase from 'pocketbase';
 import type { RecordModel } from 'pocketbase';
 import { writable } from 'svelte/store';
+import { PUBLIC_POCKETBASE_URL } from '$env/static/public'
 
-export const pb = new PocketBase('http://127.0.0.1:8090');
+export const pb = new PocketBase(PUBLIC_POCKETBASE_URL);
 export const user = writable<RecordModel | null>(null);
 // 		// ? pb.getFileUrl($user, $user.avatar, { thumb: '100x100' })
 

@@ -4,9 +4,9 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
+		"dev": "sh -ac '. ./.env;cp src/lib/backend-$PUBLIC_BACKEND_TYPE.ts src/lib/backend.ts; vite dev --open . --host 0.0.0.0'",
+		"build": "sh -ac '. ./.env;cp src/lib/backend-$PUBLIC_BACKEND_TYPE.ts src/lib/backend.ts; vite build'",
+		"preview": "sh -ac '. ./.env;cp src/lib/backend-$PUBLIC_BACKEND_TYPE.ts src/lib/backend.ts; vite preview'",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
