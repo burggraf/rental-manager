@@ -19,8 +19,8 @@ export const load: PageLoad = async ({ params }) => {
   if (err) {
     throw error(404, 'Contact not found');
   }
-
+  console.log('***** load: data', data)
   return {
-    contact: data
+    contact: data?.data, error
   };
 };

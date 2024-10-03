@@ -1,9 +1,9 @@
-import { pb } from './backend';
+import { getItemById, deleteItem, saveItem, getList } from './backend';
 import type { Contact } from '$lib/types/contact';
 
 export const getContactById = async (id: string) => {
     try {
-        const data = await pb.collection('contacts').getOne(id);
+        const data = await getItemById('contacts', id);
         return { data, error: null };
     } catch (error) {
         return { data: null, error };
@@ -12,7 +12,7 @@ export const getContactById = async (id: string) => {
 
 export const deleteContact = async (id: string) => {
     try {
-        await pb.collection('contacts').delete(id);
+        await deleteItem('contacts', id);
         return { error: null };
     } catch (error) {
         return { error };
@@ -20,21 +20,9 @@ export const deleteContact = async (id: string) => {
 }
 
 export const saveContact = async (contact: Contact) => {
-    try {
-        let data;
-        if (contact.id) {
-            data = await pb.collection('contacts').update(contact.id, contact);
-        } else {
-            if (!contact.userid) {
-                contact.userid = pb.authStore.model?.id;
-            }
-            data = await pb.collection('contacts').create(contact);
-        }
-        return { data, error: null };
-    } catch (error) {
-        console.error('saveContact error', error);
-        return { data: null, error };
-    }
+    console.log('saveContact: contact', contact);
+    const { data, error } = await saveItem('contacts', contact);
+    return { data, error };
 }
 
 export const getAllContacts = async () => {
@@ -42,12 +30,6 @@ export const getAllContacts = async () => {
 }
 
 export async function fetchContacts(column: string, direction: 'asc' | 'desc') {
-    try {
-        const data = await pb.collection('contacts').getList(1, 50, {
-            sort: direction === 'asc' ? column : `-${column}`,
-        });
-        return { data: data.items, error: null };
-    } catch (error) {
-        return { data: null, error };
-    }
+    const { data, error } = await getList('contacts', 1, 50, column, direction);
+    return { data, error };
 }

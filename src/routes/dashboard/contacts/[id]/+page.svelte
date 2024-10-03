@@ -8,12 +8,11 @@
 	import { page } from '$app/stores'
 	import { showToast } from '$lib/utils/toast'
 	import { saveContact, deleteContact } from '$lib/contactService'
+	import { user } from '$lib/backend'
 	let { data } = $props()
 	let contactDetail = $state(data.contact || { firstname: '', lastname: '', email: '', notes: '' })
 	let notesTextarea: HTMLTextAreaElement
-	console.log('$page.url.pathname', $page.url.pathname)
 	let isNewContact = $derived($page.url.pathname.split('/').pop() === 'new')
-	console.log($page.url.pathname.split('/').pop())
 
 	function isValidEmail(email: string): boolean {
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -30,8 +29,9 @@
 			showToast($t('contactDetail.emailInvalid'), { type: 'error' })
 			return
 		}
-
-		const { error } = await saveContact(contactDetail)
+		const obj = $state.snapshot(contactDetail)
+		obj.userid = $user.id
+		const { error } = await saveContact(obj)
 		if (error) {
 			console.error('Error saving contact:', error)
 			showToast($t('contactDetail.saveError'), { type: 'error' })

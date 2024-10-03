@@ -5,6 +5,57 @@ import { writable } from 'svelte/store';
 export const pb = new PocketBase('http://127.0.0.1:8090');
 export const user = writable<RecordModel | null>(null);
 
+// **************************
+// **** DATABASE ACTIONS ****
+// **************************
+
+export const getItemById = async (collection: string, id: string) => {
+    try {
+        const data = await pb.collection(collection).getOne(id);
+        return { data, error: null };
+    } catch (error) {
+        return { data: null, error };
+    }
+}
+
+export const deleteItem = async (collection: string, id: string) => {
+    try {
+        await pb.collection(collection).delete(id);
+        return { error: null };
+    } catch (error) {
+        return { error };
+    }
+}
+
+export const saveItem = async (collection: string, item: any) => {
+    console.log('saveItem: collection', collection, 'item', item);
+    try {
+        let data;
+        if (item.id) {
+            data = await pb.collection(collection).update(item.id, item);
+        } else {
+            delete item.id;
+            data = await pb.collection(collection).create(item);
+        }
+        return { data, error: null };
+    } catch (error) {
+        return { data: null, error };
+    }
+}
+
+export const getList = async (collection: string, startingIndex: number, perPage: number, sortColumn: string, sortDirection: 'asc' | 'desc') => {
+    try {
+        const data = await pb.collection(collection).getList(startingIndex, perPage, {
+            sort: sortDirection === 'asc' ? sortColumn : `-${sortColumn}`,
+        });
+        return { data: data.items, error: null };
+    } catch (error) {
+        return { data: null, error };
+    }
+}
+
+// **** AUTHENTICATION ****
+// ************************
 export const signInWithPassword = async (email: string, password: string) => {
     try {
         const authData = await pb.collection('users').authWithPassword(email, password);
