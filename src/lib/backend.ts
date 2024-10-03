@@ -1,7 +1,6 @@
 import PocketBase from 'pocketbase';
 import type { RecordModel } from 'pocketbase';
 import { writable } from 'svelte/store';
-import type { Contact } from '$lib/types/contact';
 
 export const pb = new PocketBase('http://127.0.0.1:8090');
 export const user = writable<RecordModel | null>(null);
@@ -49,14 +48,9 @@ export const signInWithOAuth = async (provider: string) => {
             console.log('User ID:', id);
             
             try {
-                // Fetch the image and create a File object
                 const avatarFile = await urlToFile(avatarUrl, 'avatar.jpg');
-
-                // Create form data
                 const formData = new FormData();
                 formData.append('avatar', avatarFile);
-
-                // Update the user record with the file
                 const record = await pb.collection('users').update(id, formData);
                 console.log('Avatar updated successfully', record);
             } catch (e) {
@@ -67,7 +61,6 @@ export const signInWithOAuth = async (provider: string) => {
                 if ('data' in e) {
                     console.error('Error data:', e.data);
                 }
-                // Don't throw the error, just log it
             }
         }
         
@@ -84,44 +77,6 @@ export const resetPasswordForEmail = async (email: string) => {
         return null;
     } catch (error) {
         return error;
-    }
-}
-
-export const getContactById = async (id: string) => {
-    try {
-        const data = await pb.collection('contacts').getOne(id);
-        return { data, error: null };
-    } catch (error) {
-        return { data: null, error };
-    }
-}
-
-export const deleteContact = async (id: string) => {
-    try {
-        await pb.collection('contacts').delete(id);
-        return { error: null };
-    } catch (error) {
-        return { error };
-    }
-}
-
-export const saveContact = async (contact: Contact) => {
-    try {
-        let data;
-        if (contact.id) {
-            // If the contact has an ID, update the existing record
-            data = await pb.collection('contacts').update(contact.id, contact);
-        } else {
-            // If the contact doesn't have an ID, create a new record
-            if (!contact.userid) {
-                contact.userid = pb.authStore.model?.id;
-            }
-            data = await pb.collection('contacts').create(contact);
-        }
-        return { data, error: null };
-    } catch (error) {
-        console.error('saveContact error', error);
-        return { data: null, error };
     }
 }
 
@@ -146,19 +101,4 @@ export const updateUser = async (obj: any) => {
 export const signOut = async () => {
     pb.authStore.clear();
     return { error: null };
-}
-
-export const getAllContacts = async () => {
-    return fetchContacts('lastname', 'asc');
-}
-
-export async function fetchContacts(column: string, direction: 'asc' | 'desc') {
-    try {
-        const data = await pb.collection('contacts').getList(1, 50, {
-            sort: direction === 'asc' ? column : `-${column}`,
-        });
-        return { data: data.items, error: null };
-    } catch (error) {
-        return { data: null, error };
-    }
 }

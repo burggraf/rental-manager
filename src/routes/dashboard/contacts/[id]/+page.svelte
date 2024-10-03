@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte'
 	import { page } from '$app/stores'
 	import { showToast } from '$lib/utils/toast'
-	import { saveContact, deleteContact } from '$lib/backend'
+	import { saveContact, deleteContact } from '$lib/contactService'
 	let { data } = $props()
 	let contactDetail = $state(data.contact || { firstname: '', lastname: '', email: '', notes: '' })
 	let notesTextarea: HTMLTextAreaElement

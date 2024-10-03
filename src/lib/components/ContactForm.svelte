@@ -1,7 +1,7 @@
 <script lang="ts">
 import { goto } from '$app/navigation';
 import { t } from '$lib/i18n';
-import { saveContact } from '$lib/backend';
+import { saveContact } from '$lib/contactService';
 let firstname = '';
 let lastname = '';
 let email = '';

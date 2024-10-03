@@ -1,6 +1,6 @@
 import type { Contact } from '$lib/types/contact';
 import type { PageLoad } from './$types';
-import { getAllContacts } from '$lib/backend';
+import { getAllContacts } from '$lib/contactService';
 
 export const load: PageLoad = async () => {
   const { data, error } = await getAllContacts();

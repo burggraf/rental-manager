@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
-import { getContactById } from '$lib/backend';
+import { getContactById } from '$lib/contactService';
 
 export const load: PageLoad = async ({ params }) => {
   if (params.id === 'new') {
