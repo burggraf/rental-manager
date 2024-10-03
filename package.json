@@ -8,7 +8,8 @@
 		"build": "sh -ac '. ./.env;cp src/lib/backend-$PUBLIC_BACKEND_TYPE.ts src/lib/backend.ts; vite build'",
 		"preview": "sh -ac '. ./.env;cp src/lib/backend-$PUBLIC_BACKEND_TYPE.ts src/lib/backend.ts; vite preview'",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+                "ios": "npm run build && npx cap sync && npx cap update ios && npx cap copy ios && npx cap run ios"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
