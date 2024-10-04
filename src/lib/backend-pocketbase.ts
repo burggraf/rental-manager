@@ -155,6 +155,10 @@ export const getSession = async () => {
 }
 
 export const updateUser = async (obj: any) => {
+    obj.user_metadata = obj.user_metadata || {};
+    for (const key in obj.data) {
+        obj.user_metadata[key] = obj.data[key];
+    }
     try {
         const data = await pb.collection('users').update(pb.authStore.model?.id, obj);
         return { data, error: null };

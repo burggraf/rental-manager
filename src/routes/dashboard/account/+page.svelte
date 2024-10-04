@@ -15,7 +15,7 @@
 	let email = $state('')	
 	let loading = false
 	$effect(() => {
-		console.log('$user', $user)
+		// console.log('$user', $user)
 
 		// This will run whenever $user changes
 		if ($user) {
@@ -49,12 +49,12 @@
 		const { data, error } = await updateUser({
 			data: { first_name: firstName, last_name: lastName },
 		})
-
+		console.log('updateProfile returned data, error:', data, error)
 		if (error) {
 			showToast('Failed to update profile', { type: 'error' })
 			console.error('Error updating profile:', error)
 		} else {
-			user.set(data.user)
+			user.set(data.user || data)
 			showToast('Profile updated successfully', { type: 'success' })
 		}
 		loading = false
