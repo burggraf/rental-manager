@@ -94,13 +94,28 @@ async function urlToFile(url: string, filename: string): Promise<File> {
     return new File([blob], filename, { type: blob.type });
 }
 
+async function refreshSession() {
+    const { data, error } = await getSession();
+    console.log('---->refreshSession: data, error', data, error)
+    console.log('---->refreshSession: user', data?.session?.user)
+    if (data.session) {
+        user.set(data.session.user);
+    } else if (error) {
+        console.error('Error refreshing session:', error);
+    }
+}
+
+
 export const signInWithOAuth = async (provider: string) => {
     try {
         const authData = await pb.collection('users').authWithOAuth2({ provider });
-        console.log('signInWithOAuth authData', authData);
-        const avatarUrl = authData?.meta?.avatarUrl;
-        console.log('signInWithOAuth avatarUrl', avatarUrl);
-        
+        const { data, error } = await getSession();
+        if (data?.session?.user) {
+            user.set(data.session.user as RecordModel);
+        } else if (error) {
+            console.error('Error refreshing session:', error);
+        }
+        const avatarUrl = authData?.meta?.avatarUrl;        
         if (avatarUrl && !authData.record.avatar) {
             console.log('Attempting to update avatar');
             const id = authData.record.id;
@@ -121,8 +136,7 @@ export const signInWithOAuth = async (provider: string) => {
                     console.error('Error data:', e.data);
                 }
             }
-        }
-        
+        }        
         return null;
     } catch (error) {
         console.error('signInWithOAuth error', error);
