@@ -158,7 +158,8 @@ export default {
         save: "Guardar",
         cancel: "Cancelar",
         edit: "Editar",
-        delete: "Eliminar"
+        delete: "Eliminar",
+        notLoggedIn: "No iniciado"
       },
       darkModeToggle: {
         toggleTheme: "Cambiar tema",

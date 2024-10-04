@@ -158,7 +158,8 @@ export default {
         save: "Save",
         cancel: "Cancel",
         edit: "Edit",
-        delete: "Delete"
+        delete: "Delete",
+        notLoggedIn: "Not logged in"
       },
       darkModeToggle: {
         toggleTheme: "Toggle theme",

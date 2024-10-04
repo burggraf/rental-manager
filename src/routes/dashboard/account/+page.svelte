@@ -10,12 +10,30 @@
 	import { updateUser } from '$lib/backend';
 	import { showToast } from '$lib/utils/toast'
 
-	let firstName = ''
-	let lastName = ''
-	let email = ''
+	let firstName = $state('')
+	let lastName = $state('')
+	let email = $state('')	
 	let loading = false
+	$effect(() => {
+		console.log('$user', $user)
 
+		// This will run whenever $user changes
+		if ($user) {
+			firstName = $user.user_metadata?.first_name || ''
+			lastName = $user.user_metadata?.last_name || ''
+			email = $user.email || ''
+
+		} else {
+			firstName = ''
+			lastName = ''
+			email = ''
+		}
+	});
+
+
+/*
 	onMount(() => {
+		
 		user.subscribe((currentUser) => {
 			if (currentUser) {
 				firstName = currentUser.user_metadata?.first_name || ''
@@ -24,6 +42,7 @@
 			}
 		})
 	})
+		*/
 
 	async function updateProfile() {
 		loading = true
@@ -45,6 +64,7 @@
 <MainLayout>
 	<div slot="title">{$t('account.title')}</div>
 	<div slot="content">
+		{#if $user}
 		<Card.Root class="max-w-md mx-auto mt-8">
 			<Card.Header>
 				<Card.Title>{$t('account.title')}</Card.Title>
@@ -69,6 +89,9 @@
 					</Button>
 				</form>
 			</Card.Content>
-		</Card.Root>
+			</Card.Root>
+		{:else}
+			<p>{$t('common.notLoggedIn')}</p>
+		{/if}
 	</div>
 </MainLayout>
