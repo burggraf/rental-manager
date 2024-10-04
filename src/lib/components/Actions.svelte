@@ -18,7 +18,6 @@
   }
 
   function handleAction(action: () => void) {
-    console.log('Action clicked');
     action();
     isOpen = false;
   }

@@ -83,7 +83,6 @@
 			} else {
 				// For OAuth, we don't need to manually refresh the session
 				// as it will be handled by the callback
-				console.log('---->handleGoogleLogin: refreshing session')
 				// await refreshSession()
 				closeModal()
 			}
@@ -136,8 +135,6 @@
 
 	async function refreshSession() {
 		const { data, error } = await getSession();
-		console.log('---->refreshSession: data, error', data, error)
-		console.log('---->refreshSession: user', data?.session?.user)
 		if (data.session) {
 			user.set(data.session.user);
 		} else if (error) {

@@ -31,7 +31,6 @@ export const deleteItem = async (collection: string, id: string) => {
 }
 
 export const saveItem = async (collection: string, item: any) => {
-    console.log('saveItem: collection', collection, 'item', item);
     try {
         let data;
         if (item.id) {
@@ -67,7 +66,6 @@ export const getAvatarUrl = (user: any) => {
 export const signInWithPassword = async (email: string, password: string) => {
     try {
         const authData = await pb.collection('users').authWithPassword(email, password);
-        console.log('signInWithPassword authData', authData)
         return '';
     } catch (error) {
         return error;
@@ -81,7 +79,6 @@ export const signUp = async (email: string, password: string) => {
             password,
             passwordConfirm: password,
         });
-        console.log('signUp result', result)
         return '';
     } catch (error) {
         return String(error);
@@ -96,8 +93,6 @@ async function urlToFile(url: string, filename: string): Promise<File> {
 
 async function refreshSession() {
     const { data, error } = await getSession();
-    console.log('---->refreshSession: data, error', data, error)
-    console.log('---->refreshSession: user', data?.session?.user)
     if (data.session) {
         user.set(data.session.user);
     } else if (error) {
@@ -117,16 +112,13 @@ export const signInWithOAuth = async (provider: string) => {
         }
         const avatarUrl = authData?.meta?.avatarUrl;        
         if (avatarUrl && !authData.record.avatar) {
-            console.log('Attempting to update avatar');
             const id = authData.record.id;
-            console.log('User ID:', id);
             
             try {
                 const avatarFile = await urlToFile(avatarUrl, 'avatar.jpg');
                 const formData = new FormData();
                 formData.append('avatar', avatarFile);
                 const record = await pb.collection('users').update(id, formData);
-                console.log('Avatar updated successfully', record);
             } catch (e) {
                 console.error('Failed to update avatar:', e);
                 if (e instanceof Error) {
@@ -156,8 +148,6 @@ export const resetPasswordForEmail = async (email: string) => {
 export const getSession = async () => {
     await pb.collection('users').authRefresh();
     const authData = pb.authStore.model;
-    console.log('>>>> getSession: authData', authData)
-    console.log('>>>> getSession will set user to: ', authData)
     return {
         data: { session: { user: authData } ? { user: authData } : null },
         error: null

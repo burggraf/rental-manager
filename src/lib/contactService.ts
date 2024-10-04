@@ -20,7 +20,6 @@ export const deleteContact = async (id: string) => {
 }
 
 export const saveContact = async (contact: Contact) => {
-    console.log('saveContact: contact', contact);
     const { data, error } = await saveItem('contacts', contact);
     return { data, error };
 }

@@ -19,7 +19,6 @@
 
   function handleChange(code: string) {
     setLocale(code);
-    console.log('Selected language:', code);
     isOpen = false;
   }
 
