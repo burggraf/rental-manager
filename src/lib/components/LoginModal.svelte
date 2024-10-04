@@ -3,7 +3,7 @@
 	import { Input } from '$lib/components/ui/input'
 	import { Label } from '$lib/components/ui/label'
 	import * as Dialog from '$lib/components/ui/dialog'
-	import { signUp, signInWithPassword, signInWithOAuth, resetPasswordForEmail } from '$lib/backend'
+	import { user, getSession, signInWithPassword, signUp, signInWithOAuth, resetPasswordForEmail } from '$lib/backend'
 	import { browser } from '$app/environment'
 	import { t } from '$lib/i18n'
 	import { showToast } from '$lib/utils/toast'
@@ -27,12 +27,14 @@
 		if (isLogin) {
 			try {
 				const signInError = await signInWithPassword(email, password)
-				console.log('signInError', signInError)
 				if (signInError) {
 					error = signInError
 					showToast(error, { type: 'error' })
 				} else {
-					closeModal() // Close the modal on successful login
+					// The user store should be automatically updated by Supabase
+					// We'll force a re-check of the session to be sure
+					await refreshSession();
+					closeModal()
 				}
 			} catch (e) {
 				error = 'An unexpected error occurred'
@@ -44,17 +46,18 @@
 		} else {
 			try {
 				const signUpError = await signUp(email, password)
-        console.log('signUpError', signUpError)
-        console.log('typeof signUpError', typeof signUpError)
 				if (signUpError && signUpError !== 'null') {
 					error = signUpError
 					showToast(error, { type: 'error' })
 				} else {
+					// The user store should be automatically updated by Supabase
+					// We'll force a re-check of the session to be sure
+					await refreshSession();
 					setTimeout(() => {
 						showToast($t('loginModal.registerSuccess'), { type: 'success' })
-          }, 500)
-					closeModal() // Close the modal on successful login
-        }
+					}, 500)
+					closeModal()
+				}
 			} catch (e) {
 				error = 'An unexpected error occurred'
 				console.error(e)
@@ -78,7 +81,9 @@
 				error = signInError
 				showToast(error, { type: 'error' })
 			} else {
-				closeModal() // Close the modal on successful login
+				// For OAuth, we don't need to manually refresh the session
+				// as it will be handled by the callback
+				closeModal()
 			}
 		} catch (e) {
 			error = 'An unexpected error occurred'
@@ -126,19 +131,28 @@
 			loading = false
 		}
 	}
+
+	async function refreshSession() {
+		const { data, error } = await getSession();
+		if (data.session) {
+			user.set(data.session.user);
+		} else if (error) {
+			console.error('Error refreshing session:', error);
+		}
+	}
 </script>
 
 {#if open}
 	<Dialog.Root open={true}>
 		<Dialog.Content class="sm:max-w-[425px]">
-			<Dialog.Header>
-				<Dialog.Title
-					>{isLogin ? $t('loginModal.loginTitle') : $t('loginModal.registerTitle')}</Dialog.Title
-				>
-				<Dialog.Description>
-					{isLogin ? $t('loginModal.loginDescription') : $t('loginModal.registerDescription')}
-				</Dialog.Description>
-			</Dialog.Header>
+				<Dialog.Header>
+					<Dialog.Title
+						>{isLogin ? $t('loginModal.loginTitle') : $t('loginModal.registerTitle')}</Dialog.Title
+					>
+					<Dialog.Description>
+						{isLogin ? $t('loginModal.loginDescription') : $t('loginModal.registerDescription')}
+					</Dialog.Description>
+				</Dialog.Header>
 			<div class="space-y-4 py-4">
 				<div class="space-y-2">
 					<Label for="email">{$t('loginModal.emailLabel')}</Label>

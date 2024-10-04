@@ -7,7 +7,7 @@
 	import { signOut, getAvatarUrl } from '$lib/backend';
 
 	let { loginModalOpen = $bindable() } = $props<{ loginModalOpen: boolean }>();
-
+	
 	async function handleLogout() {
 		await signOut();
 		user.set(null);
