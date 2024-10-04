@@ -86,12 +86,12 @@ export const signUp = async (email: string, password: string) => {
 }
 
 export const signInWithOAuth = async (provider: string) => {
-    const currentUrl = window.location.href;
-
+    let currentUrl = window.location.href;
+    localStorage.setItem('redirectUrl', currentUrl)
     const { error: signInError } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: currentUrl ? currentUrl :`${window.location.origin}/`
+          redirectTo: `${window.location.origin + '/auth/redirect'}` //currentUrl ? currentUrl :`${window.location.origin}/`
         }
       });
       return signInError;

@@ -140,10 +140,12 @@ export const resetPasswordForEmail = async (email: string) => {
 }
 
 export const getSession = async () => {
+    await pb.collection('users').authRefresh();
     const authData = pb.authStore.model;
-    console.log('getSession: authData', authData)
+    console.log('>>>> getSession: authData', authData)
+    console.log('>>>> getSession will set user to: ', authData)
     return {
-        data: { session: authData ? { user: authData } : null },
+        data: { session: { user: authData } ? { user: authData } : null },
         error: null
     };
 }
