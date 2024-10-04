@@ -14,12 +14,25 @@
   import { createSortHandler, type SortState } from '$lib/utils/sorting';
   import { t } from '$lib/i18n';
   import { fetchContacts } from '$lib/contactService';
+	import { user } from '$lib/backend';
 
   let contacts = $state<Contact[]>([]);
   let sortState = $state<SortState>({ column: 'lastname', direction: 'asc' });
 
+  // Remove the existing $effect
+  // $effect(() => {
+  //   loadContacts();
+  // });
+
+  // Add a new $effect that depends on $user
   $effect(() => {
-    loadContacts();
+    // This will run whenever $user changes
+    if ($user) {
+      loadContacts();
+    } else {
+      // Clear contacts if user is not logged in
+      contacts = [];
+    }
   });
 
   async function loadContacts() {
