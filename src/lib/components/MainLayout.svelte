@@ -58,7 +58,7 @@
   
   <div class="flex flex-col h-screen">
     <header
-      class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
+      class="bg-background fixed top-0 left-0 right-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4 safe-area-top"
     >
       <div class="flex items-center gap-0">
         <Sheet.Root bind:open={sheetOpen}>
@@ -84,9 +84,10 @@
       </div>
     </header>
 
-    <!-- adjust padding here if necessary -->
-    <main class="flex-1 overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8">
-      <slot name="content" />
+    <main class="flex-1 overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8 safe-area-top safe-area-bottom">
+      <div class="pt-14">
+        <slot name="content" />
+      </div>
     </main>
 
     <!--<footer class="bg-background border-t h-14 flex items-center justify-between px-4 pb-[env(safe-area-inset-bottom)]">-->
