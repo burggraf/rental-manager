@@ -58,7 +58,7 @@
   
   <div class="flex flex-col h-screen">
     <header
-      class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4 pt-[env(safe-area-inset-top)]"
+      class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
     >
       <div class="flex items-center gap-0">
         <Sheet.Root bind:open={sheetOpen}>
