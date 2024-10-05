@@ -3,7 +3,7 @@
 	import MainLayout from '$lib/components/MainLayout.svelte'
 	import { t } from '$lib/i18n'
 	import { cn } from '$lib/utils'
-	import { Check, X } from 'lucide-svelte'
+	import { Check, X, Trash2 } from 'lucide-svelte'
 	import { onMount } from 'svelte'
 	import { page } from '$app/stores'
 	import { showToast } from '$lib/utils/toast'
@@ -100,7 +100,7 @@
 		{isNewContact ? $t('contactDetail.createNew') : $t('contactDetail.editContact')}
 	</div>
 	<div slot="content">
-		<div class="max-w-2xl mx-auto mt-8">
+		<div class="max-w-2xl mx-auto mt-8 relative pb-16">
 			<form class="space-y-4" onsubmit={handleSubmit}>
 				<div class="w-full p-2 border rounded bg-background">
 					<label for="firstname" class="block text-sm font-medium text-foreground"
@@ -169,13 +169,14 @@
 				</div>
 
 				{#if !isNewContact}
-					<div class="flex justify-start mt-4">
+					<div class="absolute bottom-0 right-0 mt-4">
 						<button
 							type="button"
 							onclick={handleDelete}
-							class="px-4 py-2 bg-destructive text-destructive-foreground rounded hover:bg-destructive/90"
+							class="p-2 rounded-full text-destructive hover:bg-muted transition-colors duration-200"
+							aria-label={$t('common.delete')}
 						>
-							{$t('common.delete')}
+							<Trash2 class="w-6 h-6" />
 						</button>
 					</div>
 				{/if}
