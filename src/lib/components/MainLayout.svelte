@@ -84,6 +84,7 @@
       </div>
     </header>
 
+    <!-- adjust padding here if necessary -->
     <main class="flex-1 overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8">
       <slot name="content" />
     </main>

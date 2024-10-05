@@ -64,13 +64,14 @@ export default {
         privacyPolicy: "Privacy Policy"
       },
       account: {
-        title: "Account Settings",
-        personalInfo: "Update your personal information",
-        email: "Email",
-        firstName: "First Name",
-        lastName: "Last Name",
-        updateProfile: "Update Profile",
-        updating: "Updating..."
+        title: 'Account',
+        personalInfo: 'Your personal information',
+        email: 'Email',
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        bio: 'Bio', // Add this line
+        updateProfile: 'Update Profile',
+        updating: 'Updating...',
       },
       terms: {
         pageTitle: "Terms of Service - Acme Inc",

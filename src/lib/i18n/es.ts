@@ -69,6 +69,7 @@ export default {
         email: "Correo Electrónico",
         firstName: "Nombre",
         lastName: "Apellido",
+        bio: 'Biografía', // Add this line
         updateProfile: "Actualizar Perfil",
         updating: "Actualizando..."
       },

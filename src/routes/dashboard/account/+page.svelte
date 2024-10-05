@@ -9,10 +9,12 @@
 	import MainLayout from '$lib/components/MainLayout.svelte'
 	import { updateUser } from '$lib/backend';
 	import { showToast } from '$lib/utils/toast'
+	import { Textarea } from '$lib/components/ui/textarea/index.js'
 
 	let firstName = $state('')
 	let lastName = $state('')
 	let email = $state('')	
+	let bio = $state('')
 	let loading = false
 	$effect(() => {
 		// console.log('$user', $user)
@@ -22,11 +24,12 @@
 			firstName = $user.user_metadata?.first_name || ''
 			lastName = $user.user_metadata?.last_name || ''
 			email = $user.email || ''
-
+			bio = $user.user_metadata?.bio || ''
 		} else {
 			firstName = ''
 			lastName = ''
 			email = ''
+			bio = ''
 		}
 	});
 
@@ -47,9 +50,8 @@
 	async function updateProfile() {
 		loading = true
 		const { data, error } = await updateUser({
-			data: { first_name: firstName, last_name: lastName },
+			data: { first_name: firstName, last_name: lastName, bio: bio },
 		})
-		console.log('updateProfile returned data, error:', data, error)
 		if (error) {
 			showToast('Failed to update profile', { type: 'error' })
 			console.error('Error updating profile:', error)
@@ -83,6 +85,10 @@
 					<div>
 						<Label for="lastName">{$t('account.lastName')}</Label>
 						<Input id="lastName" type="text" bind:value={lastName} />
+					</div>
+					<div>
+						<Label for="bio">{$t('account.bio')}</Label>
+						<Textarea id="bio" bind:value={bio} rows="3" class="resize-y" />
 					</div>
 					<Button type="submit" disabled={loading}>
 						{loading ? $t('account.updating') : $t('account.updateProfile')}
