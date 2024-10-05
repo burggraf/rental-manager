@@ -87,6 +87,9 @@
   right: 0;
   z-index: 1000;
   padding-top: env(safe-area-inset-top);
+  height: calc(3.5rem + env(safe-area-inset-top)); /* Adjust this value as needed */
+  display: flex;
+  align-items: center;
 }
 
 /* For fixed footers */
@@ -111,4 +114,5 @@
 /* Adjust the height of the main content area */
 main {
   height: calc(100vh - env(safe-area-inset-top));
+  padding-top: calc(3.5rem + env(safe-area-inset-top)); /* Match the header height */
 }
