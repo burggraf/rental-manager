@@ -1,173 +1,128 @@
-// POCKETBASE BACKEND
-import PocketBase from 'pocketbase';
-import type { RecordModel } from 'pocketbase';
+// SUPABASE BACKEND
+import { createClient } from '@supabase/supabase-js'
+import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
 import { writable } from 'svelte/store';
-import { PUBLIC_POCKETBASE_URL } from '$env/static/public'
+import type { User } from '@supabase/supabase-js';
+import type { Contact } from '$lib/types/contact';
 
-export const pb = new PocketBase(PUBLIC_POCKETBASE_URL);
-export const user = writable<RecordModel | null>(null);
-// 		// ? pb.getFileUrl($user, $user.avatar, { thumb: '100x100' })
+export const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY)
+export const user = writable<User | null>(null);
+import { createSortHandler, type SortState } from '$lib/utils/sorting';
+
 
 // **************************
 // **** DATABASE ACTIONS ****
 // **************************
 
 export const getItemById = async (collection: string, id: string) => {
-    try {
-        const data = await pb.collection(collection).getOne(id);
-        return { data, error: null };
-    } catch (error) {
-        return { data: null, error };
-    }
+    const { data, error } = await supabase
+    .from(collection)
+    .select('*')
+    .eq('id', id)
+    .single();  
+    return {
+        data,
+        error
+    };
 }
 
 export const deleteItem = async (collection: string, id: string) => {
-    try {
-        await pb.collection(collection).delete(id);
-        return { error: null };
-    } catch (error) {
-        return { error };
-    }
+    const { error } = await supabase
+    .from(collection)
+    .delete()
+    .eq('id', id);
+    return {
+        error
+    };
 }
 
 export const saveItem = async (collection: string, item: any) => {
-    try {
-        let data;
-        if (item.id) {
-            data = await pb.collection(collection).update(item.id, item);
-        } else {
-            delete item.id;
-            data = await pb.collection(collection).create(item);
-        }
-        return { data, error: null };
-    } catch (error) {
-        return { data: null, error };
-    }
+    const { data, error } = await supabase
+    .from(collection)
+    .upsert(item);
+    return {
+        data,
+        error
+    };
 }
 
 export const getList = async (collection: string, startingIndex: number, perPage: number, sortColumn: string, sortDirection: 'asc' | 'desc') => {
-    try {
-        const data = await pb.collection(collection).getList(startingIndex, perPage, {
-            sort: sortDirection === 'asc' ? sortColumn : `-${sortColumn}`,
-        });
-        return { data: data.items, error: null };
-    } catch (error) {
-        return { data: null, error };
-    }
+
+    const { data, error } = await supabase
+      .from(collection)
+      .select('*')
+      .order(sortColumn, { ascending: sortDirection === 'asc' })
+      .range(startingIndex - 1, startingIndex + perPage - 1);
+        
+    return { data, error} // data || [];
 }
 
 // ************************
 // **** AUTHENTICATION ****
 // ************************
-export const getAvatarUrl = (user: any) => {
-    return pb.getFileUrl(user, user.avatar, { thumb: '100x100' })
+
+export const getAvatarUrl = (user: User) => {
+  return user?.user_metadata?.picture || '';
 }
 
 export const signInWithPassword = async (email: string, password: string) => {
-    try {
-        const authData = await pb.collection('users').authWithPassword(email, password);
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (signInError) {
+        return signInError;
+      } else {
         return '';
-    } catch (error) {
-        return error;
-    }
+      }
 }
 
 export const signUp = async (email: string, password: string) => {
-    try {
-        const result = await pb.collection('users').create({
-            email,
-            password,
-            passwordConfirm: password,
-        });
-        return '';
-    } catch (error) {
-        return String(error);
-    }
+    const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+      return String(signUpError);
 }
-
-async function urlToFile(url: string, filename: string): Promise<File> {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    return new File([blob], filename, { type: blob.type });
-}
-
-async function refreshSession() {
-    const { data, error } = await getSession();
-    if (data.session) {
-        user.set(data.session.user);
-    } else if (error) {
-        console.error('Error refreshing session:', error);
-    }
-}
-
 
 export const signInWithOAuth = async (provider: string) => {
-    try {
-        const authData = await pb.collection('users').authWithOAuth2({ provider });
-        const { data, error } = await getSession();
-        if (data?.session?.user) {
-            user.set(data.session.user as RecordModel);
-        } else if (error) {
-            console.error('Error refreshing session:', error);
+    let currentUrl = window.location.href;
+    localStorage.setItem('redirectUrl', currentUrl)
+    const { error: signInError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin + '/auth/redirect'}` //currentUrl ? currentUrl :`${window.location.origin}/`
         }
-        const avatarUrl = authData?.meta?.avatarUrl;        
-        if (avatarUrl && !authData.record.avatar) {
-            const id = authData.record.id;
-            
-            try {
-                const avatarFile = await urlToFile(avatarUrl, 'avatar.jpg');
-                const formData = new FormData();
-                formData.append('avatar', avatarFile);
-                const record = await pb.collection('users').update(id, formData);
-            } catch (e) {
-                console.error('Failed to update avatar:', e);
-                if (e instanceof Error) {
-                    console.error('Error message:', e.message);
-                }
-                if ('data' in e) {
-                    console.error('Error data:', e.data);
-                }
-            }
-        }        
-        return null;
-    } catch (error) {
-        console.error('signInWithOAuth error', error);
-        return error;
-    }
+      });
+      return signInError;
 }
 
 export const resetPasswordForEmail = async (email: string) => {
-    try {
-        await pb.collection('users').requestPasswordReset(email);
-        return null;
-    } catch (error) {
-        return error;
-    }
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/reset-password`,
+      });
+      return resetError;
 }
 
 export const getSession = async () => {
-    await pb.collection('users').authRefresh();
-    const authData = pb.authStore.model;
+    const { data, error } = await supabase.auth.getSession();
     return {
-        data: { session: { user: authData } ? { user: authData } : null },
-        error: null
+        data,
+        error
     };
 }
 
 export const updateUser = async (obj: any) => {
-    obj.user_metadata = obj.user_metadata || {};
-    for (const key in obj.data) {
-        obj.user_metadata[key] = obj.data[key];
-    }
-    try {
-        const data = await pb.collection('users').update(pb.authStore.model?.id, obj);
-        return { data, error: null };
-    } catch (error) {
-        return { data: null, error };
-    }
+    const { data, error } = await supabase.auth.updateUser(obj);
+    return {
+        data,
+        error
+    };
 }
 
 export const signOut = async () => {
-    pb.authStore.clear();
-    return { error: null };
+    const { error } = await supabase.auth.signOut();
+    return {
+        error
+    };
 }
