@@ -13,6 +13,7 @@ const config: Config = {
 				"2xl": "1400px"
 			}
 		},
+		plugins: [require('tailwindcss-safe-area-capacitor')],
 		extend: {
 			colors: {
 				border: "hsl(var(--border) / <alpha-value>)",

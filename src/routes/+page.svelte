@@ -38,7 +38,7 @@
             <Button asChild>
               <a href="/dashboard">Go to Dashboard</a>
             </Button>
-            <Button variant="outline">Learn More</Button>
+            <Button href="/test" variant="outline">Learn More</Button>
           </div>
         </div>
       </div>

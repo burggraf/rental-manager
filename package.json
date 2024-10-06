@@ -9,8 +9,8 @@
 		"preview": "sh -ac '. ./.env;cp src/lib/backend-$PUBLIC_BACKEND_TYPE.ts src/lib/backend.ts; vite preview'",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-        "ios": "npm run build && npx cap sync && npx cap update ios && npx cap copy ios && npx cap run ios",
-        "android": "npm run build && npx cap sync && npx cap update android && npx cap copy android && npx cap run android"
+		"ios": "npm run build && npx cap sync && npx cap update ios && npx cap copy ios && npx cap run ios",
+		"android": "npm run build && npx cap sync && npx cap update android && npx cap copy android && npx cap run android"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
@@ -50,6 +50,7 @@
 		"sveltekit-superforms": "^2.19.0",
 		"tailwind-merge": "^2.5.2",
 		"tailwind-variants": "^0.2.1",
+		"tailwindcss-safe-area-capacitor": "^0.5.1",
 		"vaul-svelte": "^0.3.2",
 		"zod": "^3.23.8"
 	}
