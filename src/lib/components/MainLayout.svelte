@@ -58,7 +58,7 @@
   
   <div class="flex flex-col h-screen">
     <header
-      class="bg-background fixed top-0 left-0 right-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4 safe-area-top"
+      class="bg-background fixed top-0 left-0 right-0 z-30 flex header-height items-center justify-between gap-4 border-b px-4"
     >
       <!--<div class="flex items-center gap-0">-->
       <div class="">
@@ -88,14 +88,14 @@
 
     <!-- adjust padding here if necessary -->
     <!--<main class="flex-1 overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8">-->
-    <main class="flex-grow overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8 mt-14">
+    <main class="flex-grow overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8 mt-14 mb-14">
         <slot name="content" />
     </main>
 
     <!-- 
     class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
     -->
-    <footer class="bg-background fixed bottom-0 left-0 right-0 z-30 border-t flex items-center justify-between px-4 h-14 safe-area-bottom">
+    <footer class="bg-background fixed bottom-0 left-0 right-0 z-30 border-t flex items-center justify-between px-4 footer-height">
       <div class="flex items-center space-x-2">
         <slot name="bottom-left">
           <!-- Default content for bottom-left -->
