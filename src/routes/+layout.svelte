@@ -56,6 +56,7 @@
   -->
 </svelte:head>
 
+<!--<div class="p-safe-or-8 m-safe-or-8 overflow-auto pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] h-[calc(100vh_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]">-->
 <div class="p-safe-or-8 m-safe-or-8 overflow-auto pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] h-[calc(100vh_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]">
   <slot />
 </div>

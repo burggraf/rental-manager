@@ -58,7 +58,7 @@
   
   <div class="flex flex-col h-screen">
     <header
-      class="bg-background fixed top-0 left-0 right-0 z-30 flex header-height items-center justify-between gap-4 border-b px-4"
+      class="bg-background fixed top-0 left-0 right-0 z-30 flex items-center justify-between gap-4 border-b px-4"
     >
       <!--<div class="flex items-center gap-0">-->
       <div class="">
@@ -95,7 +95,7 @@
     <!-- 
     class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
     -->
-    <footer class="bg-background fixed bottom-0 left-0 right-0 z-30 border-t flex items-center justify-between px-4 footer-height">
+    <footer class="bg-background fixed bottom-0 left-0 right-0 z-30 border-t flex items-center justify-between px-4">
       <div class="flex items-center space-x-2">
         <slot name="bottom-left">
           <!-- Default content for bottom-left -->
