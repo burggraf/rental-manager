@@ -22,5 +22,4 @@ vite.config.ts.timestamp-*
 pb_data/
 ios/
 android/
-./run-on-iphone.sh
-
+run-on-iphone.sh
