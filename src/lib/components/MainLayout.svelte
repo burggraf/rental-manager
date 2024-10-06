@@ -58,10 +58,11 @@
   
   <div class="flex flex-col h-screen">
     <header
-      class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
+      class="bg-background fixed top-0 left-0 right-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4 safe-area-top"
     >
-      <div class="flex items-center gap-0">
-        <Sheet.Root bind:open={sheetOpen}>
+      <!--<div class="flex items-center gap-0">-->
+      <div class="">
+          <Sheet.Root bind:open={sheetOpen}>
           <Sheet.Trigger asChild let:builder>
             <Button builders={[builder]} size="icon" variant="ghost">
               <Menu class="h-5 w-5" />
@@ -79,17 +80,22 @@
           <slot name="title" />
       </div>
 
-      <div class="flex items-center space-x-2">
-        <slot name="top-right" />
+      <!--<div class="flex items-center space-x-2">-->
+      <div class="">
+          <slot name="top-right" />
       </div>
     </header>
 
     <!-- adjust padding here if necessary -->
-    <main class="flex-1 overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8">
-      <slot name="content" />
+    <!--<main class="flex-1 overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8">-->
+    <main class="flex-grow overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8 mt-14">
+        <slot name="content" />
     </main>
 
-    <footer class="bg-background border-t h-14 flex items-center justify-between px-4">
+    <!-- 
+    class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
+    -->
+    <footer class="bg-background fixed bottom-0 left-0 right-0 z-30 border-t flex items-center justify-between px-4 h-14 safe-area-bottom">
       <div class="flex items-center space-x-2">
         <slot name="bottom-left">
           <!-- Default content for bottom-left -->
@@ -97,16 +103,18 @@
         </slot>
       </div>
       
-      <div class="flex items-center space-x-2">
-        <slot name="bottom-center">
+      <!--<div class="flex items-center space-x-2">-->
+      <div class="">
+          <slot name="bottom-center">
           {__APP_TITLE__} v{__APP_VERSION__} 
           <!-- Default content for bottom-center -->
           <slot name="footer" />
         </slot>
       </div>
       
-      <div class="flex items-center space-x-2">
-        <slot name="bottom-right">
+      <!--<div class="flex items-center space-x-2">-->
+        <div class="">
+          <slot name="bottom-right">
           <!-- Default content for bottom-right -->
           <DarkModeToggle />
         </slot>
