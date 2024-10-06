@@ -88,7 +88,7 @@
 
     <!-- adjust padding here if necessary -->
     <!--<main class="flex-1 overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8">-->
-    <main class="flex-grow overflow-y-auto bg-muted/40 p-4 md:p-6 lg:p-8 mt-14 mb-14">
+    <main class="flex-grow overflow-y-auto bg-muted/40 pt-12 pb-12 m-0 md:m-6 lg:m-8">
         <slot name="content" />
     </main>
 
