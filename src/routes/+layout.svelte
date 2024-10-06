@@ -54,4 +54,8 @@
   {/if}
   -->
 </svelte:head>
-<slot />
+
+<div class="safe-area overflow-auto pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] h-[calc(100vh_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]">
+  <slot />
+</div>
+
