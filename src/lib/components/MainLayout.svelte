@@ -95,7 +95,7 @@
     <!-- 
     class="bg-background sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-4"
     -->
-    <footer class="bg-background fixed bottom-0 left-0 right-0 z-30 border-t flex items-center justify-between px-4">
+    <footer class="safe-area-bottom-padding bg-background fixed bottom-0 left-0 right-0 z-30 border-t flex items-center justify-between px-4">
       <div class="flex items-center space-x-2">
         <slot name="bottom-left">
           <!-- Default content for bottom-left -->

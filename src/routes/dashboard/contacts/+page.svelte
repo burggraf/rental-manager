@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
+	// import { onMount } from 'svelte';
 	import ContactsList from '$lib/components/ContactsList.svelte'
 	import { Button } from '$lib/components/ui/button'
 	import type { PageData } from './$types'

@@ -8,17 +8,20 @@
 	// import { page } from '$app/stores';
 	// import LanguageSelector from '$lib/components/LanguageSelector.svelte';
 	import { ModeWatcher } from 'mode-watcher'
+	import { onMount } from 'svelte'
 	// let notificationSupported = $state(false);
 
-	SafeArea.enable({
-		config: {
-			customColorsForSystemBars: true,
-			statusBarColor: '#00000000', // transparent
-			statusBarContent: 'light',
-			navigationBarColor: '#00000000', // transparent
-			navigationBarContent: 'light',
-		},
-	})
+    SafeArea.enable({
+      config: {
+        customColorsForSystemBars: true,
+        statusBarColor: '#00000000', // transparent
+        statusBarContent: 'light',
+        navigationBarColor: '#00000000', // transparent
+        navigationBarContent: 'light',
+      },
+    })
+
+
 	/*
   onMount(() => {
     if (browser) {
