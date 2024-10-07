@@ -99,7 +99,7 @@
     margin-bottom: var(--safe-area-inset-bottom);
   }
   .safe-area-bottom-padding {
-    padding-bottom: calc(var(--safe-area-inset-bottom) / 2);
+    padding-bottom: calc(var(--safe-area-inset-bottom) / 1.75);
   }
   .safe-area {
     padding-top: var(--safe-area-inset-top);
