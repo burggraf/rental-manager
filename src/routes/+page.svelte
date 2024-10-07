@@ -24,12 +24,6 @@
 		setTimeout(updateInsets, 1000);
 		setTimeout(updateInsets, 3000);
 
-		onMount(() => {
-			$effect(() => {
-				window.scrollTo(0, 0)
-			})
-		})
-
 		// Set up a MutationObserver to watch for changes in the root element's style
 		const observer = new MutationObserver(updateInsets)
 		observer.observe(root, { attributes: true, attributeFilter: ['style'] })

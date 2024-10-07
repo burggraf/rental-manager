@@ -98,8 +98,14 @@
     /*padding-bottom: var(--safe-area-inset-bottom);*/
     margin-bottom: var(--safe-area-inset-bottom);
   }
+  .safe-area-top-padding {
+    padding-top: var(--safe-area-inset-top);
+  }
+  .safe-area-top-margin {
+    margin-top: var(--safe-area-inset-top);
+  }
   .safe-area-bottom-padding {
-    padding-bottom: calc(var(--safe-area-inset-bottom) / 1.75);
+    padding-bottom: var(--safe-area-inset-bottom);
   }
   .safe-area {
     padding-top: var(--safe-area-inset-top);
