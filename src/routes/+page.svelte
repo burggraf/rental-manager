@@ -1,6 +1,35 @@
 <script lang="ts">
   import { Button } from "$lib/components/ui/button/index.js";
   import { LayoutDashboard } from 'lucide-svelte';
+  const root = document.documentElement;
+  const styles = getComputedStyle(root);
+  
+  let insetTop = $state(styles.getPropertyValue('--safe-area-inset-top').trim());
+  let insetBottom = $state(styles.getPropertyValue('--safe-area-inset-bottom').trim());
+  let insetLeft = $state(styles.getPropertyValue('--safe-area-inset-left').trim());
+  let insetRight = $state(styles.getPropertyValue('--safe-area-inset-right').trim());
+
+  $effect(() => {
+    const updateInsets = () => {
+      insetTop = styles.getPropertyValue('--safe-area-inset-top').trim();
+      insetBottom = styles.getPropertyValue('--safe-area-inset-bottom').trim();
+      insetLeft = styles.getPropertyValue('--safe-area-inset-left').trim();
+      insetRight = styles.getPropertyValue('--safe-area-inset-right').trim();
+    };
+
+    // Update initially
+    updateInsets();
+    setTimeout(updateInsets, 1000);
+    setTimeout(updateInsets, 5000);
+
+    // Set up a MutationObserver to watch for changes in the root element's style
+    const observer = new MutationObserver(updateInsets);
+    observer.observe(root, { attributes: true, attributeFilter: ['style'] });
+
+    // Clean up the observer when the component is destroyed
+    return () => observer.disconnect();
+  });
+
 </script>
 
 <div class="bg-background min-h-screen flex flex-col">
@@ -109,6 +138,10 @@
       </div>
     </section>
     <!-- Add more sections for Pricing, About, etc. -->
+    insetTop: {insetTop}<br/>
+    insetBottom: {insetBottom}<br/>
+    insetLeft: {insetLeft}<br/>
+    insetRight: {insetRight}<br/>
   </main>
   <footer class="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
     <p class="text-xs text-gray-500 dark:text-gray-400">© 2024 Acme Inc. All rights reserved.</p>
