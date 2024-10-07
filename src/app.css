@@ -85,11 +85,17 @@
   html {
 		height: -webkit-fill-available;
 	}
+  .safe-area {
+    padding-top: var(--safe-area-inset-top);
+    padding-bottom: var(--safe-area-inset-bottom);
+    margin-top: var(--safe-area-inset-top);
+    margin-bottom: var(--safe-area-inset-bottom);
+  }
   .header-height {
-    height: calc(3.5rem + env(safe-area-inset-top));
+    height: calc(3.5rem + var(--safe-area-inset-top));
   }
   .footer-height {
-    height: calc(3.5rem + env(safe-area-inset-bottom));
+    height: calc(3.5rem + var(--safe-area-inset-bottom));
   }
 
 }
