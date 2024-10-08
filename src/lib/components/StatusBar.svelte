@@ -8,8 +8,7 @@
   
   <div class="flex flex-col h-screen">
 
-    <footer class="footer-height bg-background fixed bottom-0 left-0 right-0 z-30 border-t flex items-center justify-between px-4">
-      <div class="flex items-center space-x-2">
+    <footer class="h-[var(--footer-height)] bg-background fixed bottom-0 left-0 right-0 z-30 flex items-center justify-between px-4 border-t">      <div class="flex items-center space-x-2">
         <slot name="bottom-left">
           <!-- Default content for bottom-left -->
           <LanguageSelector />
@@ -35,4 +34,3 @@
     </footer>
     <Toaster richColors />
   </div>
-  

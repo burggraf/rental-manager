@@ -16,14 +16,11 @@
   
   </script>
   
-  <div class="flex flex-col h-screen">
+  <div class="flex flex-col">
 
-    <header
-      class="header-height safe-area-top bg-background fixed top-0 left-0 right-0 z-30 flex items-center justify-between gap-4 border-b px-4"
-    >
-      <!--<div class="flex items-center gap-0">-->
-      <div class="">
-          <Sheet.Root bind:open={sheetOpen}>
+    <header class="bg-background fixed top-0 left-0 right-0 z-30 border-b">
+      <div class="container mx-auto px-4 h-[var(--header-height)] flex items-center justify-between">
+              <Sheet.Root bind:open={sheetOpen}>
           <Sheet.Trigger asChild let:builder>
             <Button builders={[builder]} size="icon" variant="ghost">
               <Menu class="h-5 w-5" />
