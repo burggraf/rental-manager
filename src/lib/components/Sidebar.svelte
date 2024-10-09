@@ -17,6 +17,7 @@
 			icon: Users,
 			items: [
 				{ label: $t('sidebar.contacts'), href: "/dashboard/contacts" },
+				{ label: $t('sidebar.contacts'), href: "/dashboard/contacts2" },
 				{ label: $t('sidebar.myAccount'), href: "/dashboard/account" }
 			]
 		},
