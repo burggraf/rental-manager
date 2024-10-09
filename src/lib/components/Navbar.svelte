@@ -10,10 +10,34 @@
     function closeSheet() {
         sheetOpen = false;
     }
+    const root = document.documentElement
+	const styles = getComputedStyle(root)
+
+	let hh = $state(styles.getPropertyValue('--header-height').trim())
+
+	$effect(() => {
+		const updateInsets = () => {
+			hh = styles.getPropertyValue('--header-height').trim()
+		}
+
+		// Update initially
+		updateInsets()
+		setTimeout(updateInsets, 500);
+		setTimeout(updateInsets, 1000);
+		setTimeout(updateInsets, 3000);
+
+		// Set up a MutationObserver to watch for changes in the root element's style
+		const observer = new MutationObserver(updateInsets)
+		observer.observe(root, { attributes: true, attributeFilter: ['style'] })
+
+		// Clean up the observer when the component is destroyed
+		return () => observer.disconnect()
+	})
+  
 </script>
 
-<header class="bg-background fixed top-0 left-0 right-0 z-30 border-b">
-    <div class="container mx-auto px-4 h-[var(--header-height)] flex items-center justify-between">
+<header class="bg-background header-height fixed top-0 left-0 right-0 z-30 border-b">
+    <div class="container mx-auto px-4 flex items-center justify-between">
         <div class="flex items-center space-x-4">
             <Sheet.Root bind:open={sheetOpen}>
                 <Sheet.Trigger asChild let:builder>

@@ -114,10 +114,15 @@
     margin-bottom: var(--safe-area-inset-bottom);
   }
   .header-height {
-    height: calc(3.5rem + var(--safe-area-inset-top));
+    /*height: var(--header-height);*//*calc(3.5rem + var(--safe-area-inset-top));*/
+    height: 3.5rem;
+    margin-top: var(--safe-area-inset-top);
+    padding-top: 8px;
   }
   .footer-height {
-    height: calc(3.5rem + var(--safe-area-inset-bottom));
+    /*height: calc(3.5rem + var(--safe-area-inset-bottom));*/
+    height: 3.5rem;
+    /*margin-bottom: var(--safe-area-inset-bottom);*/
   }
   .pt-safe {
     padding-top: var(--header-height);
